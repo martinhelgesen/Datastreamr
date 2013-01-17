@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://services.hressurs.no/entities/2012/03/ItemInfo" elementFormDefault="qualified" targetNamespace="http://services.hressurs.no/entities/2012/03/ItemInfo" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="ItemInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Created" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Guid" nillable="true" type="ser:guid" />
+      <xs:element minOccurs="0" name="InternalId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="LastUpdated" nillable="true" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ItemInfo" nillable="true" type="tns:ItemInfo" />
+</xs:schema>

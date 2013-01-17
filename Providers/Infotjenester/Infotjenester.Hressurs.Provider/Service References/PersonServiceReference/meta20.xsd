@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://services/hressurs.no/message/2012/03/ItemResult" elementFormDefault="qualified" targetNamespace="http://services/hressurs.no/message/2012/03/ItemResult" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfItemResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ItemResult" nillable="true" type="tns:ItemResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfItemResult" nillable="true" type="tns:ArrayOfItemResult" />
+  <xs:complexType name="ItemResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ItemIdentifier" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Status" type="xs:int" />
+      <xs:element minOccurs="0" name="Text" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ItemResult" nillable="true" type="tns:ItemResult" />
+</xs:schema>

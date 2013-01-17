@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://services/hressurs.no/entities/2012/03/PersonIdentifier" elementFormDefault="qualified" targetNamespace="http://services/hressurs.no/entities/2012/03/PersonIdentifier" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/ServiceDataContracts" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd11" namespace="http://services/hressurs.no/entities/2012/03/UnitIdentifier" />
+  <xs:complexType name="PersonIdentifier">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/ServiceDataContracts" name="IdentifierType" nillable="true" type="q1:PersonIdentifierType" />
+      <xs:element xmlns:q2="http://services/hressurs.no/entities/2012/03/UnitIdentifier" minOccurs="0" name="UnitIdentifier" nillable="true" type="q2:UnitIdentifier" />
+      <xs:element name="Value" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PersonIdentifier" nillable="true" type="tns:PersonIdentifier" />
+</xs:schema>

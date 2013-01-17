@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://services/hressurs.no/entities/2012/03/Person" elementFormDefault="qualified" targetNamespace="http://services/hressurs.no/entities/2012/03/Person" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd6" namespace="http://services/hressurs.no/entities/2012/03/Address" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd8" namespace="http://services/hressurs.no/entities/2012/03/Child" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd9" namespace="http://services.hressurs.no/entities/2012/03/EMailAddress" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd10" namespace="http://services.hressurs.no/entities/2012/03/Employee" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/ServiceDataContracts" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd7" namespace="http://services.hressurs.no/entities/2012/03/ItemInfo" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd11" namespace="http://services/hressurs.no/entities/2012/03/UnitIdentifier" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd16" namespace="http://services/hressurs.no/entities/2012/03/PersonIdentifier" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd17" namespace="http://services/hressurs.no/entities/2012/03/NextOfKin" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd19" namespace="http://services/hressurs.no/entities/2012/03/Unit" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd20" namespace="http://schemas.datacontract.org/2004/07/ServiceDataContracts.Entities" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd18" namespace="http://services/hressurs.no/entities/2012/03/Phone" />
+  <xs:complexType name="ArrayOfPerson">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Person" nillable="true" type="tns:Person" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPerson" nillable="true" type="tns:ArrayOfPerson" />
+  <xs:complexType name="Person">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://services/hressurs.no/entities/2012/03/Address" minOccurs="0" name="Addresses" nillable="true" type="q1:ArrayOfAddress" />
+      <xs:element minOccurs="0" name="BankAccount1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BankAccount2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BirthDate" nillable="true" type="xs:dateTime" />
+      <xs:element xmlns:q2="http://services/hressurs.no/entities/2012/03/Child" minOccurs="0" name="Children" nillable="true" type="q2:ArrayOfChild" />
+      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CountryCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element xmlns:q3="http://services.hressurs.no/entities/2012/03/EMailAddress" minOccurs="0" name="EMailAddresses" nillable="true" type="q3:ArrayOfEMailAddress" />
+      <xs:element xmlns:q4="http://services.hressurs.no/entities/2012/03/Employee" minOccurs="0" name="EmploymentInfo" nillable="true" type="q4:ArrayOfEmployee" />
+      <xs:element name="FirstName" nillable="true" type="xs:string" />
+      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/ServiceDataContracts" minOccurs="0" name="Gender" nillable="true" type="q5:Gender" />
+      <xs:element xmlns:q6="http://services.hressurs.no/entities/2012/03/ItemInfo" minOccurs="0" name="InternalInfo" nillable="true" type="q6:ItemInfo" />
+      <xs:element minOccurs="0" name="IsDeactivated" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsLeader" type="xs:boolean" />
+      <xs:element name="LastName" nillable="true" type="xs:string" />
+      <xs:element xmlns:q7="http://services/hressurs.no/entities/2012/03/UnitIdentifier" minOccurs="0" name="LegalUnitIdentifier" nillable="true" type="q7:UnitIdentifier" />
+      <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/ServiceDataContracts" minOccurs="0" name="MaritalStatus" nillable="true" type="q8:MaritalStatus" />
+      <xs:element minOccurs="0" name="MiddleName" nillable="true" type="xs:string" />
+      <xs:element xmlns:q9="http://services/hressurs.no/entities/2012/03/PersonIdentifier" minOccurs="0" name="NearestLeader" nillable="true" type="q9:PersonIdentifier" />
+      <xs:element xmlns:q10="http://services/hressurs.no/entities/2012/03/NextOfKin" minOccurs="0" name="NextOfKinInfo" nillable="true" type="q10:ArrayOfNextOfKin" />
+      <xs:element xmlns:q11="http://services/hressurs.no/entities/2012/03/Unit" minOccurs="0" name="ParentUnit" nillable="true" type="q11:Unit" />
+      <xs:element xmlns:q12="http://services/hressurs.no/entities/2012/03/UnitIdentifier" minOccurs="0" name="ParentUnitIdentifier" nillable="true" type="q12:UnitIdentifier" />
+      <xs:element xmlns:q13="http://services/hressurs.no/entities/2012/03/PersonIdentifier" minOccurs="0" name="PersonIdentifier" nillable="true" type="q13:PersonIdentifier" />
+      <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/ServiceDataContracts.Entities" minOccurs="0" name="PersonalImage" nillable="true" type="q14:Image" />
+      <xs:element xmlns:q15="http://services/hressurs.no/entities/2012/03/Phone" minOccurs="0" name="Phones" nillable="true" type="q15:ArrayOfPhone" />
+      <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SocialSecurityNumber" nillable="true" type="xs:string" />
+      <xs:element xmlns:q16="http://services/hressurs.no/entities/2012/03/PersonIdentifier" minOccurs="0" name="SpecifiedLeader" nillable="true" type="q16:PersonIdentifier" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Person" nillable="true" type="tns:Person" />
+</xs:schema>

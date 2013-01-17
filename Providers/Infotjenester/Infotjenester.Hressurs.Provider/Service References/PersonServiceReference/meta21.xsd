@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://services/hressurs.no/entities/2012/03/Position" elementFormDefault="qualified" targetNamespace="http://services/hressurs.no/entities/2012/03/Position" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd7" namespace="http://services.hressurs.no/entities/2012/03/ItemInfo" />
+  <xs:complexType name="Position">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://services.hressurs.no/entities/2012/03/ItemInfo" minOccurs="0" name="InternalInfo" nillable="true" type="q1:ItemInfo" />
+      <xs:element minOccurs="0" name="IsDeactivated" type="xs:boolean" />
+      <xs:element name="Name" nillable="true" type="xs:string" />
+      <xs:element name="Number" type="xs:int" />
+      <xs:element minOccurs="0" name="SsbCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SsbName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SsbSubCode" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Position" nillable="true" type="tns:Position" />
+</xs:schema>

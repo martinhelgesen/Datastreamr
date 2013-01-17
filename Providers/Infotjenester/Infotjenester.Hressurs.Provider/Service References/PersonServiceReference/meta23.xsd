@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://services.hressurs.no/entities/2012/03/Employment" elementFormDefault="qualified" targetNamespace="http://services.hressurs.no/entities/2012/03/Employment" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd13" namespace="http://services/hressurs.no/entities/2012/03/Category" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd14" namespace="http://services.hressurs.no/entities/2012/03/EmploymentDistribution" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd7" namespace="http://services.hressurs.no/entities/2012/03/ItemInfo" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd15" namespace="http://services/hressurs.no/entities/2012/03/Position" />
+  <xs:complexType name="ArrayOfEmployment">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Employment" nillable="true" type="tns:Employment" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEmployment" nillable="true" type="tns:ArrayOfEmployment" />
+  <xs:complexType name="Employment">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://services/hressurs.no/entities/2012/03/Category" name="Category" nillable="true" type="q1:Category" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://services.hressurs.no/entities/2012/03/EmploymentDistribution" name="EmploymentDistributionList" nillable="true" type="q2:ArrayOfEmploymentDistribution" />
+      <xs:element name="FromDate" type="xs:dateTime" />
+      <xs:element xmlns:q3="http://services.hressurs.no/entities/2012/03/ItemInfo" minOccurs="0" name="InternalInfo" nillable="true" type="q3:ItemInfo" />
+      <xs:element xmlns:q4="http://services/hressurs.no/entities/2012/03/Position" name="Position" nillable="true" type="q4:Position" />
+      <xs:element minOccurs="0" name="ToDate" nillable="true" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Employment" nillable="true" type="tns:Employment" />
+</xs:schema>

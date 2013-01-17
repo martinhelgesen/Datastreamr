@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://services/hressurs.no/message/2012/03/ExportPersonRequest" elementFormDefault="qualified" targetNamespace="http://services/hressurs.no/message/2012/03/ExportPersonRequest" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/ServiceDataContracts.Message" />
+  <xs:complexType name="ExportPersonRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/ServiceDataContracts.Message" base="q1:BaseExportPersonMessage">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ExportPersonRequest" nillable="true" type="tns:ExportPersonRequest" />
+</xs:schema>

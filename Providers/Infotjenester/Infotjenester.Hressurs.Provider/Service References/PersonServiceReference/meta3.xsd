@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://services/hressurs.no/entities/2012/03/Child" elementFormDefault="qualified" targetNamespace="http://services/hressurs.no/entities/2012/03/Child" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/ServiceDataContracts" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd7" namespace="http://services.hressurs.no/entities/2012/03/ItemInfo" />
+  <xs:complexType name="ArrayOfChild">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Child" nillable="true" type="tns:Child" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfChild" nillable="true" type="tns:ArrayOfChild" />
+  <xs:complexType name="Child">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BirthDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DisabledChild" nillable="true" type="xs:boolean" />
+      <xs:element name="FirstName" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/ServiceDataContracts" minOccurs="0" name="Gender" type="q1:Gender" />
+      <xs:element xmlns:q2="http://services.hressurs.no/entities/2012/03/ItemInfo" minOccurs="0" name="InternalInfo" nillable="true" type="q2:ItemInfo" />
+      <xs:element name="LastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LivesWithParent" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="MiddleName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SplitCare" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SplitCarePercent" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Child" nillable="true" type="tns:Child" />
+</xs:schema>

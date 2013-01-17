@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://services.hressurs.no/entities/2012/03/EmploymentDistribution" elementFormDefault="qualified" targetNamespace="http://services.hressurs.no/entities/2012/03/EmploymentDistribution" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd7" namespace="http://services.hressurs.no/entities/2012/03/ItemInfo" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd11" namespace="http://services/hressurs.no/entities/2012/03/UnitIdentifier" />
+  <xs:complexType name="ArrayOfEmploymentDistribution">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="EmploymentDistribution" nillable="true" type="tns:EmploymentDistribution" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEmploymentDistribution" nillable="true" type="tns:ArrayOfEmploymentDistribution" />
+  <xs:complexType name="EmploymentDistribution">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://services.hressurs.no/entities/2012/03/ItemInfo" minOccurs="0" name="InternalInfo" nillable="true" type="q1:ItemInfo" />
+      <xs:element name="PositionPercent" nillable="true" type="xs:decimal" />
+      <xs:element xmlns:q2="http://services/hressurs.no/entities/2012/03/UnitIdentifier" name="Unit" nillable="true" type="q2:UnitIdentifier" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EmploymentDistribution" nillable="true" type="tns:EmploymentDistribution" />
+</xs:schema>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://services/hressurs.no/message/2012/03/ImportPersonRequest" elementFormDefault="qualified" targetNamespace="http://services/hressurs.no/message/2012/03/ImportPersonRequest" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd5" namespace="http://services/hressurs.no/entities/2012/03/Person" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/ServiceDataContracts.Message" />
+  <xs:complexType name="ImportPersonRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/ServiceDataContracts.Message" base="q1:BasePersonMessage">
+        <xs:sequence>
+          <xs:element xmlns:q2="http://services/hressurs.no/entities/2012/03/Person" minOccurs="0" name="Persons" nillable="true" type="q2:ArrayOfPerson" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ImportPersonRequest" nillable="true" type="tns:ImportPersonRequest" />
+</xs:schema>

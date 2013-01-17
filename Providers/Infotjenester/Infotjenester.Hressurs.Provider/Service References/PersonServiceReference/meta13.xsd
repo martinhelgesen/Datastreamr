@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/ServiceDataContracts.Message" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ServiceDataContracts.Message" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/ServiceDataContracts" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd16" namespace="http://services/hressurs.no/entities/2012/03/PersonIdentifier" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd11" namespace="http://services/hressurs.no/entities/2012/03/UnitIdentifier" />
+  <xs:complexType name="BasePersonMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseMessage">
+        <xs:sequence>
+          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/ServiceDataContracts" minOccurs="0" name="PersonIdentifierType" nillable="true" type="q1:PersonIdentifierType" />
+          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ServiceDataContracts" minOccurs="0" name="UnitIdentifierType" nillable="true" type="q2:UnitIdentifierType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="BasePersonMessage" nillable="true" type="tns:BasePersonMessage" />
+  <xs:complexType name="BaseMessage">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ClientLogMessage" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BaseMessage" nillable="true" type="tns:BaseMessage" />
+  <xs:complexType name="BaseExportPersonMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BasePersonMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ChangedAfterDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ChangedBeforeDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="CreatedAfterDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="CreatedBeforeDate" nillable="true" type="xs:dateTime" />
+          <xs:element xmlns:q3="http://services/hressurs.no/entities/2012/03/PersonIdentifier" minOccurs="0" name="ExportOnePerson" nillable="true" type="q3:PersonIdentifier" />
+          <xs:element xmlns:q4="http://services/hressurs.no/entities/2012/03/UnitIdentifier" minOccurs="0" name="FromUnit" nillable="true" type="q4:UnitIdentifier" />
+          <xs:element minOccurs="0" name="IncludeAddresses" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IncludeChildren" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IncludeDeactivated" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IncludeEmailAddresses" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IncludeEmployment" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IncludeNextOfKin" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IncludePersonalImage" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IncludePhones" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IncludeSocialSecurityNumber" type="xs:boolean" />
+          <xs:element minOccurs="0" name="MaxExportCount" nillable="true" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="BaseExportPersonMessage" nillable="true" type="tns:BaseExportPersonMessage" />
+</xs:schema>
