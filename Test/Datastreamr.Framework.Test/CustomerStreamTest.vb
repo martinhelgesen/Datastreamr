@@ -12,6 +12,7 @@ Imports NUnit.Framework
         Dim personsinCompany As CustomerStream = StreamStub()
         Dim resultdecorator = New CustomerStreamResultDecorator(personsinCompany, Nothing, Nothing)
         Dim result = resultdecorator.Result()
+
         Assert.IsNotNullOrEmpty(result)
     End Sub
 
