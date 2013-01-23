@@ -1,6 +1,4 @@
-﻿
-
-Namespace Entities.Job
+﻿Namespace Entities.Job
     Partial Class Job
 
         Private _id As Integer

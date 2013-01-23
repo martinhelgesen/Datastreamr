@@ -18,21 +18,21 @@ Namespace Entities.Job.DataAccess
         End Property
 
         Public Function GetEntity(id As Integer) As Job Implements IJobDataAccess.GetEntity
-            Using session As IDocumentSession = _store.OpenSession()
+            Using session = _store.OpenSession()
                 Dim o = session.Load(Of Job)(id)
                 Return o
             End Using
         End Function
 
         Public Function GetAll() As IEnumerable(Of Job) Implements IJobDataAccess.GetAllForCustomer
-            Using session As IDocumentSession = _store.OpenSession()
+            Using session = _store.OpenSession()
                 Dim o = session.Query(Of Job).ToList()
                 Return o
             End Using
         End Function
 
         Public Function Create(ByRef o As Job) As Boolean Implements IJobDataAccess.Create
-            Using session As IDocumentSession = _store.OpenSession()
+            Using session = _store.OpenSession()
                 session.Store(o)
                 session.SaveChanges()
             End Using
@@ -40,14 +40,14 @@ Namespace Entities.Job.DataAccess
         End Function
 
         Public Function Update(ByRef o As Job) As Boolean Implements IJobDataAccess.Update
-            Using session As IDocumentSession = _store.OpenSession()
+            Using session = _store.OpenSession()
                 session.Store(o)
                 session.SaveChanges()
             End Using
             Return True
         End Function
         Public Function Delete(ByRef o As Job) As Boolean Implements IJobDataAccess.Delete
-            Using session As IDocumentSession = _store.OpenSession()
+            Using session = _store.OpenSession()
                 session.Delete(o)
                 session.SaveChanges()
             End Using
