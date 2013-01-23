@@ -65,6 +65,21 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -90,6 +105,13 @@
     <Compile Include="Entities\CustomerStream\DataAccess\CustomerStream.DataAccess.Partial.vb" />
     <Compile Include="Entities\CustomerStream\DataAccess\CustomerStream.DataAccess.vb" />
     <Compile Include="Entities\CustomerStream\DataAccess\ICustomerStream.DataAccess.vb" />
+    <Compile Include="Entities\Job\JobAggregate.Aggregate.Partial.vb" />
+    <Compile Include="Entities\Job\JobAggregate.Aggregate.vb" />
+    <Compile Include="Entities\Job\Job.Entity.Partial.vb" />
+    <Compile Include="Entities\Job\Job.Entity.vb" />
+    <Compile Include="Entities\Job\DataAccess\JobDataAccess.DataAccess.Partial.vb" />
+    <Compile Include="Entities\Job\DataAccess\JobDataAccess.DataAccess.vb" />
+    <Compile Include="Entities\Job\DataAccess\IJobDataAccess.DataAccess.vb" />
     <Compile Include="Facade\CustomerStreamFacade.vb" />
     <Compile Include="Interfaces\IHasId.vb" />
     <Compile Include="Interfaces\IInternalDatastream.vb" />
@@ -119,6 +141,7 @@
     <Compile Include="ProvidersFacade.vb" />
     <Compile Include="TransformerFacade.vb" />
     <Compile Include="Transformers\FlatfilEksportFormat.vb" />
+    <Compile Include="Transporters\BaseTransporter.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -141,9 +164,7 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Transporters\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

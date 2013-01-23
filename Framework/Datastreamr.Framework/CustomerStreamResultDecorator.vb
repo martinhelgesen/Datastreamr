@@ -2,6 +2,10 @@
 Imports Datastreamr.Framework.Interfaces
 Imports Newtonsoft.Json
 
+''' <summary>
+''' Returns the result of the CustomerStream. If transformer is registered then stream is applied with transformer
+''' </summary>
+''' <remarks></remarks>
 Public Class CustomerStreamResultDecorator
     Private _stream As IInternalDatastream
     Private _transformer As ITransformers
@@ -21,14 +25,14 @@ Public Class CustomerStreamResultDecorator
 
     End Sub
 
-    Private _innerObject As CustomerStream
+    Public _inner As CustomerStream
     Public Sub New(stream As CustomerStream)
-        _innerObject = stream
+        _inner = stream
         Id = stream.Id
         Name = stream.Name
         StreamTypeId = stream.StreamtypeId
         TransformerTypeId = stream.TransformertypeId
-        stream.Params = stream.Params
+        Params = stream.Params
         TransformerParams = stream.TransformerParams
     End Sub
 
@@ -53,15 +57,6 @@ Public Class CustomerStreamResultDecorator
             Next
         End If
     End Sub
-
-    'Public Shared Function GenerateStreamFromString(s As String) As Stream
-    '    Dim str As New MemoryStream()
-    '    Dim writer As New StreamWriter(str)
-    '    writer.Write(s)
-    '    writer.Flush()
-    '    str.Position = 0
-    '    Return str
-    'End Function
 
     Private ReadOnly Property Stream() As IInternalDatastream
         Get

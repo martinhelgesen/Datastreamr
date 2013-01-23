@@ -15,7 +15,7 @@ Imports NUnit.Framework
         params.Password = "grehan1"
         Dim persons = personsinCompany.GetStream(params).ToList()
         Assert.That(persons.Count(), [Is].GreaterThan(0))
-        Assert.AreEqual(119, persons.Count())
+        Assert.AreEqual(118, persons.Count())
     End Sub
 
     <TestFixtureTearDown()> Public Sub teardown()

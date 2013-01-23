@@ -59,6 +59,14 @@ Namespace Streams
                 Add("CompanyIdentifier", New ParamInfo With {.Name = "CompanyId", .Type = GetType(UnitIdentifier), .Required = False, .Description = "Please identify the company unit to fetch from"})
                 Add("Username", New ParamInfo With {.Name = "Username", .Type = GetType(String), .Required = True, .Description = "The username to fetch data from HRessurs"})
                 Add("Password", New ParamInfo With {.Name = "Password", .Type = GetType(String), .Required = True, .Description = "The password for the user"})
+                Add("IncludeAddresses", New ParamInfo With {.Name = "IncludeAddresses", .Type = GetType(Boolean), .Required = False, .Description = "", .DefaultValue = False})
+                Add("IncludeChildren", New ParamInfo With {.Name = "IncludeChildren", .Type = GetType(Boolean), .Required = False, .Description = "", .DefaultValue = False})
+                Add("IncludeEmailAddresses", New ParamInfo With {.Name = "IncludeEmailAddresses", .Type = GetType(Boolean), .Required = False, .Description = "", .DefaultValue = False})
+                Add("IncludeNextOfKin", New ParamInfo With {.Name = "IncludeNextOfKin", .Type = GetType(Boolean), .Required = False, .Description = "", .DefaultValue = False})
+                Add("IncludePhones", New ParamInfo With {.Name = "IncludePhones", .Type = GetType(Boolean), .Required = False, .Description = "", .DefaultValue = False})
+                Add("IncludeSocialSecurityNumber", New ParamInfo With {.Name = "IncludeSocialSecurityNumber", .Type = GetType(Boolean), .Required = False, .Description = "", .DefaultValue = False})
+                Add("IncludeEmployment", New ParamInfo With {.Name = "IncludeEmployment", .Type = GetType(Boolean), .Required = False, .Description = "", .DefaultValue = False})
+                Add("MaxExportCount", New ParamInfo With {.Name = "IncludeEmployment", .Type = GetType(Boolean), .Required = False, .Description = "", .DefaultValue = False})
             End Sub
 
             Property CompanyId() As UnitIdentifier
@@ -89,75 +97,76 @@ Namespace Streams
 
             Public Property IncludeAddresses() As Boolean
                 Get
-                    Throw New NotImplementedException()
+                    Return CType(Me("IncludeAddresses").Value, Boolean)
                 End Get
                 Set(ByVal value As Boolean)
-                    Throw New NotImplementedException()
+                    Me("IncludeAddresses").Value = value
                 End Set
             End Property
 
             Public Property IncludeChildren() As Boolean
                 Get
-                    Throw New NotImplementedException()
+                    Return CType(Me("IncludeChildren").Value, Boolean)
                 End Get
                 Set(ByVal value As Boolean)
-                    Throw New NotImplementedException()
+                    Me("IncludeChildren").Value = value
                 End Set
             End Property
 
             Public Property IncludeEmailAddresses() As Boolean
                 Get
-                    Throw New NotImplementedException()
+                    Return CType(Me("IncludeEmailAddresses").Value, Boolean)
                 End Get
                 Set(ByVal value As Boolean)
-                    Throw New NotImplementedException()
+                    Me("IncludeEmailAddresses").Value = value
                 End Set
             End Property
 
             Public Property IncludeNextOfKin() As Boolean
                 Get
-                    Throw New NotImplementedException()
+                    Return CType(Me("IncludeNextOfKin").Value, Boolean)
                 End Get
                 Set(ByVal value As Boolean)
-                    Throw New NotImplementedException()
+                    Me("IncludeNextOfKin").Value = value
                 End Set
             End Property
 
             Public Property IncludePhones() As Boolean
                 Get
-                    Throw New NotImplementedException()
+                    Return CType(Me("IncludePhones").Value, Boolean)
                 End Get
                 Set(ByVal value As Boolean)
-                    Throw New NotImplementedException()
+                    Me("IncludePhones").Value = value
                 End Set
             End Property
 
             Public Property IncludeSocialSecurityNumber() As Boolean
                 Get
-                    Throw New NotImplementedException()
+                    Return CType(Me("IncludeSocialSecurityNumber").Value, Boolean)
                 End Get
                 Set(ByVal value As Boolean)
-                    Throw New NotImplementedException()
+                    Me("IncludeSocialSecurityNumber").Value = value
                 End Set
             End Property
 
             Public Property IncludeEmployment() As Boolean
                 Get
-                    Throw New NotImplementedException()
+                    Return CType(Me("IncludeEmployment").Value, Boolean)
                 End Get
                 Set(ByVal value As Boolean)
-                    Throw New NotImplementedException()
+                    Me("IncludeEmployment").Value = value
                 End Set
             End Property
 
-            Public Property MaxExportCount() As Integer?
+            Public Property MaxExportCount() As Integer
                 Get
-                    Throw New NotImplementedException()
+                    Return CType(Me("MaxExportCount").Value, Integer)
                 End Get
-                Set(ByVal value As Integer?)
-                    Throw New NotImplementedException()
+                Set(ByVal value As Integer)
+                    Me("MaxExportCount").Value = value
                 End Set
             End Property
+
         End Class
     End Class
 End Namespace

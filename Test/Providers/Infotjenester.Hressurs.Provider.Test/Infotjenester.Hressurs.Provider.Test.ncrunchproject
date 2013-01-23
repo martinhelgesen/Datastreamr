@@ -18,8 +18,8 @@
   <ProxyProcessPath></ProxyProcessPath>
   <UseCPUArchitecture>AutoDetect</UseCPUArchitecture>
   <IgnoredTests>
-    <RegexTestSelector>
-      <RegularExpression>Infotjenester\.Hressurs\.Provider\.Test\.PersonsInCompanyTest\..*</RegularExpression>
-    </RegexTestSelector>
+    <NamedTestSelector>
+      <TestName>Infotjenester.Hressurs.Provider.Test.PersonsInCompanyTest.test</TestName>
+    </NamedTestSelector>
   </IgnoredTests>
 </ProjectConfiguration>

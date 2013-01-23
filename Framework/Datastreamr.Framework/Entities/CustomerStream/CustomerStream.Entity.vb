@@ -1,6 +1,4 @@
-﻿Imports Personalarkiv.Datastream.Interfaces
-
-Namespace Entities.CustomerStream
+﻿Namespace Entities.CustomerStream
     Partial Public Class CustomerStream
 
     End Class
