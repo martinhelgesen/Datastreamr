@@ -84,6 +84,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Streams\PersonsInCompany.vb" />
+    <Compile Include="Transforms\SalesForcePersonTransformer.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -189,9 +190,7 @@
     </None>
     <None Include="Service References\PersonServiceReference\PersonService.wsdl" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Transforms\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>

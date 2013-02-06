@@ -1,14 +1,13 @@
 ﻿Namespace Transporters
-    Public MustInherit Class BaseTransporter
-        Implements ITransport
 
-        Public MustOverride Sub Transport(stream As String, params As TransportParams) Implements ITransport.Transport
-        Public MustOverride Function GetParams() As TransportParams Implements ITransport.GetParams
-    End Class
 
     Public Interface ITransport
-        Sub Transport(stream As String, params As TransportParams)
+        Sub Transport(stream As IEnumerable(Of Object), params As TransportParams)
         Function GetParams() As TransportParams
+    End Interface
+    Public Interface ITransport(Of T)
+        Inherits ITransport
+        Overloads Sub Transport(stream As IEnumerable(Of T), params As TransportParams)
     End Interface
 
     Public Class TransportParams
@@ -16,11 +15,13 @@
     End Class
 
     Public Class FtpTransporter
-        Inherits BaseTransporter
+        Implements ITransport
 
-        Public Overrides Sub Transport(stream As String, params As TransportParams)
+        Public Sub Transport(stream As IEnumerable(Of Object), params As TransportParams) Implements ITransport.Transport
         End Sub
-        Public Overrides Function GetParams() As TransportParams
+
+
+        Public Function GetParams() As TransportParams Implements ITransport.GetParams
             Return New FtpTransporterParams()
         End Function
 
@@ -70,25 +71,25 @@
         End Class
     End Class
 
-    Public Class WebServiceTransporter
-        Inherits BaseTransporter
+    'Public Class WebServiceTransporter
+    '    Inherits BaseTransporter
 
-        Public Overrides Function GetParams() As TransportParams
-            Return New WebServiceTransporterParams()
-        End Function
+    '    Public Overrides Function GetParams() As TransportParams
+    '        Return New WebServiceTransporterParams()
+    '    End Function
 
-        Public Overrides Sub Transport(ByVal stream As String, ByVal params As TransportParams)
-            Throw New NotImplementedException()
-        End Sub
+    '    Public Overrides Sub Transport(ByVal stream As String, ByVal params As TransportParams)
+    '        Throw New NotImplementedException()
+    '    End Sub
 
-        Public Class WebServiceTransporterParams
-            Inherits TransportParams
+    '    Public Class WebServiceTransporterParams
+    '        Inherits TransportParams
 
-            Sub New()
-                Add("Address", New ParamInfo With {.Name = "Address", .Type = GetType(String), .Required = True, .Description = "The address to the Ftp server"})
-                Add("Username", New ParamInfo With {.Name = "Username", .Type = GetType(String), .Required = False, .Description = "The username to authenticate with"})
-                Add("Password", New ParamInfo With {.Name = "Password", .Type = GetType(String), .Required = False, .Description = "The password for the user"})
-            End Sub
-        End Class
-    End Class
+    '        Sub New()
+    '            Add("Address", New ParamInfo With {.Name = "Address", .Type = GetType(String), .Required = True, .Description = "The address to the Ftp server"})
+    '            Add("Username", New ParamInfo With {.Name = "Username", .Type = GetType(String), .Required = False, .Description = "The username to authenticate with"})
+    '            Add("Password", New ParamInfo With {.Name = "Password", .Type = GetType(String), .Required = False, .Description = "The password for the user"})
+    '        End Sub
+    '    End Class
+    'End Class
 End Namespace

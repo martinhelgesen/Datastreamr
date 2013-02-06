@@ -3,7 +3,7 @@ Imports Datastreamr.Framework.Interfaces
 Imports Newtonsoft.Json
 
 ''' <summary>
-''' Returns the result of the CustomerStream. If transformer is registered then stream is applied with transformer
+''' Returns the result of the CustomerStream. If transformer is registered then stream is applied with the transformer
 ''' </summary>
 ''' <remarks></remarks>
 Public Class CustomerStreamResultDecorator
@@ -79,11 +79,11 @@ Public Class CustomerStreamResultDecorator
         Return Stream.GetStream(Params)
     End Function
 
-    Public Function Result() As String
+    Public Function Result() As IEnumerable(Of Object)
         Dim sourceStream = Stream.GetStream(Params)
         If Transformer IsNot Nothing Then
             Return Transformer.Transform(sourceStream, TransformerParams)
         End If
-        Return JsonConvert.SerializeObject(sourceStream)
+        Return sourceStream
     End Function
 End Class

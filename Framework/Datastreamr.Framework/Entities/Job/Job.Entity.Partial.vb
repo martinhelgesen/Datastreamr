@@ -1,27 +1,31 @@
-﻿Namespace Entities.Job
-    Partial Class Job
+﻿Imports Datastreamr.Framework.Transporters
 
-        Private _id As Integer
-        Private _name As String
-        Public Property Id As Integer
+Namespace Entities.Job
+    Partial Class Job
+        Property Id() As Integer
+        Property UserId() As Integer
+        Property CustomerStreamId() As Integer
+        Property TransporterTypeId() As Integer
+        Property TransporterParams() As TransportParams
+        Property ScheduledTask() As ScheduledTask
+    End Class
+
+    Public Class ScheduledTask
+        Property Frequency() As TimeSpan
+        Property LastRun() As JobResult
+        ReadOnly Property NextRun() As DateTime
             Get
-                Return _id
+                Return LastRun.JobDate.Add(Frequency)
             End Get
-            Set(value As Integer)
-                If _id <> value Then
-                    _id = value
-                End If
-            End Set
-        End Property
-        Public Property Name As String
-            Get
-                Return _name
-            End Get
-            Set(value As String)
-                If _name <> value Then
-                    _name = value
-                End If
-            End Set
         End Property
     End Class
+
+
+    Public Class JobResult
+        Property JobDate As DateTime
+        Property Success As Boolean
+        Property Output() As String
+        Property Input() As String
+    End Class
+
 End Namespace

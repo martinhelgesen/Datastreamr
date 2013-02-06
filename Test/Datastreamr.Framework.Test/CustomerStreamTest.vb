@@ -14,11 +14,11 @@ Imports Infotjenester.Hressurs.Provider.Streams
         Dim personsinCompany As CustomerStream = StreamStub()
         Dim resultdecorator = New CustomerStreamResultDecorator(personsinCompany, Nothing, Nothing)
         Dim result = resultdecorator.Result()
-        Assert.IsNotNullOrEmpty(result)
+        Assert.IsNotNull(result)
     End Sub
     <Test()> Sub TestCustomerStreamFetch()
 
-        Dim agg = NSubstitute.Substitute.For(Of ICustomerStreamDataAccess)()
+        Dim agg = Substitute.For(Of ICustomerStreamDataAccess)()
         agg.GetEntity(1).Returns(Function(p)
                                      Return StreamStub()
                                  End Function)
@@ -27,7 +27,7 @@ Imports Infotjenester.Hressurs.Provider.Streams
             LazyFramework.ClassFactory.SetTypeInstanceForSession(Of ICustomerStreamDataAccess)(agg)
             Dim stream As CustomerStreamResultDecorator = Facade.CustomerStreamFacade.GetCustomerStream(1)
             Dim result = stream.Result()
-            Assert.IsNotNullOrEmpty(result)       
+            Assert.IsNotNull(result)
         End Using
     End Sub
 
