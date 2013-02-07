@@ -1,4 +1,4 @@
-﻿Imports System
+﻿
 Imports System.Runtime.InteropServices
 Imports Microsoft.Web.FtpServer
 
@@ -7,35 +7,35 @@ Public Class FtpAuthenticationProvider
     Implements IFtpAuthenticationProvider
     Implements IFtpRoleProvider
 
-    Public Function AuthenticateUser(ByVal sessionId As String, ByVal siteName As String, ByVal userName As String, ByVal userPassword As String, <Out> ByRef canonicalUserName As String) As Boolean Implements IFtpAuthenticationProvider.AuthenticateUser
-        ' Note: You would add your own custom logic here.
-        canonicalUserName = userName
-        Dim strUserName As String = "MyUser"
-        Dim strPassword As String = "MyPassword"
+    Private Shared _credentials As New Hashtable
 
-        ' Verify that the user name and password are valid.
-        ' Note: In this example, the user name is case-insensitive
-        ' and the password is case-sensitive.
-        If ((userName.Equals(strUserName, StringComparison.OrdinalIgnoreCase)) = True) AndAlso userPassword = strPassword Then
-            Return True
-        Else
-            Return False
+    Public Function AuthenticateUser(ByVal sessionId As String, ByVal siteName As String, ByVal userName As String, ByVal userPassword As String, <Out> ByRef canonicalUserName As String) As Boolean Implements IFtpAuthenticationProvider.AuthenticateUser
+        canonicalUserName = userName
+
+        If _credentials.ContainsKey(userName) Then
+            Dim pwd As String = CType(_credentials(userName), String)
+            If String.Compare(pwd, userPassword, True) = 0 Then
+                Return True
+            End If
         End If
+        'username is found in cache, but password is different. || username is not found
+        'Call to SSO must be invoked.
+        With New SSOService
+            If .CreateSession(userName, userPassword) Then
+                UpdateCache(userName,userPassword)
+                Return True
+            End If
+        End With
+        Return False
     End Function
 
-    Public Function IsUserInRole(ByVal sessionId As String, ByVal siteName As String, ByVal userName As String, ByVal userRole As String) As Boolean Implements IFtpRoleProvider.IsUserInRole
-        ' Note: You would add your own custom logic here.
-        Dim strUserName As String = "MyUser"
-        Dim strRoleName As String = "MyRole"
+    Private Sub UpdateCache(ByVal userName As String, ByVal userPassword As String)
+        _credentials.Remove(userName)
+        _credentials.Add(userName, userPassword)
+    End Sub
 
-        ' Verify that the user name and role name are valid.
-        ' Note: In this example, both the user name and
-        ' the role name are case-insensitive.
-        If ((userName.Equals(strUserName, StringComparison.OrdinalIgnoreCase)) = True) AndAlso ((userRole.Equals(strRoleName, StringComparison.OrdinalIgnoreCase)) = True) Then
-            Return True
-        Else
-            Return False
-        End If
+    Public Function IsUserInRole(ByVal sessionId As String, ByVal siteName As String, ByVal userName As String, ByVal userRole As String) As Boolean Implements IFtpRoleProvider.IsUserInRole
+        Return True
     End Function
 
 
