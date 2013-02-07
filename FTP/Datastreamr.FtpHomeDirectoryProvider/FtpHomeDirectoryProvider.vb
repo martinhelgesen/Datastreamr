@@ -1,5 +1,4 @@
-﻿Imports System
-Imports System.Security.AccessControl
+﻿Imports System.IO
 Imports Microsoft.Web.FtpServer
 
 
@@ -8,33 +7,22 @@ Public Class FtpHomeDirectoryProvider
     Implements IFtpHomeDirectoryProvider
 
     Function IFtpHomeDirectoryProvider_GetUserHomeDirectoryData(ByVal sessionId As String, ByVal siteName As String, ByVal userName As String) As String Implements IFtpHomeDirectoryProvider.GetUserHomeDirectoryData
-        Const errorString As String = "!ERROR!:"
-
         'Create user directory if not exists
-        'Dim userNameWithoutMachineName = userName.Split("\"c)(1)
-        Dim userNameWithoutMachineName = userName
-        Dim IsError = userNameWithoutMachineName.StartsWith(errorString)
-        If IsError Then
-            userNameWithoutMachineName = userNameWithoutMachineName.Replace(errorString, "")
-        End If
 
-        Dim path = "C:\CustomerFtpFiles\" + userNameWithoutMachineName
+        Dim path = "C:\CustomerFtpFiles\" + userName
         CreateDirectoryStructureIfNotExists(path)
 
-        If IsError Then
-            Return path + "\error"
-        End If
         Return path
     End Function
 
     Private Sub CreateDirectoryStructureIfNotExists(ByVal path As String)
-        If Not System.IO.Directory.Exists(path) Then
-            System.IO.Directory.CreateDirectory(path)
-            System.IO.Directory.CreateDirectory(path + "\incoming")
-            System.IO.Directory.CreateDirectory(path + "\outgoing")
-            System.IO.Directory.CreateDirectory(path + "\error")
-            System.IO.Directory.CreateDirectory(path + "\error\incoming")
-            System.IO.Directory.CreateDirectory(path + "\error\outgoing")
+        If Not Directory.Exists(path) Then
+            Directory.CreateDirectory(path)
+            Directory.CreateDirectory(path + "\incoming")
+            Directory.CreateDirectory(path + "\outgoing")
+            Directory.CreateDirectory(path + "\error")
+            Directory.CreateDirectory(path + "\error\incoming")
+            Directory.CreateDirectory(path + "\error\outgoing")
         End If
     End Sub
 End Class

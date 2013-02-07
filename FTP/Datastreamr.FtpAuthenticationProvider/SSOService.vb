@@ -5,8 +5,8 @@ Public Class SSOService
 
     Public Function CreateSession(userName As String, password As String) As Boolean
         Dim crypto As New Crypto
-        Dim passwordHash = crypto.ComputeMD5HashWithSecretSalt(password.ToLower())
-        Dim qs As String = String.Format("{0}|{1}", userName, passwordHash)
+        'Dim passwordHash = crypto.ComputeMD5HashWithSecretSalt(password.ToLower())
+        Dim qs As String = String.Format("{0}|{1}", userName, password)
 
         qs = crypto.EncryptData(qs)
         qs = HttpUtility.UrlEncode(qs)
