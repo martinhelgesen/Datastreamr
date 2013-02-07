@@ -18,7 +18,8 @@ Public Class SSOService
 
         If response.StatusCode = HttpStatusCode.OK Then
             Dim g = streamReader.ReadToEnd()
-            g = Web.HttpContext.Current.Server.UrlDecode(g)
+            g = HttpUtility.UrlDecode(g)
+            g = crypto.DecryptData(g)
             Dim guid = New Guid(g)
             Return True
         End If
