@@ -1,17 +1,18 @@
-﻿Namespace Interfaces
+﻿Namespace Interfaces 
 
-    Public Interface IInternalDatastream
-        Inherits IHasId
-        Function GetStream(ByVal params As StreamParams) As IEnumerable(Of Object)
-        'Function GetParams() As StreamParams
+    Public Interface IDatastream(Of TParams As {StreamParams})   
+        Function GetStream(ByVal params As TParams) As DataContainer
+        Function GetParams() As TParams
         ReadOnly Property Name() As String
         ReadOnly Property Description() As String
     End Interface
 
-    Public Interface IInternalDatastream(Of T, TParams As {StreamParams})
-        Inherits IInternalDatastream
-        Overloads Function GetStream(ByVal params As TParams) As IEnumerable(Of T)
-    End Interface
+
+    Public Class DataContainer
+        Property Data As Object
+        Property MetaData As Object
+    End Class
+
 End Namespace
 
 Public Class StreamParams
@@ -33,4 +34,12 @@ Public Class StreamParams
         End If
         Throw New ArgumentException("Required parameter value missing. Possible corrupt parameterclass", key)
     End Function
+End Class
+Public Class HRPersonStreamParams
+    Inherits StreamParams
+
+    Public Sub New()
+        Me.Add("p1", New ParamInfo)
+        Me.Add("p2", New ParamInfo)
+    End Sub
 End Class

@@ -21,12 +21,6 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Infotjenester.Hressurs.Prov
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FTP", "FTP", "{47B63367-9AE8-4CBB-9758-B18A4D9FAC45}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Datastreamr.FtpHomeDirectoryProvider", "FTP\Datastreamr.FtpHomeDirectoryProvider\Datastreamr.FtpHomeDirectoryProvider.vbproj", "{BBEA02F2-2296-466F-B030-2382ECB5245E}"
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Datastreamr.FtpHomeDirectoryProvider.Test", "FTP\Datastreamr.FtpHomeDirectoryProvider.Test\Datastreamr.FtpHomeDirectoryProvider.Test.vbproj", "{0FC3CB6C-5A63-4405-B6A9-2898BA245A8B}"
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Datastreamr.FtpAuthenticationProvider", "FTP\Datastreamr.FtpAuthenticationProvider\Datastreamr.FtpAuthenticationProvider.vbproj", "{21CE8B46-B253-47FE-9982-23C5A463FA9A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,18 +51,6 @@ Global
 		{17C1BC58-C5C4-4102-A88F-C2F5C568C1CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17C1BC58-C5C4-4102-A88F-C2F5C568C1CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17C1BC58-C5C4-4102-A88F-C2F5C568C1CF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BBEA02F2-2296-466F-B030-2382ECB5245E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BBEA02F2-2296-466F-B030-2382ECB5245E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BBEA02F2-2296-466F-B030-2382ECB5245E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BBEA02F2-2296-466F-B030-2382ECB5245E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0FC3CB6C-5A63-4405-B6A9-2898BA245A8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0FC3CB6C-5A63-4405-B6A9-2898BA245A8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0FC3CB6C-5A63-4405-B6A9-2898BA245A8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0FC3CB6C-5A63-4405-B6A9-2898BA245A8B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{21CE8B46-B253-47FE-9982-23C5A463FA9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{21CE8B46-B253-47FE-9982-23C5A463FA9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{21CE8B46-B253-47FE-9982-23C5A463FA9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{21CE8B46-B253-47FE-9982-23C5A463FA9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,8 +62,5 @@ Global
 		{E45F2BD7-20B8-4A1C-B5B6-7C4D33091F88} = {5D611A58-AEC0-45CE-8AAE-57E16FD31526}
 		{42C7E34E-614F-410D-B274-EDA3CB71AF22} = {5D611A58-AEC0-45CE-8AAE-57E16FD31526}
 		{17C1BC58-C5C4-4102-A88F-C2F5C568C1CF} = {64E7BF1D-9EB0-4711-9BF2-7D17A8A11DF1}
-		{BBEA02F2-2296-466F-B030-2382ECB5245E} = {47B63367-9AE8-4CBB-9758-B18A4D9FAC45}
-		{0FC3CB6C-5A63-4405-B6A9-2898BA245A8B} = {47B63367-9AE8-4CBB-9758-B18A4D9FAC45}
-		{21CE8B46-B253-47FE-9982-23C5A463FA9A} = {47B63367-9AE8-4CBB-9758-B18A4D9FAC45}
 	EndGlobalSection
 EndGlobal

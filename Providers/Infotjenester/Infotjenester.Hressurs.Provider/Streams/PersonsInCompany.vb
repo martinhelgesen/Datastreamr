@@ -4,7 +4,7 @@ Imports Infotjenester.Hressurs.Provider.PersonServiceReference
 
 Namespace Streams
     Public Class PersonsInCompany
-        Inherits InternalDatastream(Of Person, PersonsInCompanyParams)
+        Inherits Datastream(Of Person, PersonsInCompanyParams)
 
         Public Overrides Function GetParams() As PersonsInCompanyParams
             Return New PersonsInCompanyParams()

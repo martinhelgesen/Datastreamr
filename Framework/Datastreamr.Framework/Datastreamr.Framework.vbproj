@@ -97,32 +97,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseClasses\DatastreamrBaseAggregate.vb" />
-    <Compile Include="CustomerStreamResultDecorator.vb" />
-    <Compile Include="Entities\CustomerStream\CustomerStream.Aggregate.Partial.vb" />
-    <Compile Include="Entities\CustomerStream\CustomerStream.Aggregate.vb" />
-    <Compile Include="Entities\CustomerStream\CustomerStream.Entity.Partial.vb" />
-    <Compile Include="Entities\CustomerStream\CustomerStream.Entity.vb" />
-    <Compile Include="Entities\CustomerStream\DataAccess\CustomerStream.DataAccess.Partial.vb" />
-    <Compile Include="Entities\CustomerStream\DataAccess\CustomerStream.DataAccess.vb" />
-    <Compile Include="Entities\CustomerStream\DataAccess\ICustomerStream.DataAccess.vb" />
-    <Compile Include="Entities\Job\JobAggregate.Aggregate.Partial.vb" />
-    <Compile Include="Entities\Job\JobAggregate.Aggregate.vb" />
-    <Compile Include="Entities\Job\Job.Entity.Partial.vb" />
-    <Compile Include="Entities\Job\Job.Entity.vb" />
-    <Compile Include="Entities\Job\DataAccess\JobDataAccess.DataAccess.Partial.vb" />
-    <Compile Include="Entities\Job\DataAccess\JobDataAccess.DataAccess.vb" />
-    <Compile Include="Entities\Job\DataAccess\IJobDataAccess.DataAccess.vb" />
-    <Compile Include="Facade\CustomerStreamFacade.vb" />
     <Compile Include="Interfaces\IHasId.vb" />
-    <Compile Include="Interfaces\IInternalDatastream.vb" />
+    <Compile Include="Interfaces\IDatastream.vb" />
     <Compile Include="Interfaces\ITransformers.vb" />
-    <Compile Include="InternalDatastream.vb" />
+    <Compile Include="Datastream.vb" />
     <Compile Include="InternalDatastreamFacade.vb" />
-    <Compile Include="InternalStreams\EmployeesInCompany.vb" />
-    <Compile Include="Job.vb" />
+    <Compile Include="InternalStreams\FileStream.vb" />
     <Compile Include="ParamInfo.vb" />
     <Compile Include="PersonsTransformOptions.vb" />
-    <Compile Include="PluginManager.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -139,9 +121,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ProvidersFacade.vb" />
-    <Compile Include="TransformerFacade.vb" />
-    <Compile Include="Transformers\FlatfilEksportFormat.vb" />
-    <Compile Include="Transporters\BaseTransporter.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -164,7 +143,10 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Entities\" />
+    <Folder Include="Facade\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -5,5 +5,4 @@
     Property Description() As String
     Property DefaultValue As Object
     Property Required() As Boolean = False
-
 End Class
