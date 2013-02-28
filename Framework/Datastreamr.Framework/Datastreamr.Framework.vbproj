@@ -98,9 +98,9 @@
   <ItemGroup>
     <Compile Include="BaseClasses\DatastreamrBaseAggregate.vb" />
     <Compile Include="DatastreamrContext.vb" />
+    <Compile Include="Interfaces\DataContainer.vb" />
     <Compile Include="Interfaces\IHasId.vb" />
     <Compile Include="Interfaces\IDatastream.vb" />
-    <Compile Include="Interfaces\ITransformers.vb" />
     <Compile Include="Datastream.vb" />
     <Compile Include="InternalDatastreamFacade.vb" />
     <Compile Include="InternalStreams\FileStream.vb" />
@@ -121,7 +121,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="PropertyDesc.vb" />
     <Compile Include="ProvidersFacade.vb" />
+    <Compile Include="StreamParams.vb" />
     <Compile Include="User.vb" />
     <Compile Include="Utils\FileHelper.vb" />
     <Compile Include="Utils\StreamHelper.vb" />

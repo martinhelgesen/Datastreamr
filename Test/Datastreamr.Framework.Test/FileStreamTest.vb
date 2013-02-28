@@ -137,4 +137,8 @@ Imports Datastreamr.Framework.Utils
         Assert.That(False)
     End Sub
 
+    <Test> Public Sub FileStrea_Authentication()
+        Assert.That(False)
+    End Sub
+
 End Class
