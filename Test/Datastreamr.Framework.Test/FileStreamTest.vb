@@ -94,7 +94,7 @@ Imports Datastreamr.Framework.Utils
         'Assert
         Assert.That(data.MetaData.Count, [Is].EqualTo(14))
         Assert.IsTrue(data.MetaData(0).Name = "0")
-        Assert.AreEqual(114, data.Data.Count)
+        Assert.AreEqual(3, data.Data.Count)
         Assert.That(data.Data(0).ContainsKey("0"))
         Assert.That(data.Data(0)("0").ToString = "1962")
     End Sub
@@ -113,7 +113,7 @@ Imports Datastreamr.Framework.Utils
         'Assert
         Assert.That(data.MetaData.Count, [Is].EqualTo(14))
         Assert.That(data.MetaData(0).Name = "@EmployeeNumber")
-        Assert.AreEqual(114, data.Data.Count)
+        Assert.AreEqual(3, data.Data.Count)
         Assert.That(data.Data(0).ContainsKey("@EmployeeNumber"))
         Assert.That(data.Data(0)("@EmployeeNumber").ToString = "1962")
     End Sub

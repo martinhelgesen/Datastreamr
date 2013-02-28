@@ -8,12 +8,19 @@
     End Interface
 
 
-    Public Class DataContainer
-        Property Data As Object
-        Property MetaData As Object
-    End Class
-
 End Namespace
+
+Public Class DataContainer
+    Property Data As List(Of Dictionary(Of String, Object))
+    Property MetaData As List(Of PropertyDesc)
+End Class
+
+Public Class PropertyDesc
+    Property Name() As String
+    Property Type() As Type
+    Property Description() As String
+    Property MaxLength As String
+End Class
 
 Public Class StreamParams
     Inherits Dictionary(Of String, ParamInfo)

@@ -1,0 +1,4 @@
+@EmployeeNumber;@Name;@PersonalNo;@EMail;@Phone;@PhonePrivate;@PhoneMobile;@DepartmentNo;@AccountNo;@EmployeeCategoryName;@EmployeePositionName;@EmploymentStartDate;@EmploymentPercent;
+1962;SOLVANG TROND;09035948934;trond.solvang@olavthon.no;;;;23;23;Fast stilling;FAGKONSULENT (FORRETNINGSUTVIKLING)               ;01.04.2007;100;
+166;LINDVALL ANDERS;31077041772;anders.lindvall@thonhotels.no;;;;27;27;Fast stilling;DRIFTSDIREKTØR;05.08.2006;100;
+352;BLOMBERG-NYGÅRD ANITA;05107148894;anita.blomberg-nygard@thonhotels.no;;;;27;27;Fast stilling;REGIONSDIREKTØR;01.02.2010;100;
