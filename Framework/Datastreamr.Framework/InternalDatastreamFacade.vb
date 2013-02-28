@@ -1,6 +1,6 @@
 ﻿Imports Datastreamr.Framework.Interfaces
 
-Public Class InternalDatastreamFacade
-    Inherits ProvidersFacade(Of IDatastream)
+'Public Class InternalDatastreamFacade
+'    Inherits ProvidersFacade(Of IDatastream)
 
-End Class
+'End Class

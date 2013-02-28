@@ -1,6 +1,7 @@
 ﻿Imports System
 Imports System.Reflection
 Imports System.Runtime.InteropServices
+Imports System.Runtime.CompilerServices
 
 ' General Information about an assembly is controlled through the following 
 ' set of attributes. Change these attribute values to modify the information
@@ -33,3 +34,5 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")> 
 <Assembly: AssemblyFileVersion("1.0.0.0")> 
+<Assembly: InternalsVisibleTo("Datastreamr.Framework.Test")> 
+<Assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")> 

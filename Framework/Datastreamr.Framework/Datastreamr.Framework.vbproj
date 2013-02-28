@@ -97,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseClasses\DatastreamrBaseAggregate.vb" />
+    <Compile Include="DatastreamrContext.vb" />
     <Compile Include="Interfaces\IHasId.vb" />
     <Compile Include="Interfaces\IDatastream.vb" />
     <Compile Include="Interfaces\ITransformers.vb" />
@@ -121,6 +122,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ProvidersFacade.vb" />
+    <Compile Include="User.vb" />
+    <Compile Include="Utils\FileHelper.vb" />
+    <Compile Include="Utils\StreamHelper.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
