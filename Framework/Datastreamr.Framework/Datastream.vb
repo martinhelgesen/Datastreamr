@@ -1,4 +1,4 @@
-﻿Imports Datastreamr.Framework.Interfaces
+﻿
 
 'Public MustInherit Class Datastream(Of TParams As {StreamParams})
 '    Implements IDatastream(Of TParams)

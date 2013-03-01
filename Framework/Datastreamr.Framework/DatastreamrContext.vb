@@ -7,7 +7,7 @@ Public Class DatastreamrContext
     Public Shared Property Current As DatastreamrContext
         Get
             If ResponseThread.ThreadHasKey(_datastreamrcontextSlotName) Then
-                Return ResponseThread.GetThreadValue(Of DatastreamrContext)(_datastreamrcontextSlotName)
+                Return ResponseThread.GetThreadValue (Of DatastreamrContext)(_datastreamrcontextSlotName)
             End If
             Throw New NotImplementedException
         End Get
@@ -17,7 +17,7 @@ Public Class DatastreamrContext
     End Property
 
     Public Sub New()
-        DatastreamrContext.Current = Me
+        Current = Me
     End Sub
 
     Public Property CurrentUser() As User

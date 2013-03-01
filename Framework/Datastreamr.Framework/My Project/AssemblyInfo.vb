@@ -1,5 +1,4 @@
-﻿Imports System
-Imports System.Reflection
+﻿Imports System.Reflection
 Imports System.Runtime.InteropServices
 Imports System.Runtime.CompilerServices
 
@@ -9,17 +8,17 @@ Imports System.Runtime.CompilerServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Datastreamr.Framework")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("Datastreamr.Framework")> 
-<Assembly: AssemblyCopyright("Copyright ©  2013")> 
-<Assembly: AssemblyTrademark("")> 
+<Assembly: AssemblyTitle("Datastreamr.Framework")>
+<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyProduct("Datastreamr.Framework")>
+<Assembly: AssemblyCopyright("Copyright ©  2013")>
+<Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("63c9344e-1e1e-44df-8fba-cfb0bdb4bf88")> 
+<Assembly: Guid("63c9344e-1e1e-44df-8fba-cfb0bdb4bf88")>
 
 ' Version information for an assembly consists of the following four values:
 '
@@ -32,7 +31,7 @@ Imports System.Runtime.CompilerServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("1.0.0.0")> 
-<Assembly: InternalsVisibleTo("Datastreamr.Framework.Test")> 
-<Assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")> 
+<Assembly: AssemblyVersion("1.0.0.0")>
+<Assembly: AssemblyFileVersion("1.0.0.0")>
+<Assembly: InternalsVisibleTo("Datastreamr.Framework.Test")>
+<Assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")>

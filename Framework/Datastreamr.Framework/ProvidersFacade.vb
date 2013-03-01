@@ -1,7 +1,8 @@
 ﻿Imports Datastreamr.Framework.Interfaces
+Imports LazyFramework
 
-Public MustInherit Class ProvidersFacade(Of T As IHasId)
-    
+Public MustInherit Class ProvidersFacade (Of T As IHasId)
+
     Private Shared _providers As Dictionary(Of Integer, T) = Nothing
     Private Shared PadLock As New Object
 
@@ -12,7 +13,7 @@ Public MustInherit Class ProvidersFacade(Of T As IHasId)
                     If _providers Is Nothing Then
                         Dim temp = New Dictionary(Of Integer, T)
 
-                        For Each t In LazyFramework.TypeValidation.FindAllClassesOfTypeInApplication(GetType(T))
+                        For Each t In TypeValidation.FindAllClassesOfTypeInApplication(GetType(T))
                             Dim t2 As T = CType(Activator.CreateInstance(t), T)
                             temp.Add(t2.Id, t2)
                         Next

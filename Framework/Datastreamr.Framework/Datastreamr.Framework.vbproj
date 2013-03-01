@@ -20,6 +20,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>Datastreamr.Framework.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -49,6 +50,13 @@
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Noesis.Javascript" Condition="'$(PlatformTarget)' != 'x86'">
+      <HintPath>..\..\packages\Noesis.Javascript.0.7.1.0\lib\net40\amd64\Noesis.Javascript.dll</HintPath>
+    </Reference>
+    <Reference Include="Noesis.Javascript, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Noesis.Javascript.0.7.1.0\lib\net40\x86\Noesis.Javascript.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Abstractions">
       <HintPath>..\..\packages\RavenDB.Client.2.0.2230\lib\net40\Raven.Abstractions.dll</HintPath>
@@ -97,13 +105,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseClasses\DatastreamrBaseAggregate.vb" />
+    <Compile Include="BaseEndpointParams.vb" />
     <Compile Include="DatastreamrContext.vb" />
+    <Compile Include="EndPointResult.vb" />
+    <Compile Include="Entities\IJobEntityDataAcces.vb" />
+    <Compile Include="Entities\JobAggregate.vb" />
+    <Compile Include="Entities\JobEntityDataAcces.vb" />
+    <Compile Include="Facade\JobFacade.vb" />
     <Compile Include="Interfaces\DataContainer.vb" />
+    <Compile Include="Interfaces\IEndpoint.vb" />
     <Compile Include="Interfaces\IHasId.vb" />
     <Compile Include="Interfaces\IDatastream.vb" />
     <Compile Include="Datastream.vb" />
     <Compile Include="InternalDatastreamFacade.vb" />
     <Compile Include="InternalStreams\FileStream.vb" />
+    <Compile Include="Entities\JobEntity.vb" />
+    <Compile Include="JobExecutor.vb" />
+    <Compile Include="MapInfo.vb" />
+    <Compile Include="Mapper.vb" />
     <Compile Include="ParamInfo.vb" />
     <Compile Include="PersonsTransformOptions.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -149,11 +168,15 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entities\" />
-    <Folder Include="Facade\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
+    xcopy /s /y "$(SolutionDir)packages\Noesis.Javascript.0.7.1.0\NativeBinaries\net40\x86\*.*" "$(TargetDir)x86"
+    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
+    xcopy /s /y "$(SolutionDir)packages\Noesis.Javascript.0.7.1.0\NativeBinaries\net40\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

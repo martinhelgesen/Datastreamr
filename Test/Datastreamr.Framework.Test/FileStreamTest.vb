@@ -12,13 +12,10 @@ Imports Datastreamr.Framework.Utils
 
     <SetUp> Public Sub Setup()
         _sessionInstance = New LazyFramework.ClassFactory.SessionInstance
-        'LazyFramework.ClassFactory.SetTypeInstanceForSession(Of IDatastrea)()
         LazyFramework.Utils.ResponseThread.SetThreadValue(_datastreamrcontextSlotName, New DatastreamrContext With {.CurrentUser = New User With {.Username = "testuser", .Password = "testpwd", .FTPRootCatalog = "C:\FTP"}})
     End Sub
     <TearDown> Public Sub TearDown()
         _sessionInstance = Nothing
-        'LazyFramework.Utils.ResponseThread.SetThreadValue(_datastreamrcontextSlotName, Nothing)
-        'LazyFramework.Utils.ResponseThread.SetThreadValue(_filehelpercontextSlotName, Nothing)
     End Sub
 
     <Test> Public Sub InitialFileStreamParamsValues()
@@ -92,7 +89,7 @@ Imports Datastreamr.Framework.Utils
         Dim data = fs.GetStream(New FtpFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = False})
 
         'Assert
-        Assert.That(data.MetaData.Count, [Is].EqualTo(14))
+        Assert.That(data.MetaData.Count = 14)
         Assert.IsTrue(data.MetaData(0).Name = "0")
         Assert.AreEqual(3, data.Data.Count)
         Assert.That(data.Data(0).ContainsKey("0"))

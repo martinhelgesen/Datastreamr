@@ -73,6 +73,8 @@
   <ItemGroup>
     <Compile Include="DatastreamrContextTest.vb" />
     <Compile Include="FileStreamTest.vb" />
+    <Compile Include="JobTest.vb" />
+    <Compile Include="MapInfoTest.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

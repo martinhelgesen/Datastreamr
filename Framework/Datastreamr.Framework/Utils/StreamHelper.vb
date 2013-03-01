@@ -1,9 +1,7 @@
 ﻿Imports System.IO
 
 Namespace Utils
-
     Public Class StreamHelper
-
         Public Shared Function GenerateStreamFromString(s As String) As Stream
             Dim stream As New MemoryStream()
             Dim writer As New StreamWriter(stream)
