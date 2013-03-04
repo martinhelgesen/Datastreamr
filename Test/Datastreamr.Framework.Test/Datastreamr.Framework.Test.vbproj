@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="DatastreamrContextTest.vb" />
     <Compile Include="FileStreamTest.vb" />
+    <Compile Include="JobExecutorTest.vb" />
     <Compile Include="JobTest.vb" />
     <Compile Include="MapInfoTest.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

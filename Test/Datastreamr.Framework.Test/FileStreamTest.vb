@@ -8,11 +8,13 @@ Imports Datastreamr.Framework.Utils
 
 <TestFixture> Public Class FileStreamTest
     Private _sessionInstance As ClassFactory.SessionInstance
-    Private Const _datastreamrcontextSlotName As String = "DatastreamrContext"
 
     <SetUp> Public Sub Setup()
         _sessionInstance = New LazyFramework.ClassFactory.SessionInstance
-        LazyFramework.Utils.ResponseThread.SetThreadValue(_datastreamrcontextSlotName, New DatastreamrContext With {.CurrentUser = New User With {.Username = "testuser", .Password = "testpwd", .FTPRootCatalog = "C:\FTP"}})
+
+        Dim contextMock = Substitute.For(Of IDatastreamrContext)()
+        contextMock.CurrentUser.ReturnsForAnyArgs(Function(p) New User With {.Username = "testuser", .Password = "testpwd", .FTPRootCatalog = "C:\FTP"})
+        ClassFactory.SetTypeInstanceForSession(Of IDatastreamrContext)(contextMock)
     End Sub
     <TearDown> Public Sub TearDown()
         _sessionInstance = Nothing
@@ -21,7 +23,7 @@ Imports Datastreamr.Framework.Utils
     <Test> Public Sub InitialFileStreamParamsValues()
         'Act
         Dim fs As New InternalStreams.FtpFileStream
-        Dim params = fs.GetParams
+        Dim params = FtpFileStream.GetParams
         Assert.IsTrue(FileStreamParamsHasDefaultValues(params))
     End Sub
 

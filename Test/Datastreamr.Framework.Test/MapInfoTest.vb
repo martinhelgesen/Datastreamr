@@ -29,6 +29,7 @@
         Assert.AreEqual(1, newData(0)("AA"))
         Assert.AreEqual(2, newData(0)("BB"))
     End Sub
+
     <Test> Public Sub Mapping_WithRules()
         'Arrange
         Dim container As New DataContainer With {

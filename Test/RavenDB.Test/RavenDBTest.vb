@@ -1,5 +1,4 @@
-﻿Imports Datastreamr.Framework.Entities.CustomerStream
-Imports Raven.Abstractions.Logging
+﻿Imports Raven.Abstractions.Logging
 Imports Raven.Client
 Imports Raven.Client.Listeners
 Imports Raven.Client.Embedded

@@ -1,17 +1,21 @@
 ﻿Imports Datastreamr.Framework
 Imports Infotjenester.Hressurs.Provider.Endpoints
 Imports LazyFramework
+Imports NSubstitute
 Imports NUnit.Framework
 Imports LazyFramework.Utils
+Imports Infotjenester.Hressurs.Provider.PersonServiceReference
 
 <testfixture> Public Class HRPersonEndPointTest
 
     Private _sessionInstance As ClassFactory.SessionInstance
-    Private Const _datastreamrcontextSlotName As String = "DatastreamrContext"
 
     <SetUp> Public Sub Setup()
         _sessionInstance = New ClassFactory.SessionInstance
-        ResponseThread.SetThreadValue(_datastreamrcontextSlotName, New DatastreamrContext With {.CurrentUser = New User With {.Username = "testuser", .Password = "testpwd", .FTPRootCatalog = "C:\FTP"}})
+        Dim contextMock = Substitute.For(Of IDatastreamrContext)()
+        contextMock.CurrentUser.ReturnsForAnyArgs(Function(p) New User With {.Username = "testuser", .Password = "testpwd", .FTPRootCatalog = "C:\FTP"})
+        ClassFactory.SetTypeInstanceForSession(Of IDatastreamrContext)(contextMock)
+
     End Sub
     <TearDown> Public Sub TearDown()
         _sessionInstance = Nothing
@@ -27,13 +31,48 @@ Imports LazyFramework.Utils
         Dim params = endpoint.GetParams
         Assert.That(HRPersonParamsHasDefaultValues(params))
     End Sub
-    <Test> Public Sub HRPersonEndpoint_DictionaryMapsCorrectToHRPerson()
+
+    <Test> Public Sub HRPersonEndpoint_Deliver_CallsServiceProxy()
+        'Arrange
+        Dim hrmock = Substitute.For(Of IPerson)()
+        ClassFactory.SetTypeInstanceForSession(Of IPerson)(hrmock)
+
+        'Act
         Dim endpoint As New HRPersonEndpoint
         Dim sourcedata = New DataContainer With {.Data = New List(Of Dictionary(Of String, Object))}
         Dim params = endpoint.GetParams
-        'Dim result = endpoint.Deliver(params, sourcedata)
-        Assert.AreEqual(1, 2)
+        params.PersonIdentifier = CType([Enum].Parse(GetType(PersonIdentifierType), "EmployeeNumber", True), PersonIdentifierType?)
+        params.UnitIdentifier = CType([Enum].Parse(GetType(UnitIdentifierType), "DepartmentCode", True), UnitIdentifierType?)
+
+        'Assert
+        Dim result = endpoint.Deliver(params, sourcedata)
+        hrmock.Received.Import(Arg.Any(Of ImportRequest))
     End Sub
+
+    <Test> Public Sub HRPersonEndpoint_Deliver_MapsCorrectlyToHRPerson()
+        'Arrange
+        Dim hrmock = Substitute.For(Of IPerson)()
+        ClassFactory.SetTypeInstanceForSession(Of IPerson)(hrmock)
+
+        'Act
+        Dim endpoint As New HRPersonEndpoint
+        Dim sourcedata = StubSourceData()
+        Dim params = endpoint.GetParams
+        params.PersonIdentifier = CType([Enum].Parse(GetType(PersonIdentifierType), "EmployeeNumber", True), PersonIdentifierType?)
+        params.UnitIdentifier = CType([Enum].Parse(GetType(UnitIdentifierType), "DepartmentCode", True), UnitIdentifierType?)
+
+        'Assert
+        Dim result = endpoint.Deliver(params, sourcedata)
+        hrmock.Received.Import(Arg.Any(Of ImportRequest))
+    End Sub
+
+    Private Function StubSourceData() As DataContainer
+        Dim dc As New DataContainer
+        dc.Data = New List(Of Dictionary(Of String, Object))
+        Dim dic = New Dictionary(Of String, Object)
+        dc.Data.Add(dic)
+        Return dc
+    End Function
 
 
     Private Function HRPersonParamsHasDefaultValues(ByVal params As HRPersonParams) As Boolean
