@@ -34,8 +34,8 @@ Imports Infotjenester.Hressurs.Provider.PersonServiceReference
 
     <Test> Public Sub HRPersonEndpoint_Deliver_CallsServiceProxy()
         'Arrange
-        Dim hrmock = Substitute.For(Of IPerson)()
-        ClassFactory.SetTypeInstanceForSession(Of IPerson)(hrmock)
+        Dim hrProxyMock = Substitute.For(Of IPerson)()
+        ClassFactory.SetTypeInstanceForSession(Of IPerson)(hrProxyMock)
 
         'Act
         Dim endpoint As New HRPersonEndpoint
@@ -46,13 +46,13 @@ Imports Infotjenester.Hressurs.Provider.PersonServiceReference
 
         'Assert
         Dim result = endpoint.Deliver(params, sourcedata)
-        hrmock.Received.Import(Arg.Any(Of ImportRequest))
+        hrProxyMock.Received.Import(Arg.Any(Of ImportRequest))
     End Sub
 
     <Test> Public Sub HRPersonEndpoint_Deliver_MapsCorrectlyToHRPerson()
         'Arrange
-        Dim hrmock = Substitute.For(Of IPerson)()
-        ClassFactory.SetTypeInstanceForSession(Of IPerson)(hrmock)
+        Dim hrProxyMock = Substitute.For(Of IPerson)()
+        ClassFactory.SetTypeInstanceForSession(Of IPerson)(hrProxyMock)
 
         'Act
         Dim endpoint As New HRPersonEndpoint
@@ -63,13 +63,22 @@ Imports Infotjenester.Hressurs.Provider.PersonServiceReference
 
         'Assert
         Dim result = endpoint.Deliver(params, sourcedata)
-        hrmock.Received.Import(Arg.Any(Of ImportRequest))
+        hrProxyMock.Received.Import(Arg.Is(Of ImportRequest)(Function(p) ValidateReceivedPersons(p).All(Function(b) b = True)))
     End Sub
+
+
+    Private Iterator Function ValidateReceivedPersons(ByVal importRequest As ImportRequest) As IEnumerable(Of Boolean)
+        Dim persons = importRequest.messageRequest.Persons
+        Yield persons.Length = 1
+        Yield persons(0).FirstName = "Martin" AndAlso persons(0).LastName = "Helgesen"
+    End Function
 
     Private Function StubSourceData() As DataContainer
         Dim dc As New DataContainer
         dc.Data = New List(Of Dictionary(Of String, Object))
-        Dim dic = New Dictionary(Of String, Object)
+        Dim dic = New Dictionary(Of String, Object) From {{"FirstName", "Martin"},
+                                                          {"LastName", "Helgesen"}
+                                                         }
         dc.Data.Add(dic)
         Return dc
     End Function

@@ -3,6 +3,7 @@
     Property Type() As Type
     Property Value() As Object
     Property Description() As String
+    Property MaxLength() As String
     Property DefaultValue As Object
     Property Required() As Boolean = False
 End Class

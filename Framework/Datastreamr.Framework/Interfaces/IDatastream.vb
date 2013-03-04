@@ -5,6 +5,7 @@
     End Interface
 
     Public Interface IDatastream
+        Function InternalGetStream(ByVal params As StreamParams) As DataContainer
         ReadOnly Property Name() As String
         ReadOnly Property Description() As String
     End Interface

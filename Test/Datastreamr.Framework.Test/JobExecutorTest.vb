@@ -8,11 +8,12 @@ Imports Datastreamr.Framework.Utils
 <testfixture> Public Class JobExecutorTest
 
     Private _sessionInstance As ClassFactory.SessionInstance
-    'Private Const _datastreamrcontextSlotName As String = "DatastreamrContext"
 
     <SetUp> Public Sub Setup()
         _sessionInstance = New ClassFactory.SessionInstance
-        'LazyFramework.Utils.ResponseThread.SetThreadValue(_datastreamrcontextSlotName, New DatastreamrContext With {.CurrentUser = New User With {.Username = "testuser", .Password = "testpwd", .FTPRootCatalog = "C:\FTP"}})
+        Dim contextMock = Substitute.For(Of IDatastreamrContext)()
+        contextMock.CurrentUser.ReturnsForAnyArgs(Function(p) New User With {.Username = "testuser", .Password = "testpwd", .FTPRootCatalog = "C:\FTP"})
+        ClassFactory.SetTypeInstanceForSession(Of IDatastreamrContext)(contextMock)
     End Sub
     <TearDown> Public Sub TearDown()
         _sessionInstance = Nothing
@@ -36,16 +37,16 @@ Imports Datastreamr.Framework.Utils
         ClassFactory.SetTypeInstanceForSession(Of IFileHelper)(filehelper)
 
         'Act
-        Dim fs As New FtpFileStream
-        Dim data = fs.GetStream(New FtpFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = False})
+        'Dim fs As New FtpFileStream
+        'Dim data = fs.GetStream(New FtpFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = False})
 
         'Act
         Dim job = Facade.JobFacade.GetJob(1)
-        Dim jobExecutor = New JobExecutor(job)
+        Dim JobExecutor = New JobExecutor(job)
         Dim result = jobExecutor.Start()
 
         'Assert
-
+        Assert.That(False)
     End Sub
 
 End Class

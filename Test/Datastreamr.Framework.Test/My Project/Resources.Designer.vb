@@ -71,10 +71,20 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to @EmployeeNumber;@Name;@PersonalNo;@EMail;@Phone;@PhonePrivate;@PhoneMobile;@DepartmentNo;@AccountNo;@EmployeeCategoryName;@EmployeePositionName;@EmploymentStartDate;@EmploymentPercent;@EmploymentEndDate;
-        '''1962;SOLVANG TROND;09035948934;trond.solvang@olavthon.no;;;;23;23;Fast stilling;FAGKONSULENT (FORRETNINGSUTVIKLING)               ;01.04.2007;100;
-        '''166;LINDVALL ANDERS;31077041772;anders.lindvall@thonhotels.no;;;;27;27;Fast stilling;DRIFTSDIREKTØR;05.08.2006;100;
-        '''352;BLOMBERG-NYGÅRD ANITA;05107148894;anit [rest of string was truncated]&quot;;.
+        '''  Looks up a localized string similar to Identifier;FirstName;MiddleName;LastName;ShortName;Gender;BirthDate;EmployeeNo;PersonalNo;Email;Street1;Street2;PostNo;Postarea;Phone;PhonePrivate;Mobile;Fax;BankAccount1;BankAccount2;DepartmentName;DepartmentNumber;SetAsLeader;EmployeeCategory;EmployeePosition;Nationality;NextOfKind;NextOfKindPhone;EmploymentStartDate;EmploymentPercent;EmploymentEndDate;IsActive;NearestLeaderIdentifier;
+        '''1;Martin;;Helgesen;;1;24.08.1980;123;24088047326;mhe@infotjenester.no;Dronningensgate 82;;1723;Sarpsborg;;;97125917;;163 [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property HRPerson() As String
+            Get
+                Return ResourceManager.GetString("HRPerson", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to @EmployeeNumber;@Name;@PersonalNo;@EMail;@Phone;@PhonePrivate;@PhoneMobile;@DepartmentNo;@AccountNo;@EmployeeCategoryName;@EmployeePositionName;@EmploymentStartDate;@EmploymentPercent;
+        '''1962;TESTPERSON 1;24088047326;test1@test.no;;;;23;23;Fast stilling;FAGKONSULENT (FORRETNINGSUTVIKLING)               ;01.04.2007;100;
+        '''166;TESTPERSON 2;24088047326;test2@test.no;;;;27;27;Fast stilling;DRIFTSDIREKTØR;05.08.2006;100;
+        '''352;TESTPERSON 3;2408804732;test3@test.no;;;;27;27;Fast stilling;REGIONSDIREKTØR;01.02.2010;1 [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property Semicolon_Header() As String
             Get
@@ -83,10 +93,9 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to 1962;SOLVANG TROND;09035948934;trond.solvang@olavthon.no;;;;23;23;Fast stilling;FAGKONSULENT (FORRETNINGSUTVIKLING)               ;01.04.2007;100;
-        '''166;LINDVALL ANDERS;31077041772;anders.lindvall@thonhotels.no;;;;27;27;Fast stilling;DRIFTSDIREKTØR;05.08.2006;100;
-        '''352;BLOMBERG-NYGÅRD ANITA;05107148894;anita.blomberg-nygard@thonhotels.no;;;;27;27;Fast stilling;REGIONSDIREKTØR;01.02.2010;100;
-        '''270;THOR ANNA;26047422891;annathor@thonhotels.no;23080178;;;33;27;Fast stilling;BOOKING &amp; DISTR.KONSULENT;23.02.2000; [rest of string was truncated]&quot;;.
+        '''  Looks up a localized string similar to 1962;TESTPERSON 1;24088047326;test1@test.no;;;;23;23;Fast stilling;FAGKONSULENT (FORRETNINGSUTVIKLING)               ;01.04.2007;100;
+        '''166;TESTPERSON 2;24088047326;test2@test.no;;;;27;27;Fast stilling;DRIFTSDIREKTØR;05.08.2006;100;
+        '''352;TESTPERSON 3;2408804732;test3@test.no;;;;27;27;Fast stilling;REGIONSDIREKTØR;01.02.2010;100;.
         '''</summary>
         Friend ReadOnly Property Semicolon_NoHeader() As String
             Get

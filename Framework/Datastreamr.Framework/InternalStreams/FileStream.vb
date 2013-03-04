@@ -168,6 +168,7 @@ Namespace InternalStreams
     Public MustInherit Class BaseDataStream (Of TParams As {New, StreamParams})
         Implements IDatastream(Of TParams)
 
+
         Public MustOverride ReadOnly Property Description As String Implements IDatastream(Of TParams).Description
         Public MustOverride ReadOnly Property Name As String Implements IDatastream(Of TParams).Name
         Protected Friend MustOverride Function GetStreamInternal(ByVal params As TParams) As DataContainer
@@ -181,6 +182,10 @@ Namespace InternalStreams
                 params = New TParams()
             End If
             Return GetStreamInternal(params)
+        End Function
+
+        Public Function InternalGetStream(params As StreamParams) As DataContainer Implements IDatastream.InternalGetStream
+            Return GetStream(CType(params, TParams))
         End Function
     End Class
 End Namespace

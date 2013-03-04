@@ -1,6 +1,8 @@
 ﻿Public Class JobExecutor
-    Public Sub New(j As JobEntity)
-        Dim ds = j.DataStream
+    Private ReadOnly _job As JobEntity
+
+    Public Sub New(job As JobEntity)
+        _job = job
         ValidateJob()
     End Sub
 
@@ -9,7 +11,7 @@
     End Sub
 
     Public Function Start() As JobResult
-
+        'Dim datacontainer = _job.DataStream.InternalGetStream(DeSerialize(_job.DataStreamParams))
     End Function
 End Class
 
