@@ -1,6 +1,5 @@
 ﻿Imports Datastreamr.Framework.Utils
 Imports System.IO
-Imports Datastreamr.Framework.Interfaces
 Imports LazyFramework
 Imports System.Text.RegularExpressions
 
@@ -8,7 +7,7 @@ Namespace InternalStreams
     Public Class FtpFileStream
         Inherits BaseDataStream(Of FtpFileStreamParams)
 
-        Private _fileHelper As IFileHelper = ClassFactory.GetTypeInstance (Of IFileHelper, FileHelperInternal)()
+        Private _fileHelper As IFileHelper = ClassFactory.GetTypeInstance(Of IFileHelper, FileHelperInternal)()
 
         Public Overrides ReadOnly Property Description As String
             Get
@@ -16,11 +15,12 @@ Namespace InternalStreams
             End Get
         End Property
 
-        Protected Friend Overrides Function GetStreamInternal(params As FtpFileStreamParams) As DataContainer
+        Public Overrides Function GetStreamInternal(params As StreamParams) As DataContainer
+            Dim p = New FtpFileStreamParams(params)
             Dim currentUser = DatastreamrContext.Current.CurrentUser
             Dim rootCat = currentUser.FTPRootCatalog + "\incoming\"
-            Dim sr = FindFile(rootCat, params.FilenameMatch)
-            Return ConvertToDataContainer(sr, params)
+            Dim sr = FindFile(rootCat, p.FilenameMatch)
+            Return ConvertToDataContainer(sr, p)
         End Function
 
         Private Function ConvertToDataContainer(ByVal streamReader As StreamReader, ByVal params As FtpFileStreamParams) _
@@ -103,6 +103,17 @@ Namespace InternalStreams
     Public Class FtpFileStreamParams
         Inherits StreamParams
 
+        Public Sub New(params As StreamParams)
+            Me.New()
+            For Each p In params
+                If Not Me.ContainsKey(p.Key) Then
+                    Add(p.Key, p.Value)
+                Else
+                    Me(p.Key) = p.Value
+                End If
+            Next
+        End Sub
+
         Public Sub New()
             Add("FilenameMatch",
                 New ParamInfo _
@@ -163,29 +174,5 @@ Namespace InternalStreams
                 Me("FixedPositionDescriptor").Value = value
             End Set
         End Property
-    End Class
-
-    Public MustInherit Class BaseDataStream (Of TParams As {New, StreamParams})
-        Implements IDatastream(Of TParams)
-
-
-        Public MustOverride ReadOnly Property Description As String Implements IDatastream(Of TParams).Description
-        Public MustOverride ReadOnly Property Name As String Implements IDatastream(Of TParams).Name
-        Protected Friend MustOverride Function GetStreamInternal(ByVal params As TParams) As DataContainer
-
-        Public Shared Function GetParams() As TParams
-            Return New TParams
-        End Function
-
-        Public Function GetStream(params As TParams) As DataContainer Implements IDatastream(Of TParams).GetStream
-            If params Is Nothing Then
-                params = New TParams()
-            End If
-            Return GetStreamInternal(params)
-        End Function
-
-        Public Function InternalGetStream(params As StreamParams) As DataContainer Implements IDatastream.InternalGetStream
-            Return GetStream(CType(params, TParams))
-        End Function
     End Class
 End Namespace

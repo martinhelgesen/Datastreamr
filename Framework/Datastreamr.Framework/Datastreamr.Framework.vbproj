@@ -115,6 +115,7 @@
     <Compile Include="Interfaces\IDatastream.vb" />
     <Compile Include="Datastream.vb" />
     <Compile Include="InternalDatastreamFacade.vb" />
+    <Compile Include="InternalStreams\BaseDataStream.vb" />
     <Compile Include="InternalStreams\FileStream.vb" />
     <Compile Include="Entities\JobEntity.vb" />
     <Compile Include="JobExecutor.vb" />

@@ -39,7 +39,7 @@ Imports Infotjenester.Hressurs.Provider.PersonServiceReference
 
         'Act
         Dim endpoint As New HRPersonEndpoint
-        Dim sourcedata = New DataContainer With {.Data = New List(Of Dictionary(Of String, Object))}
+        Dim sourcedata = New DataContainer
         Dim params = endpoint.GetParams
         params.PersonIdentifier = CType([Enum].Parse(GetType(PersonIdentifierType), "EmployeeNumber", True), PersonIdentifierType?)
         params.UnitIdentifier = CType([Enum].Parse(GetType(UnitIdentifierType), "DepartmentCode", True), UnitIdentifierType?)

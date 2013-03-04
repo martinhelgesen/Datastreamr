@@ -10,10 +10,17 @@
         'Throw New NotImplementedException()
     End Sub
 
-    Public Function Start() As JobResult
-        'Dim datacontainer = _job.DataStream.InternalGetStream(DeSerialize(_job.DataStreamParams))
+    Public Function Execute() As JobResult
+        Dim datacontainer = _job.DataStream.GetStreamInternal(_job.DataStreamParams)
+        Dim endpoint = _job.Endpoint
+
+        Dim mapresult = Mapper.Map(datacontainer, _job.Mapconfig)
+        Dim endpointResult = endpoint.InternalDeliver(_job.EndpointParams, mapresult)
+        Return New JobResult With {.EndpointResult = endpointResult, .MapResult = mapresult}
     End Function
 End Class
 
 Public Class JobResult
+    Property EndpointResult As EndPointResult
+    Property MapResult As DataContainer
 End Class

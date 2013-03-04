@@ -24,8 +24,10 @@ Imports Datastreamr.Framework.Utils
         Dim jobmock = NSubstitute.Substitute.For(Of IJobEntityDataAcces)()
         jobmock.WhenForAnyArgs(Sub(p) p.GetInstance(1, Nothing)).Do(Sub(p)
                                                                         Dim j = CType(p(1), JobEntity)
-                                                                        j.DataStreamTypeName = GetType(InternalStreams.FtpFileStream).AssemblyQualifiedName                                                                        
+                                                                        j.DataStreamTypeName = GetType(InternalStreams.FtpFileStream).AssemblyQualifiedName
                                                                         j.EndpointTypeName = GetType(Infotjenester.Hressurs.Provider.Endpoints.HRPersonEndpoint).AssemblyQualifiedName
+                                                                        j.DataStreamParamsSerialized = "{""ValueSeparator"":{""Name"":""ValueSeparator"",""Type"":""System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"",""Value"":"";"",""Description"":""ValueSeparator of file"",""MaxLength"":null,""DefaultValue"":null,""Required"":false}}"
+                                                                        j.EndpointParamsSerialized = "{UserName:'Knut',password:'But'}"
                                                                     End Sub)
 
         ClassFactory.SetTypeInstanceForSession(Of IJobEntityDataAcces)(jobmock)
@@ -37,16 +39,21 @@ Imports Datastreamr.Framework.Utils
         ClassFactory.SetTypeInstanceForSession(Of IFileHelper)(filehelper)
 
         'Act
-        'Dim fs As New FtpFileStream
-        'Dim data = fs.GetStream(New FtpFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = False})
-
-        'Act
         Dim job = Facade.JobFacade.GetJob(1)
         Dim JobExecutor = New JobExecutor(job)
-        Dim result = jobExecutor.Start()
+        Dim result = jobExecutor.Execute()
 
         'Assert
         Assert.That(False)
+    End Sub
+
+    <Test> Public Sub JsonTest()
+
+        Dim param As New JobEntity With {.DataStreamParamsSerialized = "{""ValueSeparator"":{""Name"":""ValueSeparator"",""Type"":""System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"",""Value"":"";"",""Description"":""ValueSeparator of file"",""MaxLength"":null,""DefaultValue"":null,""Required"":false}}"}
+        Dim fp As New FtpFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = True, .FilenameMatch = "1"}
+        Dim s = Newtonsoft.Json.JsonConvert.SerializeObject(fp)
+        Assert.AreEqual(1, param.DataStreamParams.Count)
+
     End Sub
 
 End Class
