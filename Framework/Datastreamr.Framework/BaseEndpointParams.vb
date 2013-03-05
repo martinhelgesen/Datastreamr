@@ -9,6 +9,12 @@
                .Description = "The address to the endpoint"})
     End Sub
 
+
+    Public Sub New(streamParams As StreamParams)
+        MyBase.New(streamParams)
+    End Sub
+
+
     Property EndpointAddress As Boolean
         Get
             If Me("EndpointAddress").Value Is Nothing Then Return CType(Me("EndpointAddress").DefaultValue, Boolean)

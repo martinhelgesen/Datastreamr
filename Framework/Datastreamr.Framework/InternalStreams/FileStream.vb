@@ -103,17 +103,6 @@ Namespace InternalStreams
     Public Class FtpFileStreamParams
         Inherits StreamParams
 
-        Public Sub New(params As StreamParams)
-            Me.New()
-            For Each p In params
-                If Not Me.ContainsKey(p.Key) Then
-                    Add(p.Key, p.Value)
-                Else
-                    Me(p.Key) = p.Value
-                End If
-            Next
-        End Sub
-
         Public Sub New()
             Add("FilenameMatch",
                 New ParamInfo _
@@ -131,6 +120,10 @@ Namespace InternalStreams
                 New ParamInfo _
                    With {.Required = False, .Name = "FixedPositionDescriptor", .Type = GetType(String),
                    .Description = "Enter fixed position lengths here separated by comma"})
+        End Sub
+
+        Public Sub New(ByVal streamParams As StreamParams)
+            MyBase.New(streamParams)
         End Sub
 
         Public Property FilenameMatch() As String

@@ -67,8 +67,11 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Endpoints\BaseEndpoint.vb" />
     <Compile Include="Endpoints\HRPersonEndpoint.vb" />
     <Compile Include="Endpoints\HRPersonParams.vb" />
+    <Compile Include="Endpoints\PersonClientProxy.vb" />
+    <Compile Include="Endpoints\TypeSafeEndPoint.vb" />
     <Compile Include="HRPerson.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
