@@ -1,7 +1,7 @@
 ﻿Imports Datastreamr.Framework.Interfaces
-Imports Datastreamr.Framework
 
 Namespace Endpoints
+
     Public MustInherit Class BaseEndpoint(Of TParams As {New, StreamParams})
         Implements IEndpoint(Of TParams)
 
@@ -21,4 +21,4 @@ Namespace Endpoints
             Return Deliver(CType(p, TParams), data)
         End Function
     End Class
-End NameSpace
+End Namespace

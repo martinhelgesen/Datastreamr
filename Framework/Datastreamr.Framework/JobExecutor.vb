@@ -19,8 +19,3 @@
         Return New JobResult With {.EndpointResult = endpointResult, .MapResult = mapresult}
     End Function
 End Class
-
-Public Class JobResult
-    Property EndpointResult As EndPointResult
-    Property MapResult As DataContainer
-End Class

@@ -6,7 +6,7 @@
         'Arrange
         Dim container As New DataContainer With {
                                         .Data = New List(Of Dictionary(Of String, Object)),
-                                        .MetaData = New List(Of PropertyDesc)
+                                        .MetaData = New List(Of ParamInfo)
                                         }
         Dim dic = New Dictionary(Of String, Object) From {
                                         {"A", 1},
@@ -34,7 +34,7 @@
         'Arrange
         Dim container As New DataContainer With {
                                         .Data = New List(Of Dictionary(Of String, Object)),
-                                        .MetaData = New List(Of PropertyDesc)
+                                        .MetaData = New List(Of ParamInfo)
                                         }
         Dim dic = New Dictionary(Of String, Object) From {
                                         {"A", 1},

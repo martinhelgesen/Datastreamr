@@ -1,4 +1,5 @@
 ﻿Imports Datastreamr.Framework
+Imports Datastreamr.Framework.Endpoints
 
 Namespace Endpoints
     Public Class HRPersonParams

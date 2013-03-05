@@ -15,7 +15,7 @@ Public Class Mapper
     End Function
 
     Private Shared Function GetValue(ByVal dictionary As Dictionary(Of String, Object),
-                                     ByVal propertyDesc As List(Of PropertyDesc), ByVal mapInfo As MapInfo) As Object
+                                     ByVal propertyDesc As List(Of ParamInfo), ByVal mapInfo As MapInfo) As Object
         If Not dictionary.ContainsKey(mapInfo.FromName) Then
             Return Nothing
         End If

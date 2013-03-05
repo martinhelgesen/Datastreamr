@@ -1,4 +1,5 @@
 ﻿Imports Datastreamr.Framework
+Imports Datastreamr.Framework.Endpoints
 Imports LazyFramework
 Imports Infotjenester.Hressurs.Provider.PersonServiceReference
 
@@ -15,20 +16,13 @@ Namespace Endpoints
             Dim persons As List(Of Person) = (From dic In values.Data Select InternalTransform(dic)).ToList()
 
             'Deliver            
-            Dim request As New ImportRequest(New ImportPersonRequest With {
+            Dim request As New ImportPersonRequest With {
                                              .Persons = persons.ToArray,
                                              .PersonIdentifierType = CType([Enum].Parse(GetType(PersonIdentifierType), params.PersonIdentifier, True), PersonIdentifierType?),
-                                             .UnitIdentifierType = CType([Enum].Parse(GetType(UnitIdentifierType), params.UnitIdentifier, True), UnitIdentifierType?)})
+                                             .UnitIdentifierType = CType([Enum].Parse(GetType(UnitIdentifierType), params.UnitIdentifier, True), UnitIdentifierType?)}
 
             Dim service = ClassFactory.GetTypeInstance(Of IHRPersonProxy, PersonClientProxy)()
-
-            If TypeOf (service) Is PersonClient Then
-                Dim s = CType(service, PersonClient)
-                s.ClientCredentials.UserName.UserName = params.Username
-                s.ClientCredentials.UserName.Password = params.Password
-            End If
-
-            Dim result = service.Import(request)
+            Dim result = service.Import(request, params.Username, params.Password)
             Return New EndPointResult With {.success = False}
         End Function
 

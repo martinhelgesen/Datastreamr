@@ -32,7 +32,7 @@ Namespace InternalStreams
             Dim _
                 retval As _
                     New DataContainer _
-                    With {.MetaData = New List(Of PropertyDesc), .Data = New List(Of Dictionary(Of String, Object))}
+                    With {.MetaData = New List(Of ParamInfo), .Data = New List(Of Dictionary(Of String, Object))}
 
             'Metadata
             Dim line As String
@@ -40,13 +40,13 @@ Namespace InternalStreams
                 line = peekableStreamReader.ReadLine
                 Dim fields = line.Split(CType(params.ValueSeparator, Char))
                 For i = 0 To fields.Length - 1
-                    retval.MetaData.Add(New PropertyDesc With {.Name = fields(i)})
+                    retval.MetaData.Add(New ParamInfo With {.Name = fields(i)})
                 Next
             Else
                 line = peekableStreamReader.PeekLine
                 Dim fields = line.Split(CType(params.ValueSeparator, Char))
                 For i = 0 To fields.Length - 1
-                    retval.MetaData.Add(New PropertyDesc With {.Name = i.ToString})
+                    retval.MetaData.Add(New ParamInfo With {.Name = i.ToString})
                 Next
             End If
 

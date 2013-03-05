@@ -1,6 +1,4 @@
-﻿Imports Datastreamr.Framework
-
-Namespace Endpoints
+﻿Namespace Endpoints
     Public MustInherit Class TypeSafeEndPoint(Of TParams As {New, StreamParams}, TMapInfo)
         Inherits BaseEndpoint(Of TParams)
         Public Overrides ReadOnly Property GetObjectMapInfo As List(Of ParamInfo)
@@ -15,4 +13,4 @@ Namespace Endpoints
 
         'Public MustOverride Function InternalTransform(dictionary As Dictionary(Of String, Object)) As TMapInfo
     End Class
-End NameSpace
+End Namespace
