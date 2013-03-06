@@ -2,7 +2,7 @@
 Imports Newtonsoft.Json
 
 Public Class JobEntity
-    Property Id As Integer
+    Property Name As String
     Property DataStreamTypeName As String
     Property EndpointTypeName As String
     Property MapSerialized As String
@@ -31,5 +31,6 @@ Public Class JobEntity
     Public Property DataStreamParams As StreamParams
     Public Property EndpointParams As StreamParams
     Public Property Mapconfig As MapConfig
+
 
 End Class

@@ -102,22 +102,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseClasses\DatastreamrBaseAggregate.vb" />
+    <Compile Include="DataStreams\StreamReaderStreamParams.vb" />
     <Compile Include="Endpoints\BaseEndpointParams.vb" />
     <Compile Include="DataContainer.vb" />
     <Compile Include="DatastreamrContext.vb" />
     <Compile Include="EndPointResult.vb" />
     <Compile Include="Endpoints\BaseEndpoint.vb" />
-    <Compile Include="Endpoints\FtpFileStreamEndpoint.vb" />
     <Compile Include="Endpoints\TypeSafeEndPoint.vb" />
     <Compile Include="Entities\IJobEntityDataAcces.vb" />
     <Compile Include="Entities\JobAggregate.vb" />
-    <Compile Include="Entities\JobEntityDataAcces.vb" />
+    <Compile Include="Entities\JobEntityDataAccess.vb" />
     <Compile Include="Facade\JobFacade.vb" />
     <Compile Include="Interfaces\IEndpoint.vb" />
     <Compile Include="Interfaces\IHasId.vb" />
     <Compile Include="Interfaces\IDatastream.vb" />
     <Compile Include="DataStreams\BaseDataStream.vb" />
-    <Compile Include="DataStreams\FileStream.vb" />
+    <Compile Include="DataStreams\StreamReaderStream.vb" />
     <Compile Include="Entities\JobEntity.vb" />
     <Compile Include="JobExecutor.vb" />
     <Compile Include="JobResult.vb" />
@@ -168,7 +168,12 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\DataStreamr.Persistence\DataStreamr.Persistence.vbproj">
+      <Project>{70dd532a-67f1-4e51-a177-872b80403bd9}</Project>
+      <Name>DataStreamr.Persistence</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PostBuildEvent>

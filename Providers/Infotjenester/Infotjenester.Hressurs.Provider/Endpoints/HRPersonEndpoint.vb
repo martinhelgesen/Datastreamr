@@ -1,5 +1,5 @@
-﻿Imports Datastreamr.Framework
-Imports Datastreamr.Framework.Endpoints
+﻿Imports Datastreamr.Framework.Endpoints
+Imports Datastreamr.Framework
 Imports LazyFramework
 Imports Infotjenester.Hressurs.Provider.PersonServiceReference
 

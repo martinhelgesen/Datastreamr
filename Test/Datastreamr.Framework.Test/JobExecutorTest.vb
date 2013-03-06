@@ -1,5 +1,6 @@
 ﻿Imports Datastreamr.Framework.Entities
-Imports Datastreamr.Framework.InternalStreams
+Imports Datastreamr.Framework.DataStreams
+Imports Datastreamr.Provider.DataStreams
 Imports Infotjenester.Hressurs.Provider.Endpoints
 Imports LazyFramework
 Imports NSubstitute
@@ -24,19 +25,19 @@ Imports Infotjenester.Hressurs.Provider.PersonServiceReference
     <Test> Public Sub ExecuteJobConsumeFtpFileDeliverToHResourceProxyNoHeader()
         'Arrange Job
         Dim jobmock = NSubstitute.Substitute.For(Of IJobEntityDataAcces)()
-        jobmock.WhenForAnyArgs(Sub(p) p.GetInstance(1, Nothing)).Do(Sub(p)
-                                                                        Dim j = CType(p(1), JobEntity)
-                                                                        j.DataStreamTypeName = GetType(InternalStreams.FtpFileStream).AssemblyQualifiedName
-                                                                        j.EndpointTypeName = GetType(Infotjenester.Hressurs.Provider.Endpoints.HRPersonEndpoint).AssemblyQualifiedName
-                                                                        j.DataStreamParams = New FtpFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = False}
-                                                                        j.EndpointParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "guid"}
+        jobmock.WhenForAnyArgs(Sub(p) p.GetInstance("", "1", Nothing)).Do(Sub(p)
+                                                                              Dim j = CType(p(2), JobEntity)
+                                                                              j.DataStreamTypeName = GetType(FtpFileStream).AssemblyQualifiedName
+                                                                              j.EndpointTypeName = GetType(Infotjenester.Hressurs.Provider.Endpoints.HRPersonEndpoint).AssemblyQualifiedName
+                                                                              j.DataStreamParams = New FtpFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = False}
+                                                                              j.EndpointParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "guid"}
 
-                                                                        Dim ret As New MapConfig
-                                                                        ret.Add("0", "Identifier", Nothing)
-                                                                        ret.Add("1", "FirstName", "return originalValue.split(' ')[0];")
-                                                                        ret.Add("1", "LastName", "return originalValue.split(' ')[1];")
-                                                                        j.Mapconfig = ret
-                                                                    End Sub)
+                                                                              Dim ret As New MapConfig
+                                                                              ret.Add("0", "Identifier", Nothing)
+                                                                              ret.Add("1", "FirstName", "return originalValue.split(' ')[0];")
+                                                                              ret.Add("1", "LastName", "return originalValue.split(' ')[1];")
+                                                                              j.Mapconfig = ret
+                                                                          End Sub)
 
         ClassFactory.SetTypeInstanceForSession(Of IJobEntityDataAcces)(jobmock)
         Dim hrPersonProxy As IHRPersonProxy = Substitute.For(Of IHRPersonProxy)()
@@ -49,7 +50,7 @@ Imports Infotjenester.Hressurs.Provider.PersonServiceReference
         ClassFactory.SetTypeInstanceForSession(Of IFileHelper)(filehelper)
 
         'Act
-        Dim job = Facade.JobFacade.GetJob(1)
+        Dim job = Facade.JobFacade.GetJob("1")
         Dim JobExecutor = New JobExecutor(job)
         Dim result = JobExecutor.Execute()
 
@@ -63,19 +64,19 @@ Imports Infotjenester.Hressurs.Provider.PersonServiceReference
     <Test> Public Sub ExecuteJobConsumeFtpFileDeliverToHResourceProxyWithHeader()
         'Arrange Job
         Dim jobmock = NSubstitute.Substitute.For(Of IJobEntityDataAcces)()
-        jobmock.WhenForAnyArgs(Sub(p) p.GetInstance(1, Nothing)).Do(Sub(p)
-                                                                        Dim j = CType(p(1), JobEntity)
-                                                                        j.DataStreamTypeName = GetType(InternalStreams.FtpFileStream).AssemblyQualifiedName
-                                                                        j.EndpointTypeName = GetType(Infotjenester.Hressurs.Provider.Endpoints.HRPersonEndpoint).AssemblyQualifiedName
-                                                                        j.DataStreamParams = New FtpFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = True}
-                                                                        j.EndpointParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "guid"}
+        jobmock.WhenForAnyArgs(Sub(p) p.GetInstance("", "1", Nothing)).Do(Sub(p)
+                                                                              Dim j = CType(p(2), JobEntity)
+                                                                              j.DataStreamTypeName = GetType(FtpFileStream).AssemblyQualifiedName
+                                                                              j.EndpointTypeName = GetType(Infotjenester.Hressurs.Provider.Endpoints.HRPersonEndpoint).AssemblyQualifiedName
+                                                                              j.DataStreamParams = New FtpFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = True}
+                                                                              j.EndpointParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "guid"}
 
-                                                                        Dim ret As New MapConfig
-                                                                        ret.Add("@EmployeeNumber", "Identifier", Nothing)
-                                                                        ret.Add("@Name", "FirstName", "return originalValue.split(' ')[0];")
-                                                                        ret.Add("@Name", "LastName", "return originalValue.split(' ')[1];")
-                                                                        j.Mapconfig = ret
-                                                                    End Sub)
+                                                                              Dim ret As New MapConfig
+                                                                              ret.Add("@EmployeeNumber", "Identifier", Nothing)
+                                                                              ret.Add("@Name", "FirstName", "return originalValue.split(' ')[0];")
+                                                                              ret.Add("@Name", "LastName", "return originalValue.split(' ')[1];")
+                                                                              j.Mapconfig = ret
+                                                                          End Sub)
 
         ClassFactory.SetTypeInstanceForSession(Of IJobEntityDataAcces)(jobmock)
         Dim hrPersonProxy As IHRPersonProxy = Substitute.For(Of IHRPersonProxy)()
@@ -88,7 +89,7 @@ Imports Infotjenester.Hressurs.Provider.PersonServiceReference
         ClassFactory.SetTypeInstanceForSession(Of IFileHelper)(filehelper)
 
         'Act
-        Dim job = Facade.JobFacade.GetJob(1)
+        Dim job = Facade.JobFacade.GetJob("1")
         Dim JobExecutor = New JobExecutor(job)
         Dim result = JobExecutor.Execute()
 

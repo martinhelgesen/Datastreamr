@@ -1,7 +1,7 @@
 Imports System.IO
 
 Namespace Utils
-    Friend Class FileHelperInternal
+    Public Class FileHelperInternal
         Implements IFileHelper
 
         Public Function GetFiles(path As String) As String() Implements IFileHelper.GetFiles

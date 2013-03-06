@@ -26,7 +26,7 @@ Namespace My.Resources
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
      Global.Microsoft.VisualBasic.HideModuleNameAttribute()>  _
-    Friend Module Resources
+    Public Module Resources
         
         Private resourceMan As Global.System.Resources.ResourceManager
         
@@ -36,7 +36,7 @@ Namespace My.Resources
         '''  Returns the cached ResourceManager instance used by this class.
         '''</summary>
         <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
-        Friend ReadOnly Property ResourceManager() As Global.System.Resources.ResourceManager
+        Public ReadOnly Property ResourceManager() As Global.System.Resources.ResourceManager
             Get
                 If Object.ReferenceEquals(resourceMan, Nothing) Then
                     Dim temp As Global.System.Resources.ResourceManager = New Global.System.Resources.ResourceManager("Datastreamr.Framework.Test.Resources", GetType(Resources).Assembly)
@@ -51,7 +51,7 @@ Namespace My.Resources
         '''  resource lookups using this strongly typed resource class.
         '''</summary>
         <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
-        Friend Property Culture() As Global.System.Globalization.CultureInfo
+        Public Property Culture() As Global.System.Globalization.CultureInfo
             Get
                 Return resourceCulture
             End Get
@@ -64,7 +64,7 @@ Namespace My.Resources
         '''  Looks up a localized string similar to 05004800474800000795000   74071699270092702370345000000000926000000017000578000000017000578SCANDINAVIAN1172339950644OSLO         NO 301600000     1000N0421242 4 01927100503            AI        HANGER/VIDAR MR     092509OSLQ6C OSL                     60491771SCANDINA                  00000000000000000000000000000000000000000000000000022453812
         '''05004800474801000795000   74071699270092702370329000000000926000000290300578000000290300578SCANDINAVIAN1172339950642OSLO         NO 301600000     1000N0421222 4 01927 [rest of string was truncated]&quot;;.
         '''</summary>
-        Friend ReadOnly Property FixedPosition_NoHeader() As String
+        Public ReadOnly Property FixedPosition_NoHeader() As String
             Get
                 Return ResourceManager.GetString("FixedPosition_NoHeader", resourceCulture)
             End Get
@@ -74,7 +74,7 @@ Namespace My.Resources
         '''  Looks up a localized string similar to Identifier;FirstName;MiddleName;LastName;ShortName;Gender;BirthDate;EmployeeNo;PersonalNo;Email;Street1;Street2;PostNo;Postarea;Phone;PhonePrivate;Mobile;Fax;BankAccount1;BankAccount2;DepartmentName;DepartmentNumber;SetAsLeader;EmployeeCategory;EmployeePosition;Nationality;NextOfKind;NextOfKindPhone;EmploymentStartDate;EmploymentPercent;EmploymentEndDate;IsActive;NearestLeaderIdentifier;
         '''1;Martin;;Helgesen;;1;24.08.1980;123;24088047326;mhe@infotjenester.no;Dronningensgate 82;;1723;Sarpsborg;;;97125917;;163 [rest of string was truncated]&quot;;.
         '''</summary>
-        Friend ReadOnly Property HRPerson() As String
+        Public ReadOnly Property HRPerson() As String
             Get
                 Return ResourceManager.GetString("HRPerson", resourceCulture)
             End Get
@@ -82,22 +82,22 @@ Namespace My.Resources
         
         '''<summary>
         '''  Looks up a localized string similar to @EmployeeNumber;@Name;@PersonalNo;@EMail;@Phone;@PhonePrivate;@PhoneMobile;@DepartmentNo;@AccountNo;@EmployeeCategoryName;@EmployeePositionName;@EmploymentStartDate;@EmploymentPercent;
-        '''1962;TESTPERSON 1;24088047326;test1@test.no;;;;23;23;Fast stilling;FAGKONSULENT (FORRETNINGSUTVIKLING)               ;01.04.2007;100;
+        '''1962;Martin Helgesen;24088047326;test1@test.no;;;;23;23;Fast stilling;FAGKONSULENT (FORRETNINGSUTVIKLING)               ;01.04.2007;100;
         '''166;TESTPERSON 2;24088047326;test2@test.no;;;;27;27;Fast stilling;DRIFTSDIREKTØR;05.08.2006;100;
-        '''352;TESTPERSON 3;2408804732;test3@test.no;;;;27;27;Fast stilling;REGIONSDIREKTØR;01.02.2010;1 [rest of string was truncated]&quot;;.
+        '''352;TESTPERSON 3;2408804732;test3@test.no;;;;27;27;Fast stilling;REGIONSDIREKTØR;01.02.201 [rest of string was truncated]&quot;;.
         '''</summary>
-        Friend ReadOnly Property Semicolon_Header() As String
+        Public ReadOnly Property Semicolon_Header() As String
             Get
                 Return ResourceManager.GetString("Semicolon_Header", resourceCulture)
             End Get
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to 1962;TESTPERSON 1;24088047326;test1@test.no;;;;23;23;Fast stilling;FAGKONSULENT (FORRETNINGSUTVIKLING)               ;01.04.2007;100;
+        '''  Looks up a localized string similar to 1962;Martin Helgesen;24088047326;test1@test.no;;;;23;23;Fast stilling;FAGKONSULENT (FORRETNINGSUTVIKLING)               ;01.04.2007;100;
         '''166;TESTPERSON 2;24088047326;test2@test.no;;;;27;27;Fast stilling;DRIFTSDIREKTØR;05.08.2006;100;
         '''352;TESTPERSON 3;2408804732;test3@test.no;;;;27;27;Fast stilling;REGIONSDIREKTØR;01.02.2010;100;.
         '''</summary>
-        Friend ReadOnly Property Semicolon_NoHeader() As String
+        Public ReadOnly Property Semicolon_NoHeader() As String
             Get
                 Return ResourceManager.GetString("Semicolon_NoHeader", resourceCulture)
             End Get

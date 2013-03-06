@@ -1,6 +1,4 @@
-﻿Imports Datastreamr.Framework.InternalStreams
-Imports Datastreamr.Framework.Interfaces
-Imports System.IO
+﻿Imports Datastreamr.Provider.DataStreams
 Imports LazyFramework
 Imports NSubstitute
 Imports NUnit.Framework
@@ -22,7 +20,7 @@ Imports Datastreamr.Framework.Utils
 
     <Test> Public Sub InitialFileStreamParamsValues()
         'Act
-        Dim fs As New InternalStreams.FtpFileStream
+        Dim fs As New FtpFileStream
         Dim params = FtpFileStream.GetParams
         Assert.IsTrue(FileStreamParamsHasDefaultValues(params))
     End Sub
@@ -125,7 +123,7 @@ Imports Datastreamr.Framework.Utils
         LazyFramework.ClassFactory.SetTypeInstanceForSession(Of IFileHelper)(filehelper)
 
         'Act
-        Dim fs As New InternalStreams.FtpFileStream
+        Dim fs As New FtpFileStream
         fs.GetStream(New FtpFileStreamParams With {.FilenameMatch = "Second"})
 
         'Assert
