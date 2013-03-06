@@ -34,8 +34,8 @@ Imports Infotjenester.Hressurs.Provider.PersonServiceReference
 
     <Test> Public Sub HRPersonEndpoint_Deliver_CallsServiceProxy()
         'Arrange
-        Dim hrProxyMock = Substitute.For(Of IPerson)()
-        ClassFactory.SetTypeInstanceForSession(Of IPerson)(hrProxyMock)
+        Dim hrProxyMock = Substitute.For(Of IHRPersonProxy)()
+        ClassFactory.SetTypeInstanceForSession(Of IHRPersonProxy)(hrProxyMock)
 
         'Act
         Dim endpoint As New HRPersonEndpoint
@@ -46,13 +46,13 @@ Imports Infotjenester.Hressurs.Provider.PersonServiceReference
 
         'Assert
         Dim result = endpoint.Deliver(params, sourcedata)
-        hrProxyMock.Received.Import(Arg.Any(Of ImportRequest))
+        hrProxyMock.Received.Import(Arg.Any(Of ImportPersonRequest), Arg.Any(Of String), Arg.Any(Of String))
     End Sub
 
     <Test> Public Sub HRPersonEndpoint_Deliver_MapsCorrectlyToHRPerson()
         'Arrange
-        Dim hrProxyMock = Substitute.For(Of IPerson)()
-        ClassFactory.SetTypeInstanceForSession(Of IPerson)(hrProxyMock)
+        Dim hrProxyMock = Substitute.For(Of IHRPersonProxy)()
+        ClassFactory.SetTypeInstanceForSession(Of IHRPersonProxy)(hrProxyMock)
 
         'Act
         Dim endpoint As New HRPersonEndpoint
@@ -63,12 +63,12 @@ Imports Infotjenester.Hressurs.Provider.PersonServiceReference
 
         'Assert
         Dim result = endpoint.Deliver(params, sourcedata)
-        hrProxyMock.Received.Import(Arg.Is(Of ImportRequest)(Function(p) ValidateReceivedPersons(p).All(Function(b) b = True)))
+        hrProxyMock.Received.Import(Arg.Is(Of ImportPersonRequest)(Function(p) ValidateReceivedPersons(p).All(Function(b) b = True)), Arg.Any(Of String), Arg.Any(Of String))
     End Sub
 
 
-    Private Iterator Function ValidateReceivedPersons(ByVal importRequest As ImportRequest) As IEnumerable(Of Boolean)
-        Dim persons = importRequest.messageRequest.Persons
+    Private Iterator Function ValidateReceivedPersons(ByVal importRequest As ImportPersonRequest) As IEnumerable(Of Boolean)
+        Dim persons = importRequest.Persons
         Yield persons.Length = 1
         Yield persons(0).FirstName = "Martin" AndAlso persons(0).LastName = "Helgesen"
     End Function
