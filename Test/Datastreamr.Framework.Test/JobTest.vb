@@ -16,7 +16,28 @@ Imports LazyFramework.Utils
     <TearDown> Public Sub TearDown()
         _sessionInstance = Nothing
     End Sub
+    <Test> Public Sub GetJob_CallsRepository_WithSpecificArgs()
+        'Arrange
+        Dim jobmock = NSubstitute.Substitute.For(Of IJobEntityDataAcces)()
+        ClassFactory.SetTypeInstanceForSession(Of IJobEntityDataAcces)(jobmock)
+        Dim calledWith As JobEntity = Nothing
+        jobmock.WhenForAnyArgs(Sub(f) f.GetInstance(1, Nothing)).Do(Sub(s) calledWith = s.Arg(Of JobEntity)())
 
+        'Act
+        Dim job = Facade.JobFacade.GetJob(1)
+
+        'Assert
+        Assert.IsNotNull(calledWith)
+    End Sub
+
+    Private Sub Martin(s As Core.CallInfo)
+        If s.Args(0).ToString = "" Then
+            Throw New Exception
+        End If
+        If s.Args(1).ToString = "" Then
+            Throw New Exception
+        End If
+    End Sub
     <Test> Public Sub GetJob_CreatesDatastreamAndEndpointObjects()
         'Arrange
         Dim jobmock = NSubstitute.Substitute.For(Of IJobEntityDataAcces)()
@@ -36,5 +57,6 @@ Imports LazyFramework.Utils
         Assert.IsInstanceOf(Of IDatastream)(datastream)
         Assert.IsInstanceOf(Of IEndpoint)(endpoint)
     End Sub
+
 
 End Class
