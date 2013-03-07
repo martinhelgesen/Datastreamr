@@ -32,7 +32,7 @@ Public Class FileWatcher
         If e.ChangeType = WatcherChangeTypes.Renamed Then
             Using New ClassFactory.SessionInstance
                 Dim logPath As String = _path & "\" & username & "\log"
-                Using New DefaultDataStreamrContext With {.CurrentUser = New User With {.Username = username, .FTPRootCatalog = _path + "\" + username},
+                Using New DefaultDataStreamrContext With {.CurrentUser = New User With {.Username = username, .FTPRootCatalog = _path + username},
                                                           .Logger = New FileLogger(logPath & "\")}
                     Dim jobName As String = GetName(e.Name)
                     Dim job = Facade.JobFacade.GetJob(jobName)

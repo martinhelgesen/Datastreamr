@@ -33,6 +33,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Integration.Test", "Test\In
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FileWatcherService", "FTP\FileWatcherService\FileWatcherService.vbproj", "{D419F1D6-9983-4249-8392-C0448E002ABC}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FtpFileWatcherConsoleApp", "Ftp\FtpFileWatcherConsoleApp\FtpFileWatcherConsoleApp.vbproj", "{C1301BD4-942F-4897-AF85-F19A69DEFB43}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{D419F1D6-9983-4249-8392-C0448E002ABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D419F1D6-9983-4249-8392-C0448E002ABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D419F1D6-9983-4249-8392-C0448E002ABC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1301BD4-942F-4897-AF85-F19A69DEFB43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1301BD4-942F-4897-AF85-F19A69DEFB43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1301BD4-942F-4897-AF85-F19A69DEFB43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1301BD4-942F-4897-AF85-F19A69DEFB43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,5 +108,6 @@ Global
 		{1E73D348-631C-416A-965A-EDAA3F023F9E} = {5D611A58-AEC0-45CE-8AAE-57E16FD31526}
 		{17C1BC58-C5C4-4102-A88F-C2F5C568C1CF} = {64E7BF1D-9EB0-4711-9BF2-7D17A8A11DF1}
 		{D419F1D6-9983-4249-8392-C0448E002ABC} = {47B63367-9AE8-4CBB-9758-B18A4D9FAC45}
+		{C1301BD4-942F-4897-AF85-F19A69DEFB43} = {47B63367-9AE8-4CBB-9758-B18A4D9FAC45}
 	EndGlobalSection
 EndGlobal

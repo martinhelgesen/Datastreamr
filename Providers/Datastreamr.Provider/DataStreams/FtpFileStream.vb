@@ -14,7 +14,7 @@ Namespace DataStreams
         Public Overrides Function GetStreamInternal(params As StreamParams) As DataContainer
             Dim p = New FtpFileStreamParams(params)
             Dim currentUser = DatastreamrContext.Current.CurrentUser
-            Dim rootCat = currentUser.FTPRootCatalog + "\incoming\"
+            Dim rootCat = currentUser.FTPRootCatalog + "\incoming"
             Dim dc As DataContainer = Nothing
             Using sr = FindFile(rootCat, p.FilenameMatch)
                 dc = ConvertToDataContainer(sr, p)
@@ -23,10 +23,12 @@ Namespace DataStreams
         End Function
 
         Private Function FindFile(ByVal path As String, ByVal filenameMatch As String) As StreamReader
+
             If String.IsNullOrEmpty(path) Then
                 Return Nothing
             End If
             Dim files = _fileHelper.GetFiles(path)
+
             Dim filteredFiles = FilterWithRegex(files, filenameMatch)
             If filteredFiles Is Nothing Then
                 Return Nothing
