@@ -6,16 +6,21 @@ Namespace Logging
         
         Private ReadOnly _StringWriter As StreamWriter
 
-        Public Sub New(path As String)
-            _StringWriter = New StreamWriter(path, True, System.Text.Encoding.UTF8)
+        Public Sub New(folder As String)
+            If Not Directory.Exists(folder) Then
+                Directory.CreateDirectory(folder)
+            End If
+            'Slæsjen må ligge der
+            _StringWriter = New StreamWriter(folder & LogFilePrefix & ".log", True, System.Text.Encoding.UTF8)
+            WriteLine("Log started")
         End Sub
 
         Public Sub WriteLine(message As String) Implements ILog.WriteLine
-            _StringWriter.WriteLine(message)
+            _StringWriter.WriteLine(Now.ToLongTimeString & ":" & message)
         End Sub
 
         Public Sub WriteLineFormat(format As String, ParamArray args() As String) Implements ILog.WriteLineFormat
-            _StringWriter.WriteLine(format, args)
+            WriteLine(String.Format(format, args))
         End Sub
 
 #Region "IDisposable Support"
@@ -26,6 +31,7 @@ Namespace Logging
             If Not Me._DisposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
+                    WriteLine("Log ended")
                     _StringWriter.Close()
                     _StringWriter.Dispose()
                 End If
@@ -50,6 +56,12 @@ Namespace Logging
             GC.SuppressFinalize(Me)
         End Sub
 #End Region
+
+        ReadOnly Property LogFilePrefix As String
+            Get
+                Return Date.Now.ToString("yyyy-MM-dd-HH-mm-ss")
+            End Get
+        End Property
 
     End Class
 End NameSpace

@@ -1,9 +1,11 @@
 ﻿Imports System.IO
 Imports Datastreamr.Framework
 Imports LazyFramework
+Imports Datastreamr.Framework.Logging
 
 Public Class FileWatcher
     Private ReadOnly _path As String
+    'Private ReadOnly _FileLoggerPath As String = "C:\"
     Private ReadOnly _fileWatcher As FileSystemWatcher
     Private _filter As String
     ReadOnly Property LogFilePrefix As String
@@ -29,22 +31,23 @@ Public Class FileWatcher
 
         If e.ChangeType = WatcherChangeTypes.Renamed Then
             Using New ClassFactory.SessionInstance
-                Dim context As IDatastreamrContext = New DefaultDataStreamrContext With {.CurrentUser = New User With {.Username = username, .FTPRootCatalog = _path + "\" + username}}
-                DatastreamrContext.Current = context
+                Dim logPath As String = _path & "\" & username & "\log"
+                Using New DefaultDataStreamrContext With {.CurrentUser = New User With {.Username = username, .FTPRootCatalog = _path + "\" + username},
+                                                          .Logger = New FileLogger(logPath & "\")}
+                    Dim jobName As String = GetName(e.Name)
+                    Dim job = Facade.JobFacade.GetJob(jobName)
+                    Dim jobExec As New JobExecutor(job)
+                    Dim result = jobExec.Execute()
+                    If result.Success = True Then
 
-                Dim jobName As String = GetName(e.Name)
-                Dim job = Facade.JobFacade.GetJob(jobName)
-                Dim jobExec As New JobExecutor(job)
-                Dim result = jobExec.Execute()
-                If result.Success = True Then
-                    Dim logPath As String = _path & "\" & username & "\log"
-                    Directory.CreateDirectory(logPath)                  
-                    File.Move(e.FullPath, logPath & "\" & LogFilePrefix & "-" & GetName(e.Name, True))                    
-                Else
-                    Dim errorPath As String = _path & "\" & username & "\error"
-                    Directory.CreateDirectory(errorPath)
-                    File.Move(e.FullPath, errorPath & "\" & LogFilePrefix & "-" & GetName(e.Name, True))
-                End If
+                        Directory.CreateDirectory(logPath)
+                        File.Move(e.FullPath, logPath & "\" & LogFilePrefix & "-" & GetName(e.Name, True))
+                    Else
+                        Dim errorPath As String = _path & "\" & username & "\error"
+                        Directory.CreateDirectory(errorPath)
+                        File.Move(e.FullPath, errorPath & "\" & LogFilePrefix & "-" & GetName(e.Name, True))
+                    End If
+                End Using
             End Using
         End If
     End Sub

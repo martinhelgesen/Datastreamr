@@ -3,8 +3,12 @@ Imports Datastreamr.Framework.Logging
 Public Class DefaultDataStreamrContext
     Implements IDatastreamrContext
 
+    Public Sub New()
+        DatastreamrContext.Current = Me
+    End Sub
+
     Public Property CurrentUser As User Implements IDatastreamrContext.CurrentUser
-    Public Property Logger As ILog = New DefaultLogger Implements IDatastreamrContext.Logger
+    Public Property Logger As ILog Implements IDatastreamrContext.Logger
 
 #Region "IDisposable Support"
     Private _DisposedValue As Boolean ' To detect redundant calls
@@ -14,6 +18,7 @@ Public Class DefaultDataStreamrContext
         If Not Me._DisposedValue Then
             If disposing Then
                 ' TODO: dispose managed state (managed objects).
+                DatastreamrContext.Current = Nothing
                 Logger.dispose()
             End If
 

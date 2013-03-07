@@ -83,7 +83,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HRPersonEndPointTest.vb" />
-    <Compile Include="PersonsInCompanyTest.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -126,9 +125,17 @@
       <Project>{c3071178-6787-430f-9980-26ad5178715d}</Project>
       <Name>Datastreamr.Framework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Providers\Datastreamr.Provider\Datastreamr.Provider.vbproj">
+      <Project>{1E73D348-631C-416A-965A-EDAA3F023F9E}</Project>
+      <Name>Datastreamr.Provider</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Providers\Infotjenester\Infotjenester.Hressurs.Provider\Infotjenester.Hressurs.Provider.vbproj">
       <Project>{e45f2bd7-20b8-4a1c-b5b6-7c4d33091f88}</Project>
       <Name>Infotjenester.Hressurs.Provider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Datastreamr.Framework.Test\Datastreamr.Framework.Test.vbproj">
+      <Project>{51a78e9f-d3e9-489a-99e8-5fc872ffc17c}</Project>
+      <Name>Datastreamr.Framework.Test</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

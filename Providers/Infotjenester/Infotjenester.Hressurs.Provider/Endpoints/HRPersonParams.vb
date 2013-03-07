@@ -10,7 +10,7 @@ Namespace Endpoints
             MyBase.New()
             Add("Username", New ParamInfo With {.Required = False, .Name = "Username", .Type = GetType(String), .Description = "The username to connect to the endpoint", .DefaultValue = DatastreamrContext.Current.CurrentUser.Username})
             Add("Password", New ParamInfo With {.Required = False, .Name = "Password", .Type = GetType(String), .Description = "The password of the account"})
-            Add("PersonIdentifier", New ParamInfo With {.Required = False, .Name = "PersonIdentifier", .Type = GetType(String), .Description = "EmployeeNumber,SocialSecurityNumber,BirthDate"})
+            Add("PersonIdentifier", New ParamInfo With {.Required = False, .Name = "PersonIdentifier", .Type = GetType(String), .Description = "EmployeeNumber,SocialSecurityNumber"})
             Add("UnitIdentifier", New ParamInfo With {.Required = False, .Name = "UnitIdentifier", .Type = GetType(String), .Description = "DepartmentCode,InternalId"})
         End Sub
 
