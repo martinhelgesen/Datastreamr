@@ -29,7 +29,7 @@ Public Class FileWatcher
 
         If e.ChangeType = WatcherChangeTypes.Renamed Then
             Using New ClassFactory.SessionInstance
-                Dim context As IDatastreamrContext = New DatastreamrContext With {.CurrentUser = New User With {.Username = username, .FTPRootCatalog = _path + "\" + username}}
+                Dim context As IDatastreamrContext = New DefaultDataStreamrContext With {.CurrentUser = New User With {.Username = username, .FTPRootCatalog = _path + "\" + username}}
                 DatastreamrContext.Current = context
 
                 Dim jobName As String = GetName(e.Name)

@@ -106,6 +106,7 @@
   <ItemGroup>
     <Compile Include="BaseClasses\DatastreamrBaseAggregate.vb" />
     <Compile Include="DataStreams\StreamReaderStreamParams.vb" />
+    <Compile Include="DefaultDataStreamrContext.vb" />
     <Compile Include="Endpoints\BaseEndpointParams.vb" />
     <Compile Include="DataContainer.vb" />
     <Compile Include="DatastreamrContext.vb" />
@@ -116,6 +117,7 @@
     <Compile Include="Entities\JobAggregate.vb" />
     <Compile Include="Entities\JobEntityDataAccess.vb" />
     <Compile Include="Facade\JobFacade.vb" />
+    <Compile Include="IDatastreamrContext.vb" />
     <Compile Include="Interfaces\IEndpoint.vb" />
     <Compile Include="Interfaces\IHasId.vb" />
     <Compile Include="Interfaces\IDatastream.vb" />
@@ -124,6 +126,9 @@
     <Compile Include="Entities\JobEntity.vb" />
     <Compile Include="JobExecutor.vb" />
     <Compile Include="JobResult.vb" />
+    <Compile Include="Logging\DefaultLogger.vb" />
+    <Compile Include="Logging\FileLogger.vb" />
+    <Compile Include="Logging\ILog.vb" />
     <Compile Include="MapConfig.vb" />
     <Compile Include="MapInfo.vb" />
     <Compile Include="Mapper.vb" />

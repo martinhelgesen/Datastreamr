@@ -12,7 +12,7 @@ Public Module FtpIntegrationTest
 
     Public Sub Main()
         Using New ClassFactory.SessionInstance
-            DatastreamrContext.Current = New DatastreamrContext With {.CurrentUser = New User With {.Username = "mhe"}}
+            DatastreamrContext.Current = New DefaultDataStreamrContext With {.CurrentUser = New User With {.Username = "mhe"}}
             Dim webproxy = NSubstitute.Substitute.For(Of IHRPersonProxy)()
             webproxy.WhenForAnyArgs(Sub(p) p.Import(Nothing, "", "")).Do(Sub(p) Debug.Write(Newtonsoft.Json.JsonConvert.SerializeObject(p.Arg(Of ImportPersonRequest), Newtonsoft.Json.Formatting.Indented)))
             ClassFactory.SetTypeInstance(Of IHRPersonProxy)(webproxy)

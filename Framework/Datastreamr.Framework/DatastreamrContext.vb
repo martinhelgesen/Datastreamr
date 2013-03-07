@@ -1,12 +1,6 @@
 Imports LazyFramework
 
-Public Interface IDatastreamrContext
-    Property CurrentUser() As User
-End Interface
-
 Public Class DatastreamrContext
-    Implements IDatastreamrContext
-
     Public Shared Property Current As IDatastreamrContext
         Get
             Return ClassFactory.GetTypeInstance(Of IDatastreamrContext)()
@@ -19,18 +13,4 @@ Public Class DatastreamrContext
             End If
         End Set
     End Property
-
-    Public Sub New()
-        Current = Me
-    End Sub
-
-    Public Property CurrentUser() As User Implements IDatastreamrContext.CurrentUser
 End Class
-
-Public Class DefaultDataStreamrContext
-    Implements IDatastreamrContext
-
-    Public Property CurrentUser As User Implements IDatastreamrContext.CurrentUser
-
-End Class
-
