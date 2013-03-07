@@ -19,7 +19,9 @@ Public Class DefaultDataStreamrContext
             If disposing Then
                 ' TODO: dispose managed state (managed objects).
                 DatastreamrContext.Current = Nothing
-                Logger.dispose()
+                If Logger IsNot Nothing Then
+                    Logger.Dispose()
+                End If
             End If
 
             ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.

@@ -39,7 +39,6 @@ Public Class FileWatcher
                     Dim jobExec As New JobExecutor(job)
                     Dim result = jobExec.Execute()
                     If result.Success = True Then
-
                         Directory.CreateDirectory(logPath)
                         File.Move(e.FullPath, logPath & "\" & LogFilePrefix & "-" & GetName(e.Name, True))
                     Else

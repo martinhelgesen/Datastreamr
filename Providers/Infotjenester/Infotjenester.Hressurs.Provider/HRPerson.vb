@@ -1,6 +1,7 @@
 
 Public Class HRPerson
     Property Identifier As String
+    Property CompanyIdentifier As String
     Property FirstName As String
     Property MiddleName As String
     Property LastName As String

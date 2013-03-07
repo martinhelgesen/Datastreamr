@@ -92,7 +92,7 @@ Namespace Endpoints
                 person.EmploymentInfo = New Employee() {New Employee}
                 Dim employee = person.EmploymentInfo(0)
                 employee.EmployeeNumber = CType(dictionary("EmployeeNo"), String)
-                If dictionary.ContainsKey("DepartmentIdentifier") Then employee.EmployedIn = New UnitIdentifier With {.Value = CType(dictionary("DepartmentIdentifier"), String), .Identifiertype = CType([Enum].Parse(GetType(UnitIdentifierType), requestParams.UnitIdentifier, True), UnitIdentifierType?)}
+                If dictionary.ContainsKey("CompanyIdentifier") Then employee.EmployedIn = New UnitIdentifier With {.Value = CType(dictionary("CompanyIdentifier"), String), .Identifiertype = CType([Enum].Parse(GetType(UnitIdentifierType), requestParams.UnitIdentifier, True), UnitIdentifierType?)}
 
                 If dictionary.Keys.Any(Function(s) {"EmploymentStartDate", "EmploymentPercent", "EmploymentEndDate", "EmployeeCategory", "EmployeePosition"}.Contains(s)) Then
                     employee.Employment = New Employment() {New Employment}
