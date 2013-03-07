@@ -23,7 +23,8 @@ Namespace Endpoints
 
             Dim service = ClassFactory.GetTypeInstance(Of IHRPersonProxy, PersonClientProxy)()
             Dim result = service.Import(request, params.Username, params.Password)
-            Return New EndPointResult With {.success = False}
+
+            Return New EndPointResult With {.success = False, .Result = Newtonsoft.Json.JsonConvert.SerializeObject(result)}
         End Function
 
         Private Function InternalTransform(ByVal dictionary As Dictionary(Of String, Object)) As Person

@@ -6,7 +6,6 @@ Imports DataStreamr.Framework.Facade
 Imports Infotjenester.Hressurs.Provider.Endpoints
 Imports LazyFramework
 Imports NSubstitute
-Imports NUnit.Framework
 Imports Infotjenester.Hressurs.Provider.PersonServiceReference
 
 Public Module FtpIntegrationTest
@@ -26,7 +25,9 @@ Public Module FtpIntegrationTest
 
     Private Sub CreateFile()
         Dim s = "c:\Temp\ftp\mhe\incoming\TestJob.tmp"
-        Using fw = System.IO.File.Create(s)
+        File.Delete(s)
+        File.Delete(s.Split("."c)(0) + ".job")
+        Using fw = File.Create(s)
             Dim sw As New StreamWriter(fw)
             sw.Write(Datastreamr.Framework.Test.My.Resources.Semicolon_NoHeader)
             sw.Flush()
@@ -36,7 +37,7 @@ Public Module FtpIntegrationTest
     End Sub
 
     Private Sub CreateJob()
-
+        File.Delete("C:\Temp\persist\mhe\JobEntity\TestJob.json")
         Dim j As New JobEntity
         j.Name = "TestJob"
         j.DataStreamTypeName = GetType(FtpFileStream).AssemblyQualifiedName

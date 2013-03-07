@@ -15,8 +15,11 @@ Namespace DataStreams
             Dim p = New FtpFileStreamParams(params)
             Dim currentUser = DatastreamrContext.Current.CurrentUser
             Dim rootCat = currentUser.FTPRootCatalog + "\incoming\"
-            Dim sr = FindFile(rootCat, p.FilenameMatch)
-            Return ConvertToDataContainer(sr, p)
+            Dim dc As DataContainer = Nothing
+            Using sr = FindFile(rootCat, p.FilenameMatch)
+                dc = ConvertToDataContainer(sr, p)
+            End Using
+            Return dc
         End Function
 
         Private Function FindFile(ByVal path As String, ByVal filenameMatch As String) As StreamReader

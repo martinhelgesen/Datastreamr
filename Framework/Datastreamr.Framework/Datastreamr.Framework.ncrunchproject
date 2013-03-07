@@ -17,4 +17,5 @@
   <UseBuildPlatform></UseBuildPlatform>
   <ProxyProcessPath></ProxyProcessPath>
   <UseCPUArchitecture>AutoDetect</UseCPUArchitecture>
+  <HiddenWarnings>PostBuildEventDisabled</HiddenWarnings>
 </ProjectConfiguration>

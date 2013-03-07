@@ -22,4 +22,5 @@
       <TestName>Infotjenester.Hressurs.Provider.Test.PersonsInCompanyTest.test</TestName>
     </NamedTestSelector>
   </IgnoredTests>
+  <HiddenWarnings>PostBuildEventDisabled</HiddenWarnings>
 </ProjectConfiguration>
