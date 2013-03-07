@@ -23,14 +23,21 @@ Friend Class FilePersister
     End Property
 
     Public Sub Persist(dbName As String, objectname As String, data As Object) Implements IPersister.Persist
+        Try
+            If Not IO.Directory.Exists(filePath & dbName & "\") Then
+                IO.Directory.CreateDirectory(filePath & dbName & "\")
+            End If
 
-        If Not IO.Directory.Exists(Path(dbName, data.GetType)) Then
-            IO.Directory.CreateDirectory(Path(dbName, data.GetType))
-        End If
+            If Not IO.Directory.Exists(Path(dbName, data.GetType)) Then
+                IO.Directory.CreateDirectory(Path(dbName, data.GetType))
+            End If
 
-        Using sWriter As New IO.StreamWriter(Path(dbName, data.GetType) & objectname & ".json", False)
-            sWriter.Write(Newtonsoft.Json.JsonConvert.SerializeObject(data))
-        End Using
+            Using sWriter As New IO.StreamWriter(Path(dbName, data.GetType) & objectname & ".json", False)
+                sWriter.Write(Newtonsoft.Json.JsonConvert.SerializeObject(data))
+            End Using
+        Catch ex As Exception
+            Throw New Exception("Something went wrong when trying to write to: " & Path(dbName, data.GetType))
+        End Try
     End Sub
 End Class
 
