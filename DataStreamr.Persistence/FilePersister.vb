@@ -12,6 +12,18 @@ Friend Class FilePersister
         Return ret
     End Function
 
+    Public Function LoadAll(Of T)(dbName As String) As IList(Of T) Implements IPersister.LoadAll
+        Dim ret As New List(Of T)
+
+        For Each f In New System.IO.DirectoryInfo(Path(dbName, GetType(T))).GetFiles("*.json")
+            Using sReader As New IO.StreamReader(f.OpenRead)
+                ret.Add(Newtonsoft.Json.JsonConvert.DeserializeObject(Of T)(sReader.ReadToEnd))
+            End Using
+        Next
+        
+        Return ret
+    End Function
+
     Private Function Path(ByVal dbName As String, type As Type) As String
         Return filePath & dbName & "\" & type.Name & "\"
     End Function
@@ -32,8 +44,8 @@ Friend Class FilePersister
         End If
 
         Using sWriter As New IO.StreamWriter(Path(dbName, data.GetType) & objectname & ".json", False)
-            sWriter.Write(Newtonsoft.Json.JsonConvert.SerializeObject(data))
+            sWriter.Write(Newtonsoft.Json.JsonConvert.SerializeObject(data, Newtonsoft.Json.Formatting.Indented))
         End Using
+        
     End Sub
 End Class
-
