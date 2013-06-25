@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://services.hressurs.no/2012/03" elementFormDefault="qualified" targetNamespace="http://services.hressurs.no/2012/03" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd2" namespace="http://services/hressurs.no/message/2012/03/ImportPersonRequest" />
-  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd21" namespace="http://services/hressurs.no/message/2012/03/ImportPersonResponse" />
-  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd23" namespace="http://services/hressurs.no/message/2012/03/ExportPersonRequest" />
-  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd24" namespace="http://services/hressurs.no/message/2012/03/ExportPersonResponse" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd22" namespace="http://services/hressurs.no/message/2012/03/ImportPersonResponse" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd24" namespace="http://services/hressurs.no/message/2012/03/ExportPersonRequest" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd25" namespace="http://services/hressurs.no/message/2012/03/ExportPersonResponse" />
   <xs:element name="Import">
     <xs:complexType>
       <xs:sequence>

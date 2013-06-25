@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/ServiceDataContracts.Entities" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ServiceDataContracts.Entities" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:complexType name="Image">
+<xs:schema xmlns:tns="http://services/hressurs.no/entities/2012/03/Unit" elementFormDefault="qualified" targetNamespace="http://services/hressurs.no/entities/2012/03/Unit" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd6" namespace="http://services/hressurs.no/entities/2012/03/Address" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd9" namespace="http://services.hressurs.no/entities/2012/03/EMailAddress" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd7" namespace="http://services.hressurs.no/entities/2012/03/ItemInfo" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd17" namespace="http://services/hressurs.no/entities/2012/03/PersonIdentifier" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd11" namespace="http://services/hressurs.no/entities/2012/03/UnitIdentifier" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd19" namespace="http://services/hressurs.no/entities/2012/03/Phone" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/ServiceDataContracts" />
+  <xs:complexType name="Unit">
     <xs:sequence>
-      <xs:element minOccurs="0" name="FileData" nillable="true" type="xs:base64Binary" />
-      <xs:element minOccurs="0" name="MimeType" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://services/hressurs.no/entities/2012/03/Address" minOccurs="0" name="Addresses" nillable="true" type="q1:ArrayOfAddress" />
+      <xs:element minOccurs="0" name="CompanyNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DepartmentCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://services.hressurs.no/entities/2012/03/EMailAddress" minOccurs="0" name="EMailAddresses" nillable="true" type="q2:ArrayOfEMailAddress" />
+      <xs:element xmlns:q3="http://services.hressurs.no/entities/2012/03/ItemInfo" minOccurs="0" name="InternalInfo" nillable="true" type="q3:ItemInfo" />
+      <xs:element minOccurs="0" name="IsDeactivated" type="xs:boolean" />
+      <xs:element xmlns:q4="http://services/hressurs.no/entities/2012/03/PersonIdentifier" minOccurs="0" name="LeaderIdentifier" nillable="true" type="q4:PersonIdentifier" />
+      <xs:element minOccurs="0" name="MunicipalityCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NaceCode" nillable="true" type="xs:string" />
+      <xs:element name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrganizationNumber" nillable="true" type="xs:string" />
+      <xs:element xmlns:q5="http://services/hressurs.no/entities/2012/03/UnitIdentifier" minOccurs="0" name="ParentUnitIdentifier" nillable="true" type="q5:UnitIdentifier" />
+      <xs:element xmlns:q6="http://services/hressurs.no/entities/2012/03/Phone" minOccurs="0" name="Phones" nillable="true" type="q6:ArrayOfPhone" />
+      <xs:element xmlns:q7="http://services/hressurs.no/entities/2012/03/UnitIdentifier" name="UnitIdentifier" nillable="true" type="q7:UnitIdentifier" />
+      <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/ServiceDataContracts" minOccurs="0" name="UnitType" type="q8:UnitType" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="Image" nillable="true" type="tns:Image" />
+  <xs:element name="Unit" nillable="true" type="tns:Unit" />
 </xs:schema>

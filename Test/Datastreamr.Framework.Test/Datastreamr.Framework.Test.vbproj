@@ -159,6 +159,9 @@
   <ItemGroup>
     <None Include="Resources\HRPerson.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Middleware_FullPersonFile_WithHeader.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PostBuildEvent>

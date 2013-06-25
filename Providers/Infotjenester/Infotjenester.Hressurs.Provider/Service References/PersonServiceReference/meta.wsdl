@@ -18,15 +18,16 @@
       <xsd:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd13" namespace="http://services/hressurs.no/entities/2012/03/Category" />
       <xsd:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd14" namespace="http://services.hressurs.no/entities/2012/03/EmploymentDistribution" />
       <xsd:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd15" namespace="http://services/hressurs.no/entities/2012/03/Position" />
-      <xsd:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd16" namespace="http://services/hressurs.no/entities/2012/03/PersonIdentifier" />
-      <xsd:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd17" namespace="http://services/hressurs.no/entities/2012/03/NextOfKin" />
-      <xsd:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd18" namespace="http://services/hressurs.no/entities/2012/03/Phone" />
-      <xsd:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd19" namespace="http://services/hressurs.no/entities/2012/03/Unit" />
-      <xsd:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd20" namespace="http://schemas.datacontract.org/2004/07/ServiceDataContracts.Entities" />
-      <xsd:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd21" namespace="http://services/hressurs.no/message/2012/03/ImportPersonResponse" />
-      <xsd:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd22" namespace="http://services/hressurs.no/message/2012/03/ItemResult" />
-      <xsd:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd23" namespace="http://services/hressurs.no/message/2012/03/ExportPersonRequest" />
-      <xsd:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd24" namespace="http://services/hressurs.no/message/2012/03/ExportPersonResponse" />
+      <xsd:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd16" namespace="http://services/hressurs.no/entities/2013/03/Logon" />
+      <xsd:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd17" namespace="http://services/hressurs.no/entities/2012/03/PersonIdentifier" />
+      <xsd:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd18" namespace="http://services/hressurs.no/entities/2012/03/NextOfKin" />
+      <xsd:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd19" namespace="http://services/hressurs.no/entities/2012/03/Phone" />
+      <xsd:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd20" namespace="http://services/hressurs.no/entities/2012/03/Unit" />
+      <xsd:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd21" namespace="http://schemas.datacontract.org/2004/07/ServiceDataContracts.Entities" />
+      <xsd:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd22" namespace="http://services/hressurs.no/message/2012/03/ImportPersonResponse" />
+      <xsd:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd23" namespace="http://services/hressurs.no/message/2012/03/ItemResult" />
+      <xsd:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd24" namespace="http://services/hressurs.no/message/2012/03/ExportPersonRequest" />
+      <xsd:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd25" namespace="http://services/hressurs.no/message/2012/03/ExportPersonResponse" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IPerson_Import_InputMessage">

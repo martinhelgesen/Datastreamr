@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D419F1D6-9983-4249-8392-C0448E002ABC}</ProjectGuid>
+    <ProjectGuid>{982E86D3-D70B-45C4-8A00-A556FB8B7DD2}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>FileWatcherService.FileWatcherService</StartupObject>
-    <RootNamespace>FileWatcherService</RootNamespace>
-    <AssemblyName>FileWatcherService</AssemblyName>
+    <StartupObject>CreditCardWatcherService.CreditCardWatcherService</StartupObject>
+    <RootNamespace>CreditCardWatcherService</RootNamespace>
+    <AssemblyName>CreditCardWatcherService</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
@@ -20,17 +20,17 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>FileWatcherService.xml</DocumentationFile>
+    <DocumentationFile>CreditCardWatcherService.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>FileWatcherService.xml</DocumentationFile>
+    <DocumentationFile>CreditCardWatcherService.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -40,26 +40,14 @@
     <OptionCompare>Binary</OptionCompare>
   </PropertyGroup>
   <PropertyGroup>
-    <OptionStrict>On</OptionStrict>
+    <OptionStrict>Off</OptionStrict>
   </PropertyGroup>
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LazyFramework">
-      <HintPath>..\..\lib\LazyFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Noesis.Javascript, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64" Condition="'$(PlatformTarget)' == 'x86'">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Noesis.Javascript.0.7.1.0\lib\net40\x86\Noesis.Javascript.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.ServiceProcess" />
@@ -83,11 +71,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
     </Compile>
-    <Compile Include="FileWatcherService.vb">
+    <Compile Include="CreditCardWatcherService.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="FileWatcherService.Designer.vb">
-      <DependentUpon>FileWatcherService.vb</DependentUpon>
+    <Compile Include="CreditCardWatcherService.Designer.vb">
+      <DependentUpon>CreditCardWatcherService.vb</DependentUpon>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
@@ -100,12 +88,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="ProjectInstaller.Designer.vb">
-      <DependentUpon>ProjectInstaller.vb</DependentUpon>
-    </Compile>
-    <Compile Include="ProjectInstaller.vb">
-      <SubType>Component</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -114,12 +96,8 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProjectInstaller.resx">
-      <DependentUpon>ProjectInstaller.vb</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -129,38 +107,14 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Datastreamr.JobRunner\Datastreamr.JobRunner.vbproj">
       <Project>{9254ff3e-31af-4bbe-9ca0-699850ccc8eb}</Project>
       <Name>Datastreamr.JobRunner</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\DataStreamr.Persistence\DataStreamr.Persistence.vbproj">
-      <Project>{70dd532a-67f1-4e51-a177-872b80403bd9}</Project>
-      <Name>DataStreamr.Persistence</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Framework\Datastreamr.Framework\Datastreamr.Framework.vbproj">
-      <Project>{c3071178-6787-430f-9980-26ad5178715d}</Project>
-      <Name>Datastreamr.Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Providers\Datastreamr.Provider\Datastreamr.Provider.vbproj">
-      <Project>{1e73d348-631c-416a-965a-edaa3f023f9e}</Project>
-      <Name>Datastreamr.Provider</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Providers\Infotjenester\Infotjenester.Hressurs.Provider\Infotjenester.Hressurs.Provider.vbproj">
-      <Project>{e45f2bd7-20b8-4a1c-b5b6-7c4d33091f88}</Project>
-      <Name>Infotjenester.Hressurs.Provider</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>
-    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
-    xcopy /s /y "$(SolutionDir)packages\Noesis.Javascript.0.7.1.0\NativeBinaries\net40\x86\*.*" "$(TargetDir)x86"
-    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
-    xcopy /s /y "$(SolutionDir)packages\Noesis.Javascript.0.7.1.0\NativeBinaries\net40\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

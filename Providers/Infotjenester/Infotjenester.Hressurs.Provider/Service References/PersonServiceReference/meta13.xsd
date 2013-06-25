@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/ServiceDataContracts.Message" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ServiceDataContracts.Message" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/ServiceDataContracts" />
-  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd16" namespace="http://services/hressurs.no/entities/2012/03/PersonIdentifier" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd17" namespace="http://services/hressurs.no/entities/2012/03/PersonIdentifier" />
   <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd11" namespace="http://services/hressurs.no/entities/2012/03/UnitIdentifier" />
   <xs:complexType name="BasePersonMessage">
     <xs:complexContent mixed="false">

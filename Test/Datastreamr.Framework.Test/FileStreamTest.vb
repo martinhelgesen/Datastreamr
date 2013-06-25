@@ -115,6 +115,23 @@ Imports Datastreamr.Framework.Utils
         Assert.That(data.Data(0)("@EmployeeNumber").ToString = "1962")
     End Sub
 
+    <Test> Public Sub GetStream_WithEmptyFieldValues_ShouldBeEmptyString()
+        'Arrange
+        Dim filehelper = Substitute.For(Of IFileHelper)()
+        filehelper.GetFiles("").ReturnsForAnyArgs(Function(p) {"Middleware"})
+        filehelper.OpenFile("").ReturnsForAnyArgs(Function(p) StreamHelper.GenerateStreamReaderFromString(My.Resources.Middleware_FullPersonFile_WithHeader))
+        ClassFactory.SetTypeInstanceForSession(Of IFileHelper)(filehelper)
+
+        'Act
+        Dim fs As New FtpFileStream
+        Dim data = fs.GetStream(New FtpFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = True})
+
+        'Assert
+        Assert.AreEqual(data.MetaData(0).Name, "Identifier")
+        Assert.AreEqual(1, data.Data.Count)
+        Assert.AreEqual("", data.Data(0)("Username"))
+    End Sub
+
 
     <Test> Public Sub GetStream_MultipleFileMatch_Regex_ReducesMatches_ThenTakesFirstMatchIfMultiple()
         'Arrange

@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://services/hressurs.no/entities/2012/03/Phone" elementFormDefault="qualified" targetNamespace="http://services/hressurs.no/entities/2012/03/Phone" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:tns="http://services/hressurs.no/entities/2012/03/NextOfKin" elementFormDefault="qualified" targetNamespace="http://services/hressurs.no/entities/2012/03/NextOfKin" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd6" namespace="http://services/hressurs.no/entities/2012/03/Address" />
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd9" namespace="http://services.hressurs.no/entities/2012/03/EMailAddress" />
   <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd7" namespace="http://services.hressurs.no/entities/2012/03/ItemInfo" />
-  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/ServiceDataContracts" />
-  <xs:complexType name="ArrayOfPhone">
+  <xs:import schemaLocation="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd19" namespace="http://services/hressurs.no/entities/2012/03/Phone" />
+  <xs:complexType name="ArrayOfNextOfKin">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Phone" nillable="true" type="tns:Phone" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="NextOfKin" nillable="true" type="tns:NextOfKin" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfPhone" nillable="true" type="tns:ArrayOfPhone" />
-  <xs:complexType name="Phone">
+  <xs:element name="ArrayOfNextOfKin" nillable="true" type="tns:ArrayOfNextOfKin" />
+  <xs:complexType name="NextOfKin">
     <xs:sequence>
-      <xs:element xmlns:q1="http://services.hressurs.no/entities/2012/03/ItemInfo" minOccurs="0" name="InternalInfo" nillable="true" type="q1:ItemInfo" />
-      <xs:element name="Number" nillable="true" type="xs:string" />
-      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ServiceDataContracts" name="Type" type="q2:PhoneType" />
+      <xs:element xmlns:q1="http://services/hressurs.no/entities/2012/03/Address" minOccurs="0" name="Addresses" nillable="true" type="q1:ArrayOfAddress" />
+      <xs:element xmlns:q2="http://services.hressurs.no/entities/2012/03/EMailAddress" minOccurs="0" name="EMailAddresses" nillable="true" type="q2:ArrayOfEMailAddress" />
+      <xs:element name="FirstName" nillable="true" type="xs:string" />
+      <xs:element xmlns:q3="http://services.hressurs.no/entities/2012/03/ItemInfo" minOccurs="0" name="InternalInfo" nillable="true" type="q3:ItemInfo" />
+      <xs:element name="LastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MiddleName" nillable="true" type="xs:string" />
+      <xs:element xmlns:q4="http://services/hressurs.no/entities/2012/03/Phone" minOccurs="0" name="Phones" nillable="true" type="q4:ArrayOfPhone" />
+      <xs:element minOccurs="0" name="Relation" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="Phone" nillable="true" type="tns:Phone" />
+  <xs:element name="NextOfKin" nillable="true" type="tns:NextOfKin" />
 </xs:schema>

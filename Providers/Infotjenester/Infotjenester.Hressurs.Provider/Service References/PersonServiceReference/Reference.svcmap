@@ -28,6 +28,7 @@
     <MetadataFile FileName="meta4.xsd" MetadataType="Schema" ID="5fec6690-664c-4fdb-b5aa-5ccf36fa7aad" SourceId="1" SourceUrl="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd10" />
     <MetadataFile FileName="meta5.xsd" MetadataType="Schema" ID="e4923e6a-fcbc-4692-8da9-e8ba4a33663c" SourceId="1" SourceUrl="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd18" />
     <MetadataFile FileName="meta6.xsd" MetadataType="Schema" ID="10b0eaf2-b71b-4f48-9c3a-0dc52e534683" SourceId="1" SourceUrl="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd14" />
+    <MetadataFile FileName="meta25.xsd" MetadataType="Schema" ID="39e0a098-150c-4565-afe5-5389364384b3" SourceId="1" SourceUrl="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd25" />
     <MetadataFile FileName="meta7.xsd" MetadataType="Schema" ID="1f7fb39d-58ed-4337-a058-9d3c1ada95d1" SourceId="1" SourceUrl="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd4" />
     <MetadataFile FileName="meta8.xsd" MetadataType="Schema" ID="6d04b212-358d-4b68-90fe-bce982aff004" SourceId="1" SourceUrl="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd7" />
     <MetadataFile FileName="meta9.xsd" MetadataType="Schema" ID="d469efe9-2754-4217-9421-b65e6c354b2d" SourceId="1" SourceUrl="http://services.hressurs.no/PersonService.svc/meta?xsd=xsd6" />

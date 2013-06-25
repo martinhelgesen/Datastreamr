@@ -9,7 +9,7 @@ Imports LazyFramework.Utils
 Imports Infotjenester.Hressurs.Provider.PersonServiceReference
 Imports Datastreamr.Framework.Utils
 
-<testfixture> Public Class HRPersonEndPointTest
+<TestFixture> Public Class HRChildEndPointTest
 
     Private _sessionInstance As ClassFactory.SessionInstance
 
@@ -24,18 +24,18 @@ Imports Datastreamr.Framework.Utils
         _sessionInstance = Nothing
     End Sub
 
-    <Test> Public Sub HRPersonEndpoint_UsernameIsDefaultFromContext()
-        Dim endpoint As New HRPersonEndpoint
+    <Test> Public Sub HRChildEndpoint_UsernameIsDefaultFromContext()
+        Dim endpoint As New HRChildEndpoint
         Dim params = endpoint.GetParams
         Assert.That(params.Username = DatastreamrContext.Current.CurrentUser.Username)
     End Sub
-    <Test> Public Sub HRPersonEndpoint_Parameters_DefaultValues()
+    <Test> Public Sub HRChildEndpoint_Parameters_DefaultValues()
         Dim endpoint As New HRPersonEndpoint
         Dim params = endpoint.GetParams
         Assert.That(HRPersonParamsHasDefaultValues(params))
     End Sub
 
-    <Test> Public Sub HRPersonEndpoint_Deliver_CallsServiceProxy()
+    <Test> Public Sub HRChildEndpoint_Deliver_CallsServiceProxy()
         'Arrange
         Dim hrProxyMock = Substitute.For(Of IHRPersonProxy)()
         ClassFactory.SetTypeInstanceForSession(Of IHRPersonProxy)(hrProxyMock)
@@ -52,7 +52,7 @@ Imports Datastreamr.Framework.Utils
         hrProxyMock.Received.Import(Arg.Any(Of ImportPersonRequest), Arg.Any(Of String), Arg.Any(Of String))
     End Sub
 
-    <Test> Public Sub HRPersonEndpoint_Deliver_MapsCorrectlyToHRPerson()
+    <Test> Public Sub HRChildEndpoint_Deliver_MapsCorrectlyToHRPersonAndHRChild()
         'Arrange
         Dim hrProxyMock = Substitute.For(Of IHRPersonProxy)()
         ClassFactory.SetTypeInstanceForSession(Of IHRPersonProxy)(hrProxyMock)
@@ -67,7 +67,7 @@ Imports Datastreamr.Framework.Utils
         'Assert
         Dim result = endpoint.Deliver(params, sourcedata)
         hrProxyMock.ReceivedWithAnyArgs.Import(Nothing, "", "")
-        hrProxyMock.Received.Import(Arg.Is(Of ImportPersonRequest)(Function(p) ValidateReceivedPersons(p).All(Function(b) b = True)), Arg.Any(Of String), Arg.Any(Of String))
+        hrProxyMock.Received.Import(Arg.Is(Of ImportPersonRequest)(Function(p) ValidateReceivedChildren(p).All(Function(b) b = True)), Arg.Any(Of String), Arg.Any(Of String))
     End Sub
 
     <Test> Public Sub Deliver_TestInternalMapping()
@@ -122,88 +122,10 @@ Imports Datastreamr.Framework.Utils
             Arg.Any(Of String))
     End Sub
 
-    <Test> Public Sub Deliver_Test_Wideroe()
-        'Arrange Job
-        Dim jobmock = NSubstitute.Substitute.For(Of IJobEntityDataAcces)()
-        jobmock.WhenForAnyArgs(Sub(p) p.GetInstance("", "1", Nothing)).Do(Sub(p)
-                                                                              Dim j = CType(p(2), JobEntity)
-                                                                              j.DataStreamTypeName = GetType(FtpFileStream).AssemblyQualifiedName
-                                                                              j.EndpointTypeName = GetType(HRPersonEndpoint).AssemblyQualifiedName
-                                                                              j.DataStreamParams = New FtpFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = False}
-                                                                              j.EndpointParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "guid"}
-
-                                                                              Dim ret As New MapConfig
-                                                                              ret.Add("0", "Identifier", Nothing)
-                                                                              ret.Add("1", "CompanyIdentifier", Nothing)
-                                                                              ret.Add("2", "FirstName", Nothing)
-                                                                              ret.Add("3", "MiddleName", Nothing)
-                                                                              ret.Add("4", "LastName", Nothing)
-                                                                              ret.Add("5", "ShortName", Nothing)
-                                                                              ret.Add("6", "Gender", Nothing)
-                                                                              ret.Add("7", "BirthDate", Nothing)
-                                                                              ret.Add("8", "EmployeeNo", Nothing)
-                                                                              ret.Add("9", "PersonalNo", Nothing)
-                                                                              ret.Add("10", "Email", Nothing)
-                                                                              ret.Add("11", "Street1", Nothing)
-                                                                              ret.Add("12", "Street2", Nothing)
-                                                                              ret.Add("13", "Street3", Nothing)
-                                                                              ret.Add("14", "PostNo", Nothing)
-                                                                              ret.Add("15", "Postarea", Nothing)
-                                                                              ret.Add("16", "CountryCode", Nothing)
-                                                                              ret.Add("17", "Phone", Nothing)
-                                                                              ret.Add("18", "PhonePrivate", Nothing)
-                                                                              ret.Add("19", "Mobile", Nothing)
-                                                                              ret.Add("20", "Fax", Nothing)
-                                                                              ret.Add("21", "BankAccount1", Nothing)
-                                                                              ret.Add("22", "BankAccount2", Nothing)
-                                                                              ret.Add("23", "DepartmentIdentifier", Nothing)
-                                                                              ret.Add("24", "SetAsLeader", Nothing)
-                                                                              ret.Add("25", "EmployeeCategory", Nothing)
-                                                                              ret.Add("26", "EmployeePosition", Nothing)
-                                                                              ret.Add("27", "Nationality", Nothing)
-                                                                              ret.Add("28", "NextOfKinFirstName", Nothing)
-                                                                              ret.Add("29", "NextOfKinLastName", Nothing)
-                                                                              ret.Add("30", "NextOfKinPhone", Nothing)
-                                                                              ret.Add("31", "EmploymentStartDate", Nothing)
-                                                                              ret.Add("32", "EmploymentEndDate", Nothing)
-                                                                              ret.Add("33", "IsActive", Nothing)
-                                                                              ret.Add("34", "SpecifiedLeaderIdentifier", Nothing)
-                                                                              ret.Add("35", "Username", Nothing)
-                                                                              j.Mapconfig = ret
-                                                                          End Sub)
-
-        ClassFactory.SetTypeInstanceForSession(Of IJobEntityDataAcces)(jobmock)
-        Dim hrPersonProxy As IHRPersonProxy = Substitute.For(Of IHRPersonProxy)()
-        ClassFactory.SetTypeInstanceForSession(Of IHRPersonProxy)(hrPersonProxy)
-
-        'Arrange Filestream
-        Dim filehelper = Substitute.For(Of IFileHelper)()
-        filehelper.GetFiles("").ReturnsForAnyArgs(Function(p) {"SemicolonNoHeader"})
-        filehelper.OpenFile("").ReturnsForAnyArgs(Function(p) StreamHelper.GenerateStreamReaderFromString(My.Resources.w_ansatte))
-        ClassFactory.SetTypeInstanceForSession(Of IFileHelper)(filehelper)
-
-        'Act
-        Dim job = Facade.JobFacade.GetJob("1")
-        Dim JobExecutor = New JobExecutor(job)
-        Dim result = JobExecutor.Execute()
-
-
-        'Assert
-        Assert.AreEqual(True, result.Success)
-        hrPersonProxy.Received.Import(
-            Arg.Is(Of ImportPersonRequest)(Function(p) ValidateReceivedPersons_AllFields(p).All(Function(b) b)),
-            Arg.Any(Of String),
-            Arg.Any(Of String))
-    End Sub
-
-
-    Private Iterator Function ValidateReceivedPersons(ByVal importRequest As ImportPersonRequest) As IEnumerable(Of Boolean)
+    Private Iterator Function ValidateReceivedChildren(ByVal importRequest As ImportPersonRequest) As IEnumerable(Of Boolean)
         Dim persons = importRequest.Persons
         Yield persons.Length = 1
-        Yield persons(0).FirstName = "Martin"
-        Yield persons(0).LastName = "Helgesen"
-        Yield persons(0).ShortName = ""
-        Yield persons(0).MiddleName Is Nothing
+        Yield persons(0).Children.Count = 3
     End Function
     Private Iterator Function ValidateReceivedPersons_AllFields(ByVal importRequest As ImportPersonRequest) As IEnumerable(Of Boolean)
         Dim persons = importRequest.Persons
@@ -225,9 +147,18 @@ Imports Datastreamr.Framework.Utils
     Private Function StubSourceData() As DataContainer
         Dim dc As New DataContainer
         dc.Data = New List(Of Dictionary(Of String, Object))
-        Dim dic = New Dictionary(Of String, Object) From {{"FirstName", "Martin"},
-                                                          {"LastName", "Helgesen"},
-                                                          {"ShortName", ""}
+        Dim dic = New Dictionary(Of String, Object) From {{"ParentIdentifier", "2408"},
+                                                          {"FirstName", "Andreas"},
+                                                          {"LastName", "Helgesen"}
+                                                         }
+        dc.Data.Add(dic)
+        dic = New Dictionary(Of String, Object) From {{"ParentIdentifier", "2408"},
+                                                          {"FirstName", "Pia"},
+                                                          {"LastName", "Andersen"}
+                                                         }
+        dic = New Dictionary(Of String, Object) From {{"ParentIdentifier", "2408"},
+                                                          {"FirstName", "Jesper"},
+                                                          {"LastName", "Andersen"}
                                                          }
         dc.Data.Add(dic)
         Return dc
@@ -242,5 +173,41 @@ Imports Datastreamr.Framework.Utils
         Return True
     End Function
 
+    <Test> Public Sub TestSortAndGroupDictionary()
+        Dim dc As New DataContainer
+        dc.Data = New List(Of Dictionary(Of String, Object))
+
+        Dim dic = New Dictionary(Of String, Object) From {{"ParentIdentifier", "2408"},
+                                                          {"FirstName", "Andreas"},
+                                                          {"LastName", "Helgesen"}
+                                                         }
+        dc.Data.Add(dic)
+
+        dic = New Dictionary(Of String, Object) From {{"ParentIdentifier", "1911"},
+                                                          {"FirstName", "Pia"},
+                                                          {"LastName", "Andersen"}
+                                                         }
+        dc.Data.Add(dic)
+
+        dic = New Dictionary(Of String, Object) From {{"ParentIdentifier", "2408"},
+                                                          {"FirstName", "Jesper"},
+                                                          {"LastName", "Andersen"}
+                                                         }
+        dc.Data.Add(dic)
+
+        dic = New Dictionary(Of String, Object) From {{"ParentIdentifier", "2011"},
+                                                          {"FirstName", "Anette"},
+                                                          {"LastName", "Helgesen"}
+                                                         }
+        dc.Data.Add(dic)
+
+        dic = New Dictionary(Of String, Object) From {{"ParentIdentifier", "2408"},
+                                                          {"FirstName", "Jesper"},
+                                                          {"LastName", "Andersen"}
+                                                         }
+        dc.Data.Add(dic)
+
+
+    End Sub
 
 End Class

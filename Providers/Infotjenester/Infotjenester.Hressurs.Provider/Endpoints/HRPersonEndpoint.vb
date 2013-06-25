@@ -35,13 +35,13 @@ Namespace Endpoints
             'Property Identifier As String
             If dictionary.ContainsKey("Identifier") Then person.PersonIdentifier = New PersonIdentifier With {.Value = CType(dictionary("Identifier"), String), .IdentifierType = CType([Enum].Parse(GetType(PersonIdentifierType), requestParams.PersonIdentifier, True), PersonIdentifierType?)}
 
-            If dictionary.ContainsKey("FirstName") Then person.FirstName = CType(dictionary("FirstName"), String)
-            If dictionary.ContainsKey("LastName") Then person.LastName = CType(dictionary("LastName"), String)
-            If dictionary.ContainsKey("MiddleName") Then person.MiddleName = CType(dictionary("MiddleName"), String)
-            If dictionary.ContainsKey("ShortName") Then person.ShortName = CType(dictionary("ShortName"), String)
-            If dictionary.ContainsKey("PersonalNo") Then person.SocialSecurityNumber = CType(dictionary("PersonalNo"), String)
+            If ContainsAndNotEmpty(dictionary, "FirstName") Then person.FirstName = CType(dictionary("FirstName"), String)
+            If ContainsAndNotEmpty(dictionary, "LastName") Then person.LastName = CType(dictionary("LastName"), String)
+            If ContainsAndNotEmpty(dictionary, "MiddleName") Then person.MiddleName = CType(dictionary("MiddleName"), String)
+            If ContainsAndNotEmpty(dictionary, "ShortName") Then person.ShortName = CType(dictionary("ShortName"), String)
+            If ContainsAndNotEmpty(dictionary, "PersonalNo") Then person.SocialSecurityNumber = CType(dictionary("PersonalNo"), String)
             'Email
-            If dictionary.ContainsKey("Email") Then
+            If ContainsAndNotEmpty(dictionary, "Email") Then
                 person.EMailAddresses = New EMailAddress() {New EMailAddress With {.Address = CType(dictionary("Email"), String), .Type = EMailType.Main}}
             End If
 
@@ -49,46 +49,46 @@ Namespace Endpoints
             If dictionary.ContainsKey("DepartmentIdentifier") Then person.ParentUnitIdentifier = New UnitIdentifier With {.Value = CType(dictionary("DepartmentIdentifier"), String), .Identifiertype = CType([Enum].Parse(GetType(UnitIdentifierType), requestParams.UnitIdentifier, True), UnitIdentifierType?)}
 
             'Address
-            If dictionary.Keys.Any(Function(s) {"Street1", "Street2", "PostNo", "Postarea", "CountryCode"}.Contains(s)) Then
+            If dictionary.Where(Function(s) {"Street1", "Street2", "PostNo", "Postarea", "CountryCode"}.Contains(s.Key)).Any(Function(s) Not String.IsNullOrEmpty(s.Key)) Then
                 person.Addresses = New Address() {New Address}
-                If dictionary.ContainsKey("Street1") Then person.Addresses(0).StreetName1 = CType(dictionary("Street1"), String)
-                If dictionary.ContainsKey("Street2") Then person.Addresses(0).StreetName2 = CType(dictionary("Street2"), String)
-                If dictionary.ContainsKey("PostNo") Then person.Addresses(0).ZipCode = CType(dictionary("PostNo"), String)
-                If dictionary.ContainsKey("Postarea") Then person.Addresses(0).PostalArea = CType(dictionary("Postarea"), String)
-                If dictionary.ContainsKey("CountryCode") Then person.Addresses(0).CountryCode = CType(dictionary("CountryCode"), String)
+                If ContainsAndNotEmpty(dictionary, "Street1") Then person.Addresses(0).StreetName1 = CType(dictionary("Street1"), String)
+                If ContainsAndNotEmpty(dictionary, "Street2") Then person.Addresses(0).StreetName2 = CType(dictionary("Street2"), String)
+                If ContainsAndNotEmpty(dictionary, "PostNo") Then person.Addresses(0).ZipCode = CType(dictionary("PostNo"), String)
+                If ContainsAndNotEmpty(dictionary, "Postarea") Then person.Addresses(0).PostalArea = CType(dictionary("Postarea"), String)
+                If ContainsAndNotEmpty(dictionary, "CountryCode") Then person.Addresses(0).CountryCode = CType(dictionary("CountryCode"), String)
             End If
             'Phones
             Dim phones = New List(Of Phone)
-            If dictionary.ContainsKey("Phone") Then phones.Add(New Phone With {.Number = CType(dictionary("Phone"), String), .Type = PhoneType.DirectNumber})
-            If dictionary.ContainsKey("PhonePrivate") Then phones.Add(New Phone With {.Number = CType(dictionary("PhonePrivate"), String), .Type = PhoneType.Home})
-            If dictionary.ContainsKey("Mobile") Then phones.Add(New Phone With {.Number = CType(dictionary("Mobile"), String), .Type = PhoneType.CellPhone})
-            If dictionary.ContainsKey("Fax") Then phones.Add(New Phone With {.Number = CType(dictionary("Fax"), String), .Type = PhoneType.Fax})
+            If ContainsAndNotEmpty(dictionary, "Phone") Then phones.Add(New Phone With {.Number = CType(dictionary("Phone"), String), .Type = PhoneType.DirectNumber})
+            If ContainsAndNotEmpty(dictionary, "PhonePrivate") Then phones.Add(New Phone With {.Number = CType(dictionary("PhonePrivate"), String), .Type = PhoneType.Home})
+            If ContainsAndNotEmpty(dictionary, "Mobile") Then phones.Add(New Phone With {.Number = CType(dictionary("Mobile"), String), .Type = PhoneType.CellPhone})
+            If ContainsAndNotEmpty(dictionary, "Fax") Then phones.Add(New Phone With {.Number = CType(dictionary("Fax"), String), .Type = PhoneType.Fax})
             If phones.Count > 0 Then
                 person.Phones = phones.ToArray
             End If
 
-            If dictionary.ContainsKey("BankAccount1") Then person.BankAccount1 = CType(dictionary("BankAccount1"), String)
-            If dictionary.ContainsKey("BankAccount2") Then person.BankAccount2 = CType(dictionary("BankAccount2"), String)
-            If dictionary.ContainsKey("Nationality") Then person.CountryCode = CType(dictionary("Nationality"), String)
+            If ContainsAndNotEmpty(dictionary, "BankAccount1") Then person.BankAccount1 = CType(dictionary("BankAccount1"), String)
+            If ContainsAndNotEmpty(dictionary, "BankAccount2") Then person.BankAccount2 = CType(dictionary("BankAccount2"), String)
+            If ContainsAndNotEmpty(dictionary, "Nationality") Then person.CountryCode = CType(dictionary("Nationality"), String)
 
-            'NextOfKind
-            If dictionary.Keys.Any(Function(s) {"NextOfKindFirstName", "NextOfKindLastName", "NextOfKindPhone"}.Contains(s)) Then
+            'NextOfKin
+            If ContainsAndNotEmpty(dictionary, "NextOfKinFirstName") Then
                 person.NextOfKinInfo = New NextOfKin() {New NextOfKin}
-                If dictionary.ContainsKey("NextOfKindFirstName") Then person.NextOfKinInfo(0).FirstName = CType(dictionary("NextOfKindFirstName"), String)
-                If dictionary.ContainsKey("NextOfKindLastName") Then person.NextOfKinInfo(0).FirstName = CType(dictionary("NextOfKindLastName"), String)
-                If dictionary.ContainsKey("NextOfKindPhone") Then
-                    person.NextOfKinInfo(0).Phones = New Phone() {New Phone With {.Number = CType(dictionary("NextOfKindPhone"), String), .Type = PhoneType.CellPhone}}
+                If ContainsAndNotEmpty(dictionary, "NextOfKinFirstName") Then person.NextOfKinInfo(0).FirstName = CType(dictionary("NextOfKinFirstName"), String)
+                If ContainsAndNotEmpty(dictionary, "NextOfKinLastName") Then person.NextOfKinInfo(0).FirstName = CType(dictionary("NextOfKinLastName"), String)
+                If ContainsAndNotEmpty(dictionary, "NextOfKinPhone") Then
+                    person.NextOfKinInfo(0).Phones = New Phone() {New Phone With {.Number = CType(dictionary("NextOfKinPhone"), String), .Type = PhoneType.CellPhone}}
                 End If
             End If
 
-            If dictionary.ContainsKey("IsActive") Then person.IsDeactivated = Not CType(dictionary("IsActive"), Boolean)
+            If ContainsAndNotEmpty(dictionary, "IsActive") Then person.IsDeactivated = Not CType(dictionary("IsActive"), Boolean)
 
-            If dictionary.ContainsKey("SpecifiedLeaderIdentifier") Then
+            If ContainsAndNotEmpty(dictionary, "SpecifiedLeaderIdentifier") Then
                 Dim ptype = CType([Enum].Parse(GetType(PersonIdentifierType), requestParams.PersonIdentifier, True), PersonIdentifierType?)
                 person.SpecifiedLeader = New PersonIdentifier With {.Value = CType(dictionary("SpecifiedLeaderIdentifier"), String), .IdentifierType = ptype}
             End If
 
-            If dictionary.ContainsKey("EmployeeNo") Then
+            If ContainsAndNotEmpty(dictionary, "EmployeeNo") Then
                 person.EmploymentInfo = New Employee() {New Employee}
                 Dim employee = person.EmploymentInfo(0)
                 employee.EmployeeNumber = CType(dictionary("EmployeeNo"), String)
@@ -104,12 +104,22 @@ Namespace Endpoints
 
             End If
 
-            If dictionary.ContainsKey("Gender") Then person.Gender = CType(dictionary("Gender"), Gender)
-            If dictionary.ContainsKey("BirthDate") Then person.BirthDate = CType(dictionary("BirthDate"), Date)
+            If ContainsAndNotEmpty(dictionary, "Gender") Then person.Gender = CType(dictionary("Gender"), Gender)
+            If ContainsAndNotEmpty(dictionary, "BirthDate") Then person.BirthDate = CType(dictionary("BirthDate"), Date)
+
+            If ContainsAndNotEmpty(dictionary, "Username") Then
+                Dim logon As Logon = New Logon With {.UserName = CType(dictionary("Username"), String)}
+                logon.Email = CType(dictionary("Email"), String)
+                logon.MobilePhoneNumber = CType(dictionary("Mobile"), String)
+                person.LogOn = logon
+            End If
 
             Return person
         End Function
 
+        Private Function ContainsAndNotEmpty(d As Dictionary(Of String, Object), field As String) As Boolean
+            Return d.ContainsKey(field) AndAlso Not String.IsNullOrEmpty(CType(d(field), String))
+        End Function
 
         Private Sub ValidateParams(ByVal hrPersonParams As HRPersonParams)
             If String.IsNullOrEmpty(hrPersonParams.PersonIdentifier) Then

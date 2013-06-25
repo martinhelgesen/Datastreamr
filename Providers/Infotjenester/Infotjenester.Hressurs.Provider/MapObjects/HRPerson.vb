@@ -13,6 +13,7 @@ Public Class HRPerson
     Property Email As String
     Property Street1 As String
     Property Street2 As String
+    Property Street3 As String
     Property PostNo As String
     Property Postarea As String
     Property CountryCode As String
@@ -27,11 +28,12 @@ Public Class HRPerson
     Property EmployeeCategory As String
     Property EmployeePosition As String
     Property Nationality As String
-    Property NextOfKindFirstName As String
-    Property NextOfKindLastName As String
-    Property NextOfKindPhone As String
+    Property NextOfKinFirstName As String
+    Property NextOfKinLastName As String
+    Property NextOfKinPhone As String
     Property EmploymentStartDate As String
     Property EmploymentEndDate As String
     Property IsActive As String
     Property SpecifiedLeaderIdentifier As String
+    Property Username As String
 End Class

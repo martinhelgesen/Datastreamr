@@ -82,6 +82,7 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HRChildEndPointTest.vb" />
     <Compile Include="HRPersonEndPointTest.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -140,6 +141,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\HRPerson.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HRChild.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\w_ansatte.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

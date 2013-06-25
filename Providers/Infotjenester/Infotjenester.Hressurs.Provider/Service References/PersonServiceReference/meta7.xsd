@@ -204,6 +204,15 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="EMailType" nillable="true" type="tns:EMailType" />
+  <xs:simpleType name="UserNameAlternative">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="UseEmailIfUserNameIsOccupied" />
+      <xs:enumeration value="UseMobileNumberIfUserNameIsOccupied" />
+      <xs:enumeration value="UseSystemGenerated" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="UserNameAlternative" nillable="true" type="tns:UserNameAlternative" />
   <xs:simpleType name="MaritalStatus">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Singel">

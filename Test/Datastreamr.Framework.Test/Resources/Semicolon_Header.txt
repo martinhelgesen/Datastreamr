@@ -1,4 +1,4 @@
 @EmployeeNumber;@Name;@PersonalNo;@EMail;@Phone;@PhonePrivate;@PhoneMobile;@DepartmentNo;@AccountNo;@EmployeeCategoryName;@EmployeePositionName;@EmploymentStartDate;@EmploymentPercent;
-1962;Martin Helgesen;24088047326;test1@test.no;69971705;69157337;97125917;23;23;Fast stilling;FAGKONSULENT (FORRETNINGSUTVIKLING)               ;01.04.2007;100;
+1962;Martin Helgesen;;test1@test.no;69971705;69157337;97125917;23;23;Fast stilling;FAGKONSULENT (FORRETNINGSUTVIKLING)               ;01.04.2007;100;
 166;TESTPERSON 2;24088047326;test2@test.no;;;;27;27;Fast stilling;DRIFTSDIREKTØR;05.08.2006;100;
 352;TESTPERSON 3;2408804732;test3@test.no;;;;27;27;Fast stilling;REGIONSDIREKTØR;01.02.2010;100;
