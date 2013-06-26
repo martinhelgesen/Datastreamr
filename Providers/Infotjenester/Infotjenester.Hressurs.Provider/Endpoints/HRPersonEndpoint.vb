@@ -53,9 +53,11 @@ Namespace Endpoints
                 person.Addresses = New Address() {New Address}
                 If ContainsAndNotEmpty(dictionary, "Street1") Then person.Addresses(0).StreetName1 = CType(dictionary("Street1"), String)
                 If ContainsAndNotEmpty(dictionary, "Street2") Then person.Addresses(0).StreetName2 = CType(dictionary("Street2"), String)
+                If ContainsAndNotEmpty(dictionary, "Street3") Then person.Addresses(0).StreetName3 = CType(dictionary("Street3"), String)
                 If ContainsAndNotEmpty(dictionary, "PostNo") Then person.Addresses(0).ZipCode = CType(dictionary("PostNo"), String)
                 If ContainsAndNotEmpty(dictionary, "Postarea") Then person.Addresses(0).PostalArea = CType(dictionary("Postarea"), String)
                 If ContainsAndNotEmpty(dictionary, "CountryCode") Then person.Addresses(0).CountryCode = CType(dictionary("CountryCode"), String)
+                person.Addresses(0).Type = AddressType.Primary
             End If
             'Phones
             Dim phones = New List(Of Phone)
@@ -92,14 +94,14 @@ Namespace Endpoints
                 person.EmploymentInfo = New Employee() {New Employee}
                 Dim employee = person.EmploymentInfo(0)
                 employee.EmployeeNumber = CType(dictionary("EmployeeNo"), String)
-                If dictionary.ContainsKey("CompanyIdentifier") Then employee.EmployedIn = New UnitIdentifier With {.Value = CType(dictionary("CompanyIdentifier"), String), .Identifiertype = CType([Enum].Parse(GetType(UnitIdentifierType), requestParams.UnitIdentifier, True), UnitIdentifierType?)}
+                If ContainsAndNotEmpty(dictionary, "CompanyIdentifier") Then employee.EmployedIn = New UnitIdentifier With {.Value = CType(dictionary("CompanyIdentifier"), String), .Identifiertype = CType([Enum].Parse(GetType(UnitIdentifierType), requestParams.UnitIdentifier, True), UnitIdentifierType?)}
 
                 If dictionary.Keys.Any(Function(s) {"EmploymentStartDate", "EmploymentPercent", "EmploymentEndDate", "EmployeeCategory", "EmployeePosition"}.Contains(s)) Then
                     employee.Employment = New Employment() {New Employment}
-                    If dictionary.ContainsKey("EmploymentStartDate") Then employee.Employment(0).FromDate = CType(dictionary("EmploymentStartDate"), Date)
-                    If dictionary.ContainsKey("EmploymentEndDate") Then employee.Employment(0).ToDate = CType(dictionary("EmploymentEndDate"), Date)
-                    If dictionary.ContainsKey("EmployeeCategory") Then employee.Employment(0).Category = New Category With {.Name = CType(dictionary("EmployeeCategory"), String)}
-                    If dictionary.ContainsKey("EmployeePosition") Then employee.Employment(0).Position = New Position With {.Name = CType(dictionary("EmployeePosition"), String)}
+                    If ContainsAndNotEmpty(dictionary, "EmploymentStartDate") Then employee.Employment(0).FromDate = CType(dictionary("EmploymentStartDate"), Date)
+                    If ContainsAndNotEmpty(dictionary, "EmploymentEndDate") Then employee.Employment(0).ToDate = CType(dictionary("EmploymentEndDate"), Date)
+                    If ContainsAndNotEmpty(dictionary, "EmployeeCategory") Then employee.Employment(0).Category = New Category With {.Name = CType(dictionary("EmployeeCategory"), String)}
+                    If ContainsAndNotEmpty(dictionary, "EmployeePosition") Then employee.Employment(0).Position = New Position With {.Name = CType(dictionary("EmployeePosition"), String)}
                 End If
 
             End If
@@ -118,7 +120,7 @@ Namespace Endpoints
         End Function
 
         Private Function ContainsAndNotEmpty(d As Dictionary(Of String, Object), field As String) As Boolean
-            Return d.ContainsKey(field) AndAlso Not String.IsNullOrEmpty(CType(d(field), String))
+            Return d.ContainsKey(field) AndAlso (Not String.IsNullOrEmpty(CType(d(field), String)) AndAlso CType(d(field), String).Trim <> "")
         End Function
 
         Private Sub ValidateParams(ByVal hrPersonParams As HRPersonParams)

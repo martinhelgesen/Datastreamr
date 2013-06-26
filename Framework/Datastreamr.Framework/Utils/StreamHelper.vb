@@ -4,7 +4,7 @@ Namespace Utils
     Public Class StreamHelper
         Public Shared Function GenerateStreamFromString(s As String) As Stream
             Dim stream As New MemoryStream()
-            Dim writer As New StreamWriter(stream)
+            Dim writer As New StreamWriter(stream, Text.Encoding.GetEncoding("iso-8859-1"))
             writer.Write(s)
             writer.Flush()
             stream.Position = 0
@@ -12,7 +12,7 @@ Namespace Utils
         End Function
 
         Public Shared Function GenerateStreamReaderFromString(ByVal s As String) As StreamReader
-            Return New StreamReader(GenerateStreamFromString(s))
+            Return New StreamReader(GenerateStreamFromString(s), Text.Encoding.GetEncoding("iso-8859-1"))
         End Function
     End Class
 

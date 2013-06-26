@@ -9,7 +9,7 @@ Namespace Utils
         End Function
 
         Public Function OpenFile(path As String) As StreamReader Implements IFileHelper.OpenFile
-            Return New StreamReader(path)
+            Return New StreamReader(path, Text.Encoding.GetEncoding("iso-8859-1"))
         End Function
     End Class
 
