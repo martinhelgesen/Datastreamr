@@ -148,6 +148,9 @@
   <ItemGroup>
     <None Include="Resources\w_ansatte.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WF_Personale_130625_1.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PostBuildEvent>

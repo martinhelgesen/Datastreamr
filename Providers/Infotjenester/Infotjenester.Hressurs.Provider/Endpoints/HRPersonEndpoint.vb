@@ -106,7 +106,11 @@ Namespace Endpoints
 
             End If
 
-            If ContainsAndNotEmpty(dictionary, "Gender") Then person.Gender = CType(dictionary("Gender"), Gender)
+            If ContainsAndNotEmpty(dictionary, "Gender") Then
+                person.Gender = CType(dictionary("Gender"), Gender)
+            Else
+                person.Gender = Gender.NotSet
+            End If
             If ContainsAndNotEmpty(dictionary, "BirthDate") Then person.BirthDate = CType(dictionary("BirthDate"), Date)
 
             If ContainsAndNotEmpty(dictionary, "Username") Then

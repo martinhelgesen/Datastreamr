@@ -12,10 +12,12 @@ Namespace Endpoints
             'Validate
             ValidateParams(params)
 
-
             'Transform values to Person and Child objects
-            'values.Data.Sort()
-            Dim persons As List(Of Person) = (From dic In values.Data Select InternalTransform(dic, params)).ToList()
+            Dim persons As New List(Of Person)
+            Dim persongroups = values.Data.GroupBy(Function(d) d("ParentIdentifier"))
+            For Each group In persongroups
+                persons.Add(TransformPerson(group, params))
+            Next
 
             'Deliver            
             Dim request As New ImportPersonRequest With {
@@ -30,11 +32,39 @@ Namespace Endpoints
             Return New EndPointResult With {.success = False, .Result = Newtonsoft.Json.JsonConvert.SerializeObject(result)}
         End Function
 
-        Private Function InternalTransformChildren(ByVal dictionary As Dictionary(Of String, Object), requestParams As HRPersonParams) As Person
+        Private Function TransformPerson(group As IEnumerable(Of Dictionary(Of String, Object)), params As HRPersonParams) As Person
+            Dim person As New Person
+            person.PersonIdentifier = New PersonIdentifier With {.IdentifierType = CType([Enum].Parse(GetType(PersonIdentifierType), params.PersonIdentifier, True), PersonIdentifierType?)}
+            Dim children As New List(Of Child)
+            For Each value In group
+                If ContainsAndNotEmpty(value, "ParentIdentifier") Then person.PersonIdentifier.Value = CType(value("ParentIdentifier"), String)
+                If ContainsAndNotEmpty(value, "ParentFirstName") Then person.FirstName = CType(value("ParentFirstName"), String)
+                If ContainsAndNotEmpty(value, "ParentLastName") Then person.LastName = CType(value("ParentLastName"), String)
+                children.Add(AddChild(value, params))
+            Next
+            person.Children = children.ToArray
+            Return person
+        End Function
+
+        Private Function AddChild(ByVal dictionary As Dictionary(Of String, Object), requestParams As HRPersonParams) As Child
             Dim child As New Child
             If ContainsAndNotEmpty(dictionary, "FirstName") Then child.FirstName = CType(dictionary("FirstName"), String)
-            If ContainsAndNotEmpty(dictionary, "LastName") Then child.FirstName = CType(dictionary("LastName"), String)
+            If ContainsAndNotEmpty(dictionary, "LastName") Then child.LastName = CType(dictionary("LastName"), String)
+
+            If ContainsAndNotEmpty(dictionary, "MiddleName") Then child.MiddleName = CType(dictionary("MiddleName"), String)
+            If ContainsAndNotEmpty(dictionary, "Gender") Then
+                child.Gender = CType(dictionary("Gender"), Gender)
+            Else
+                child.Gender = Gender.NotSet
+            End If
+            If ContainsAndNotEmpty(dictionary, "BirthDate") Then child.BirthDate = CDate(dictionary("BirthDate"))
+            If ContainsAndNotEmpty(dictionary, "SplitCare") Then child.SplitCare = CType(dictionary("SplitCare"), Boolean)
+            If ContainsAndNotEmpty(dictionary, "SplitCarePercent") Then child.SplitCarePercent = CType(dictionary("SplitCarePercent"), Integer)
+            If ContainsAndNotEmpty(dictionary, "LivesWithParent") Then child.LivesWithParent = CType(dictionary("LivesWithParent"), Boolean)
+            If ContainsAndNotEmpty(dictionary, "DisabledChild") Then child.DisabledChild = CType(dictionary("DisabledChild"), Boolean)
+            Return child
         End Function
+
         Private Function InternalTransform(ByVal dictionary As Dictionary(Of String, Object), requestParams As HRPersonParams) As Person
             Dim person As New Person
 

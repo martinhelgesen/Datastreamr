@@ -71,11 +71,13 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Endpoints\HREmploymentEndpoint.vb" />
     <Compile Include="Endpoints\HRChildEndpoint.vb" />
     <Compile Include="Endpoints\HRPersonEndpoint.vb" />
     <Compile Include="Endpoints\HRPersonParams.vb" />
     <Compile Include="Endpoints\PersonClientProxy.vb" />
     <Compile Include="MapObjects\HRChild.vb" />
+    <Compile Include="MapObjects\HREmployment.vb" />
     <Compile Include="MapObjects\HRPerson.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

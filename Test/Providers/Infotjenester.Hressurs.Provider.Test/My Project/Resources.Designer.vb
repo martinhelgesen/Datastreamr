@@ -95,5 +95,16 @@ Namespace My.Resources
                 Return ResourceManager.GetString("w_ansatte", resourceCulture)
             End Get
         End Property
+
+        '''<summary>
+        '''  Looks up a localized string similar to 4170;WF;Egil;;Bjerke;;1;04.01.1956;4170;04015642993;egil.bjerke@wideroe.no;Torvmyrvn 41;;;3170;SEM;NO; ; ; ;;;;425;;F;Flytekniker; ;;;;01.08.1986; ;1;;egil.bjerke@wideroe.no
+        '''6880;WF;John Agnar;;Hansen;;1;18.05.1955;6880;18055534302;john.agnar.hansen@wideroe.no;Kjelling;;;8120;NYGÅRDSJØEN;NO; ; ;004795714296;;;;602;;F;Flytekniker; ;;;;19.03.2001; ;1;;john.agnar.hansen@wideroe.no
+        '''3459;WF;Reidar;;Johansen;;1;12.06.1954;3459;12065438117;reidar.johansen@wideroe.no;Trollmyra 28;;;8028;BODØ;NO; ; ; ;;;;419;;F;Et [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property WF_Personale_130625_1() As String
+            Get
+                Return ResourceManager.GetString("WF_Personale_130625_1", resourceCulture)
+            End Get
+        End Property
     End Module
 End Namespace

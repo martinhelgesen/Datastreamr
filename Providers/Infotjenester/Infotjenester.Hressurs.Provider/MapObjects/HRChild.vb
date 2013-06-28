@@ -9,6 +9,6 @@
     Property BirthDate As String
     Property SplitCare As String
     Property SplitCarePercent As String
-    Property LiveWithParent As String
+    Property LivesWithParent As String
     Property DisabledChild As String
 End Class
