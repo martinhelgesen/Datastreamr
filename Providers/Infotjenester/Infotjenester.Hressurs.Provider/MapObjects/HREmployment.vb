@@ -1,9 +1,10 @@
 Public Class HREmployment
-    Property Identifier As String
+    Property PersonIdentifier As String
+    Property CompanyIdentifier As String
     Property EmployeeNumber As String
     Property EmployeeCategory As String
     Property Position As String
-    Property StartDate As String
+    Property FromDate As String
     Property EndDate As String
     Property PositionPercent As String
     Property DepartmentIdentifier As String

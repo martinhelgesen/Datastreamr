@@ -17,6 +17,13 @@ Public Class Mapper
     Private Shared Function GetValue(ByVal dictionary As Dictionary(Of String, Object),
                                      ByVal propertyDesc As List(Of ParamInfo), ByVal mapInfo As MapInfo) As Object
         If Not dictionary.ContainsKey(mapInfo.FromName) Then
+            If mapInfo.FromName = "STATIC" Then
+                Return mapInfo.Rule
+                'Using context As New JavascriptContext
+                '    context.SetParameter("newValue", "")
+                '    Return context.Run("f = function() { ret" + mapInfo.Rule + "}; newValue = f();")
+                'End Using
+            End If
             Return Nothing
         End If
         If String.IsNullOrEmpty(mapInfo.Rule) Then

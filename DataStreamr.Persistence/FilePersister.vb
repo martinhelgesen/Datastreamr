@@ -1,12 +1,15 @@
 ﻿Imports DataStreamr.Persistence.Config
 Imports DataStreamr.Persistence.Interfaces
+Imports System.Text
 
 Friend Class FilePersister
     Implements IPersister
 
+    Private _getEncoding As Encoding = Text.Encoding.GetEncoding("ISO-8859-1")
+
     Public Function Load(Of T)(dbName As String, objectName As String) As T Implements IPersister.Load
         Dim ret As T
-        Using sReader As New IO.StreamReader(Path(dbName, GetType(T)) & objectName & ".json")
+        Using sReader As New IO.StreamReader(Path(dbName, GetType(T)) & objectName & ".json", _getEncoding)
             ret = Newtonsoft.Json.JsonConvert.DeserializeObject(Of T)(sReader.ReadToEnd)
         End Using
         Return ret
@@ -16,11 +19,11 @@ Friend Class FilePersister
         Dim ret As New List(Of T)
 
         For Each f In New System.IO.DirectoryInfo(Path(dbName, GetType(T))).GetFiles("*.json")
-            Using sReader As New IO.StreamReader(f.OpenRead)
+            Using sReader As New IO.StreamReader(f.OpenRead, _getEncoding)
                 ret.Add(Newtonsoft.Json.JsonConvert.DeserializeObject(Of T)(sReader.ReadToEnd))
             End Using
         Next
-        
+
         Return ret
     End Function
 
@@ -46,6 +49,6 @@ Friend Class FilePersister
         Using sWriter As New IO.StreamWriter(Path(dbName, data.GetType) & objectname & ".json", False)
             sWriter.Write(Newtonsoft.Json.JsonConvert.SerializeObject(data, Newtonsoft.Json.Formatting.Indented))
         End Using
-        
+
     End Sub
 End Class

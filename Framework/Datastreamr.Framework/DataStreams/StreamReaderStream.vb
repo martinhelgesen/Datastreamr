@@ -30,7 +30,13 @@ Namespace DataStreams
                 Next
             Else
                 line = peekableStreamReader.PeekLine
-                Dim fields = line.Split(CType(params.ValueSeparator, Char))
+                Dim fields As String() = Nothing
+                If Not String.IsNullOrEmpty(params.ValueSeparator) Then
+                    fields = line.Split(CType(params.ValueSeparator, Char))
+                ElseIf Not String.IsNullOrEmpty(params.FixedPositionDescriptor) Then
+                    fields = params.FixedPositionDescriptor.Split(","c)
+                End If
+
                 For i = 0 To fields.Length - 1
                     retval.MetaData.Add(New ParamInfo With {.Name = i.ToString})
                 Next
@@ -40,12 +46,26 @@ Namespace DataStreams
             Do
                 line = peekableStreamReader.ReadLine
                 If line Is Nothing Then Exit Do
-
                 Dim values As New Dictionary(Of String, Object)
-                Dim fields = line.Split(CType(params.ValueSeparator, Char))
-                For i = 0 To fields.Length - 1
-                    values.Add(retval.MetaData(i).Name, fields(i))
-                Next
+
+                If Not String.IsNullOrEmpty(params.ValueSeparator) Then
+                    Dim fields = line.Split(CType(params.ValueSeparator, Char))
+                    For i = 0 To fields.Length - 1
+                        values.Add(retval.MetaData(i).Name, fields(i))
+                    Next
+                End If
+
+                If Not String.IsNullOrEmpty(params.FixedPositionDescriptor) Then
+                    Dim lengths = params.FixedPositionDescriptor.Split(","c)
+                    Dim start = 0
+                    For i = 0 To lengths.Length - 1
+                        If start + CInt(lengths(i)) > line.Length Then
+                            Exit For
+                        End If
+                        values.Add(retval.MetaData(i).Name, line.Substring(start, CInt(lengths(i))))
+                        start = start + CInt(lengths(i))
+                    Next
+                End If
                 retval.Data.Add(values)
             Loop
 
