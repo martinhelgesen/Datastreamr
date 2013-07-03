@@ -1,4 +1,5 @@
-﻿Imports LazyFramework
+﻿Imports Noesis.Javascript
+Imports LazyFramework
 
 Public Class JobExecutor
     Private ReadOnly _job As JobEntity
@@ -18,6 +19,7 @@ Public Class JobExecutor
         Dim mapresult As DataContainer = Nothing
         Dim endpointResult As EndPointResult = Nothing
         Try
+            InitializeV8Engine()
             Dim dataContainer = _job.DataStream.GetStreamInternal(_job.DataStreamParams)
             Dim endpoint = _job.Endpoint
             mapresult = Mapper.Map(dataContainer, _job.Mapconfig)
@@ -27,5 +29,14 @@ Public Class JobExecutor
             Return New JobResult With {.EndpointResult = endpointResult, .MapResult = mapresult, .Success = False, .Exception = ex}
         End Try
     End Function
+
+    Private Sub InitializeV8Engine()
+        Try
+            Using context = New JavascriptContext
+                context.Run("return true;")
+            End Using
+        Catch ex As Exception
+        End Try
+    End Sub
 End Class
 

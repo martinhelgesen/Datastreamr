@@ -1,7 +1,9 @@
-﻿Imports Datastreamr.Framework.Endpoints
+﻿Imports System.Runtime.CompilerServices
+Imports Datastreamr.Framework.Endpoints
 Imports Datastreamr.Framework
 Imports LazyFramework
 Imports Infotjenester.Hressurs.Provider.PersonServiceReference
+
 
 Namespace Endpoints
     Public Class HREmploymentEndpoint
@@ -19,15 +21,21 @@ Namespace Endpoints
                 persons.Add(TransformPerson(group, params))
             Next
 
-            'Deliver            
-            Dim request As New ImportPersonRequest With {
-                                             .Persons = persons.ToArray,
-                                             .PersonIdentifierType = CType([Enum].Parse(GetType(PersonIdentifierType), params.PersonIdentifier, True), PersonIdentifierType?),
-                                             .UnitIdentifierType = CType([Enum].Parse(GetType(UnitIdentifierType), params.UnitIdentifier, True), UnitIdentifierType?)}
-            'request.
+            Dim chunks = persons.SplitList(10)
+            Dim result As New List(Of ImportPersonResponse)
 
-            Dim service = ClassFactory.GetTypeInstance(Of IHRPersonProxy, PersonClientProxy)()
-            Dim result = service.Import(request, params.Username, params.Password)
+            For Each chunk In chunks
+
+                'Deliver            
+                Dim request As New ImportPersonRequest With {
+                                                 .Persons = chunk.ToArray,
+                                                 .PersonIdentifierType = CType([Enum].Parse(GetType(PersonIdentifierType), params.PersonIdentifier, True), PersonIdentifierType?),
+                                                 .UnitIdentifierType = CType([Enum].Parse(GetType(UnitIdentifierType), params.UnitIdentifier, True), UnitIdentifierType?)}
+                'request.
+
+                Dim service = ClassFactory.GetTypeInstance(Of IHRPersonProxy, PersonClientProxy)()
+                result.Add(service.Import(request, params.Username, params.Password))
+            Next
 
             Return New EndPointResult With {.success = False, .Result = Newtonsoft.Json.JsonConvert.SerializeObject(result)}
         End Function
@@ -109,3 +117,15 @@ Namespace Endpoints
     End Class
 
 End Namespace
+
+Public Module ExtensionMethods
+    <Extension()>
+    Public Iterator Function SplitList(Of T)(source As IEnumerable(Of T), size As Integer) As IEnumerable(Of IEnumerable(Of T))
+        'Dim local = source.ToArray
+        'Dim enumerable As IEnumerable(Of T) = If(TryCast(source, T()), source.ToArray())
+        While source.Any()
+            Yield source.Take(size)
+            source = source.Skip(size)
+        End While
+    End Function
+End Module
