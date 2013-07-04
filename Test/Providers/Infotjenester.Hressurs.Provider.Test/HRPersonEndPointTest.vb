@@ -122,7 +122,7 @@ Imports Datastreamr.Framework.Utils
             Arg.Any(Of String))
     End Sub
 
-    <Test> Public Sub Deliver_Test_Wideroe()
+    <Test> Public Sub Deliver_Test_W()
         'Arrange Job
         Dim jobmock = NSubstitute.Substitute.For(Of IJobEntityDataAcces)()
         jobmock.WhenForAnyArgs(Sub(p) p.GetInstance("", "1", Nothing)).Do(Sub(p)
@@ -130,7 +130,7 @@ Imports Datastreamr.Framework.Utils
                                                                               j.DataStreamTypeName = GetType(FtpFileStream).AssemblyQualifiedName
                                                                               j.EndpointTypeName = GetType(HRPersonEndpoint).AssemblyQualifiedName
                                                                               j.DataStreamParams = New FtpFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = False}
-                                                                              j.EndpointParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "guid"}
+                                                                              j.EndpointParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "DepartmentCode"}
 
                                                                               Dim ret As New MapConfig
                                                                               ret.Add("0", "Identifier", Nothing)
@@ -157,18 +157,64 @@ Imports Datastreamr.Framework.Utils
                                                                               ret.Add("21", "BankAccount1", Nothing)
                                                                               ret.Add("22", "BankAccount2", Nothing)
                                                                               ret.Add("23", "DepartmentIdentifier", Nothing)
-                                                                              ret.Add("24", "SetAsLeader", Nothing)
-                                                                              ret.Add("25", "EmployeeCategory", Nothing)
-                                                                              ret.Add("26", "EmployeePosition", Nothing)
+                                                                              'ret.Add("24", "SetAsLeader", Nothing)
+                                                                              'ret.Add("25", "EmployeeCategory", Nothing)
+                                                                              'ret.Add("26", "EmployeePosition", Nothing)
                                                                               ret.Add("27", "Nationality", Nothing)
                                                                               ret.Add("28", "NextOfKinFirstName", Nothing)
                                                                               ret.Add("29", "NextOfKinLastName", Nothing)
                                                                               ret.Add("30", "NextOfKinPhone", Nothing)
-                                                                              ret.Add("31", "EmploymentStartDate", Nothing)
-                                                                              ret.Add("32", "EmploymentEndDate", Nothing)
+                                                                              'ret.Add("31", "EmploymentStartDate", Nothing)
+                                                                              'ret.Add("32", "EmploymentEndDate", Nothing)
                                                                               ret.Add("33", "IsActive", Nothing)
                                                                               ret.Add("34", "SpecifiedLeaderIdentifier", Nothing)
-                                                                              ret.Add("35", "Username", Nothing)
+                                                                              'ret.Add("35", "Username", Nothing)
+                                                                              j.Mapconfig = ret
+                                                                          End Sub)
+
+        ClassFactory.SetTypeInstanceForSession(Of IJobEntityDataAcces)(jobmock)
+        Dim hrPersonProxy As IHRPersonProxy = Substitute.For(Of IHRPersonProxy)()
+        ClassFactory.SetTypeInstanceForSession(Of IHRPersonProxy)(hrPersonProxy)
+
+        'Arrange Filestream
+        Dim filehelper = Substitute.For(Of IFileHelper)()
+        filehelper.GetFiles("").ReturnsForAnyArgs(Function(p) {"SemicolonNoHeader"})
+        filehelper.OpenFile("").ReturnsForAnyArgs(Function(p) StreamHelper.GenerateStreamReaderFromString(My.Resources.w_ansatte))
+        ClassFactory.SetTypeInstanceForSession(Of IFileHelper)(filehelper)
+
+        'Act
+        Dim job = Facade.JobFacade.GetJob("1")
+        Dim JobExecutor = New JobExecutor(job)
+        Dim result = JobExecutor.Execute()
+
+
+        'Assert 
+        Assert.AreEqual(True, result.Success)
+        hrPersonProxy.Received.Import(
+            Arg.Is(Of ImportPersonRequest)(Function(p) ValidateReceivedPersons_W(p).All(Function(b) b)),
+            Arg.Any(Of String),
+            Arg.Any(Of String))
+    End Sub
+
+    <Test> Public Sub Deliver_FieldsWithEmptySpaces_BecomesNothing()
+        'Arrange Job
+        Dim jobmock = NSubstitute.Substitute.For(Of IJobEntityDataAcces)()
+        jobmock.WhenForAnyArgs(Sub(p) p.GetInstance("", "1", Nothing)).Do(Sub(p)
+                                                                              Dim j = CType(p(2), JobEntity)
+                                                                              j.DataStreamTypeName = GetType(FtpFileStream).AssemblyQualifiedName
+                                                                              j.EndpointTypeName = GetType(HRPersonEndpoint).AssemblyQualifiedName
+                                                                              j.DataStreamParams = New FtpFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = False}
+                                                                              j.EndpointParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "guid"}
+
+                                                                              Dim ret As New MapConfig
+                                                                              ret.Add("0", "Identifier", Nothing)
+                                                                              ret.Add("1", "CompanyIdentifier", Nothing)
+                                                                              ret.Add("2", "FirstName", Nothing)
+                                                                              ret.Add("3", "MiddleName", Nothing)
+                                                                              ret.Add("7", "BirthDate", Nothing)
+                                                                              ret.Add("8", "EmployeeNo", Nothing)
+                                                                              ret.Add("31", "EmploymentStartDate", Nothing)
+                                                                              ret.Add("32", "EmploymentEndDate", Nothing) 'This contains a blank character
                                                                               j.Mapconfig = ret
                                                                           End Sub)
 
@@ -191,12 +237,61 @@ Imports Datastreamr.Framework.Utils
         'Assert
         Assert.AreEqual(True, result.Success)
         hrPersonProxy.Received.Import(
-            Arg.Is(Of ImportPersonRequest)(Function(p) ValidateReceivedPersons_AllFields(p).All(Function(b) b)),
+            Arg.Is(Of ImportPersonRequest)(Function(p) ValidateReceivedPersons_FieldsWithBlanks(p).All(Function(b) b)),
             Arg.Any(Of String),
             Arg.Any(Of String))
     End Sub
 
 
+    Private Iterator Function ValidateReceivedPersons_FieldsWithBlanks(ByVal importRequest As ImportPersonRequest) As IEnumerable(Of Boolean)
+        Yield importRequest.Persons(0).EmploymentInfo(0).Employment(0).ToDate Is Nothing
+        Yield importRequest.Persons(0).BirthDate IsNot Nothing
+    End Function
+
+
+    Private Iterator Function ValidateReceivedPersons_W(ByVal importRequest As ImportPersonRequest) As IEnumerable(Of Boolean)
+        Dim persons = importRequest.Persons
+        Yield persons.Length = 2
+        Yield persons(0).Addresses(0).CountryCode = "NO"
+        Yield persons(0).Addresses(0).PostalArea = "SEM"
+        Yield persons(0).Addresses(0).StreetName1 = "Torvmyrvn 41"
+        Yield persons(0).Addresses(0).StreetName2 Is Nothing
+        Yield persons(0).Addresses(0).StreetName3 Is Nothing
+        Yield persons(0).Addresses(0).ZipCode = "3170"
+        Yield persons(0).BankAccount1 Is Nothing
+        Yield persons(0).BankAccount2 Is Nothing
+        Yield persons(0).BirthDate = CType("04.01.1956", Date)
+        Yield persons(0).Children Is Nothing
+        Yield persons(0).CountryCode Is Nothing
+        Yield persons(0).EMailAddresses(0).Address = "egil.bjerke@wideroe.no"
+        Yield persons(0).EMailAddresses(0).Type = EMailType.Main
+        Yield persons(0).EmploymentInfo(0).EmployeeNumber = "4170"
+        Yield persons(0).EmploymentInfo(0).EmployedIn.Value = "WF"
+        Yield persons(0).EmploymentInfo(0).EmployedIn.Identifiertype = UnitIdentifierType.DepartmentCode
+        Yield persons(0).EmploymentInfo(0).Employment Is Nothing
+        Yield persons(0).FirstName = "Egil"
+        Yield persons(0).Gender = Gender.Male
+        Yield persons(0).IsDeactivated = False
+        Yield persons(0).IsLeader = False  'Not used on import
+        Yield persons(0).LastName = "Bjerke"
+        Yield persons(0).LegalUnitIdentifier Is Nothing
+        Yield persons(0).LogOn Is Nothing
+        Yield persons(0).MaritalStatus Is Nothing
+        Yield persons(0).MiddleName Is Nothing
+        Yield persons(0).NearestLeader Is Nothing
+        Yield persons(0).NextOfKinInfo Is Nothing
+        Yield persons(0).ParentUnitIdentifier.Value = "425"
+        Yield persons(0).ParentUnitIdentifier.Identifiertype = UnitIdentifierType.DepartmentCode
+        Yield persons(0).PersonalImage Is Nothing
+        Yield persons(0).PersonIdentifier.Value = "4170"
+        Yield persons(0).PersonIdentifier.IdentifierType = PersonIdentifierType.EmployeeNumber
+        'Yield persons(0).PersonIdentifier.UnitIdentifier.Value = "WF"
+        'Yield persons(0).PersonIdentifier.UnitIdentifier.Identifiertype = UnitIdentifierType.DepartmentCode
+        Yield persons(0).Phones Is Nothing
+        Yield persons(0).ShortName Is Nothing
+        Yield persons(0).SocialSecurityNumber = "04015642993"
+        Yield persons(0).SpecifiedLeader Is Nothing
+    End Function
     Private Iterator Function ValidateReceivedPersons(ByVal importRequest As ImportPersonRequest) As IEnumerable(Of Boolean)
         Dim persons = importRequest.Persons
         Yield persons.Length = 1

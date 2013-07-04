@@ -1,0 +1,2 @@
+4170;WF;Arne;;Belinda;;1;04.01.1946;4170;04015452453;arne.belinda@lala.no;Torvmyrvn 41;;;3170;SEM;NO; ; ; ;;;;425;;F;Flytekniker; ;;;;01.08.1916; ;1;;arne.belinda@lala.no
+15260;WF;Per;;Peterson;;1;10.02.1913;15260;10045328453; ; ;;; ; ; ; ; ; ;;;;045;;F;Sjef Stuertjenesten; ;;;;16.04.1919; ;1;;

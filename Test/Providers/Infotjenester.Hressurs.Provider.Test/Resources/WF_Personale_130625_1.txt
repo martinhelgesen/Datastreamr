@@ -1,0 +1,2 @@
+4170;WF;Arne;;Belinda;;1;04.01.1946;4170;04015452453;arne.belinda@lala.no;Torvmyrvn 41;;;1700;SARPSBORG;NO; ; ; ;;;;425;;F;Flytekniker; ;;;;01.08.1916; ;1;;arne.belinda@lala.no
+6880;WF;Per;;Morning;;1;18.07.1915;6880;18125531202;per.morning@lala.no;Harabakk;;;1701;SARPSBORG;NO; ; ;004797710296;;;;602;;F;Flytekniker; ;;;;19.03.1921; ;1;;per.morning@lala.no

@@ -148,10 +148,22 @@ Imports Datastreamr.Framework.Utils
     End Sub
 
     <Test> Public Sub GetStream_FixedPositionFileNoHeader()
-        Assert.That(False)
+        'Arrange
+        Dim filehelper = Substitute.For(Of IFileHelper)()
+        filehelper.GetFiles("").ReturnsForAnyArgs(Function(p) {"SemicolonNoHeader"})
+        filehelper.OpenFile("").ReturnsForAnyArgs(Function(p) StreamHelper.GenerateStreamReaderFromString(My.Resources.FixedPosition_NoHeader))
+        ClassFactory.SetTypeInstanceForSession(Of IFileHelper)(filehelper)
+
+        Dim fs As New FtpFileStream
+        Dim data = fs.GetStream(New FtpFileStreamParams With {.FirstLineIsHeader = False, .FixedPositionDescriptor = "2,1,4,16,3,1,1,1,23,8,4,12,3,12,3,25,13,3,4,5,3,1,1,1,2,1,1,6,1,1,1,1,2,4,1,2,1,1,12,2,6,20,6,3,7,7,7,7,8,25,1,6,6,6,6,4,5,5,5,5,3,8"})
+
+        Assert.AreEqual(3, data.Data.Count)
+        Assert.AreEqual(62, data.Data(0).Keys.Count)
+        Dim dic = data.Data(0)
+        Assert.AreEqual(dic("0"), "05")
     End Sub
 
-    <Test> Public Sub FileStrea_Authentication()
+    <Test> Public Sub FileStream_Authentication()
         Assert.That(False)
     End Sub
 

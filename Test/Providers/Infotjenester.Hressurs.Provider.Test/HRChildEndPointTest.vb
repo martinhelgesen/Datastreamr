@@ -58,7 +58,7 @@ Imports Datastreamr.Framework.Utils
         ClassFactory.SetTypeInstanceForSession(Of IHRPersonProxy)(hrProxyMock)
 
         'Act
-        Dim endpoint As New HRPersonEndpoint
+        Dim endpoint As New HRChildEndpoint
         Dim sourcedata = StubSourceData()
         Dim params = endpoint.GetParams
         params.PersonIdentifier = CType([Enum].Parse(GetType(PersonIdentifierType), "EmployeeNumber", True), PersonIdentifierType?)
@@ -76,25 +76,17 @@ Imports Datastreamr.Framework.Utils
         jobmock.WhenForAnyArgs(Sub(p) p.GetInstance("", "1", Nothing)).Do(Sub(p)
                                                                               Dim j = CType(p(2), JobEntity)
                                                                               j.DataStreamTypeName = GetType(FtpFileStream).AssemblyQualifiedName
-                                                                              j.EndpointTypeName = GetType(HRPersonEndpoint).AssemblyQualifiedName
+                                                                              j.EndpointTypeName = GetType(HRChildEndpoint).AssemblyQualifiedName
                                                                               j.DataStreamParams = New FtpFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = False}
                                                                               j.EndpointParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "guid"}
 
                                                                               Dim ret As New MapConfig
-                                                                              ret.Add("0", "Identifier", Nothing)
-                                                                              ret.Add("0", "EmployeeNo", Nothing)
-                                                                              ret.Add("1", "FirstName", "return originalValue.split(' ')[0];")
-                                                                              ret.Add("1", "LastName", "return originalValue.split(' ')[1];")
-                                                                              ret.Add("2", "PersonalNo", Nothing)
-                                                                              ret.Add("3", "Email", Nothing)
-                                                                              ret.Add("4", "Phone", Nothing)
-                                                                              ret.Add("5", "PhonePrivate", Nothing)
-                                                                              ret.Add("6", "Mobile", Nothing)
-                                                                              ret.Add("7", "DepartmentIdentifier", Nothing)
-                                                                              'ret.Add("8", "Account", Nothing)
-                                                                              ret.Add("9", "EmployeeCategory", Nothing)
-                                                                              ret.Add("10", "EmployeePosition", Nothing)
-                                                                              ret.Add("11", "EmploymentStartDate", Nothing)
+                                                                              ret.Add("0", "ParentIdentifier", Nothing)
+                                                                              ret.Add("1", "ParentFirstName", Nothing)
+                                                                              ret.Add("2", "ParentLastName", Nothing)
+                                                                              ret.Add("3", "FirstName", "var splitString = function (s) { var splitChar = ' '; if (s.indexOf(',') > 0) { splitChar = ',' } var arr = s.split(splitChar); if (arr.length > 1) { var x = arr[0]; arr.splice(0, 1); return [x, arr.join(splitChar)] } else { return [s, s] } }; return splitString(originalValue)[0];")
+                                                                              ret.Add("3", "LastName", "var splitString = function (s) { var splitChar = ' '; if (s.indexOf(',') > 0) { splitChar = ',' } var arr = s.split(splitChar); if (arr.length > 1) { var x = arr[0]; arr.splice(0, 1); return [x, arr.join(splitChar)] } else { return [s, s] } }; return splitString(originalValue)[1];")
+                                                                              ret.Add("4", "BirthDate", Nothing)
                                                                               j.Mapconfig = ret
                                                                           End Sub)
 
@@ -104,8 +96,8 @@ Imports Datastreamr.Framework.Utils
 
         'Arrange Filestream
         Dim filehelper = Substitute.For(Of IFileHelper)()
-        filehelper.GetFiles("").ReturnsForAnyArgs(Function(p) {"SemicolonNoHeader"})
-        filehelper.OpenFile("").ReturnsForAnyArgs(Function(p) StreamHelper.GenerateStreamReaderFromString(Datastreamr.Framework.Test.My.Resources.Semicolon_NoHeader))
+        filehelper.GetFiles("").ReturnsForAnyArgs(Function(p) {""})
+        filehelper.OpenFile("").ReturnsForAnyArgs(Function(p) StreamHelper.GenerateStreamReaderFromString(My.Resources.HRChild))
         ClassFactory.SetTypeInstanceForSession(Of IFileHelper)(filehelper)
 
         'Act
@@ -117,48 +109,87 @@ Imports Datastreamr.Framework.Utils
         'Assert
         Assert.AreEqual(True, result.Success)
         hrPersonProxy.Received.Import(
-            Arg.Is(Of ImportPersonRequest)(Function(p) ValidateReceivedPersons_AllFields(p).All(Function(b) b)),
+            Arg.Is(Of ImportPersonRequest)(Function(p) ValidateReceivedChild_Mapping(p).All(Function(b) b)),
             Arg.Any(Of String),
             Arg.Any(Of String))
     End Sub
 
     Private Iterator Function ValidateReceivedChildren(ByVal importRequest As ImportPersonRequest) As IEnumerable(Of Boolean)
         Dim persons = importRequest.Persons
-        Yield persons.Length = 1
-        Yield persons(0).Children.Count = 3
-    End Function
-    Private Iterator Function ValidateReceivedPersons_AllFields(ByVal importRequest As ImportPersonRequest) As IEnumerable(Of Boolean)
-        Dim persons = importRequest.Persons
         Yield persons.Length = 3
-        Yield persons(0).FirstName = "Martin"
-        Yield persons(0).LastName = "Helgesen"
-        Yield persons(0).SocialSecurityNumber Is Nothing
-        Yield persons(0).EmploymentInfo(0).EmployeeNumber = "1962"
-        Yield persons(0).EMailAddresses(0).Address = "test1@test.no"
-        Yield persons(0).Phones(0).Number = "69971705"
-        Yield persons(0).Phones(1).Number = "69157337"
-        Yield persons(0).Phones(2).Number = "97125917"
-        Yield persons(0).ParentUnitIdentifier.Value = "23"
-        Yield persons(0).EmploymentInfo(0).Employment(0).Category.Name = "Fast stilling"
-        Yield persons(0).EmploymentInfo(0).Employment(0).Position.Name.Trim = "FAGKONSULENT (FORRETNINGSUTVIKLING)"
-        Yield persons(0).EmploymentInfo(0).Employment(0).FromDate = Date.Parse("01.04.2007")
+        Yield persons.FirstOrDefault(Function(p) p.PersonIdentifier.Value = "230397").Children.Count = 1
+        Yield persons.FirstOrDefault(Function(p) p.PersonIdentifier.Value = "2011").Children.Count = 2
+        Yield persons.FirstOrDefault(Function(p) p.PersonIdentifier.Value = "1911").Children.Count = 2
+
+        Dim child = persons.FirstOrDefault(Function(p) p.PersonIdentifier.Value = "230397").Children(0)
+        Yield child.FirstName = "Andreas"
+        Yield child.LastName = "Helgesen"
+        Yield child.BirthDate Is Nothing
+        Yield child.DisabledChild Is Nothing
+        Yield child.Gender = Gender.NotSet
+        Yield child.LivesWithParent Is Nothing
+        Yield child.MiddleName Is Nothing
+        Yield child.SplitCare Is Nothing
+        Yield child.SplitCarePercent Is Nothing
+    End Function
+    Private Iterator Function ValidateReceivedChild_Mapping(ByVal importRequest As ImportPersonRequest) As IEnumerable(Of Boolean)
+        Dim persons = importRequest.Persons
+        Yield persons.Length = 1
+        Yield persons(0).FirstName = "Age"
+        Yield persons(0).LastName = "Huskesen"
+        Yield persons(0).Children.Count = 1
+        Yield persons(0).Children(0).FirstName = "Andreas"
+        Yield persons(0).Children(0).LastName = "Helgesen"
+        Yield persons(0).Children(0).BirthDate = CDate("19.04.2012")
+        Yield persons(0).Children(0).DisabledChild Is Nothing
+        Yield persons(0).Children(0).Gender = Gender.NotSet
+        Yield persons(0).Children(0).LivesWithParent Is Nothing
+        Yield persons(0).Children(0).MiddleName Is Nothing
+        Yield persons(0).Children(0).SplitCare Is Nothing
+        Yield persons(0).Children(0).SplitCarePercent Is Nothing
     End Function
 
     Private Function StubSourceData() As DataContainer
         Dim dc As New DataContainer
         dc.Data = New List(Of Dictionary(Of String, Object))
-        Dim dic = New Dictionary(Of String, Object) From {{"ParentIdentifier", "2408"},
+
+        Dim dic = New Dictionary(Of String, Object) From {{"ParentIdentifier", "230397"},
+                                                          {"ParentFirstName", "Age"},
+                                                          {"ParentLastName", "Huskesen"},
                                                           {"FirstName", "Andreas"},
                                                           {"LastName", "Helgesen"}
                                                          }
         dc.Data.Add(dic)
-        dic = New Dictionary(Of String, Object) From {{"ParentIdentifier", "2408"},
+
+        dic = New Dictionary(Of String, Object) From {{"ParentIdentifier", "1911"},
+                                                          {"ParentFirstName", "Eilen"},
+                                                          {"ParentLastName", "Andersen"},
                                                           {"FirstName", "Pia"},
                                                           {"LastName", "Andersen"}
                                                          }
-        dic = New Dictionary(Of String, Object) From {{"ParentIdentifier", "2408"},
+        dc.Data.Add(dic)
+
+        dic = New Dictionary(Of String, Object) From {{"ParentIdentifier", "1911"},
+                                                          {"ParentFirstName", "Eilen"},
+                                                          {"ParentLastName", "Andersen"},
                                                           {"FirstName", "Jesper"},
                                                           {"LastName", "Andersen"}
+                                                         }
+        dc.Data.Add(dic)
+
+        dic = New Dictionary(Of String, Object) From {{"ParentIdentifier", "2011"},
+                                                          {"ParentFirstName", "Thorbjørn"},
+                                                          {"ParentLastName", "Helgesen"},
+                                                          {"FirstName", "Anette"},
+                                                          {"LastName", "Helgesen"}
+                                                         }
+        dc.Data.Add(dic)
+
+        dic = New Dictionary(Of String, Object) From {{"ParentIdentifier", "2011"},
+                                                          {"ParentFirstName", "Thorbjørn"},
+                                                          {"ParentLastName", "Helgesen"},
+                                                          {"FirstName", "Lene"},
+                                                          {"LastName", "Helgesen"}
                                                          }
         dc.Data.Add(dic)
         Return dc
@@ -207,7 +238,13 @@ Imports Datastreamr.Framework.Utils
                                                          }
         dc.Data.Add(dic)
 
-
+        Dim groups = dc.Data.GroupBy(Function(d) d("ParentIdentifier"))
+        For Each group In groups
+            Debug.WriteLine("key = {0}:", group.Key)
+            For Each value In group
+                Debug.WriteLine("value = {0}:", value)
+            Next
+        Next
     End Sub
 
 End Class
