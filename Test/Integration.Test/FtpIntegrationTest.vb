@@ -10,10 +10,10 @@ Public Module FtpIntegrationTest
 
     Public Sub Main()
         Using New ClassFactory.SessionInstance
-            'Using New DefaultDataStreamrContext With {.CurrentUser = New User With {.Username = "webservicewideroe"}}
-            '    CreateJob()
-            'End Using
-            StartFileWatching()
+            Using New DefaultDataStreamrContext With {.CurrentUser = New User With {.Username = "grehan"}}
+                CreateJob()
+            End Using
+            'StartFileWatching()
             'CreateFile()
             Console.ReadKey()
         End Using
@@ -35,14 +35,16 @@ Public Module FtpIntegrationTest
     End Sub
 
     Private Sub CreateJob()
-        If File.Exists("C:\Temp\persist\**********\JobEntity\HREmployment.json") Then File.Delete("C:\Temp\persist\************\JobEntity\HREmployment.json")
+        If File.Exists("C:\Temp\persist\grehan\JobEntity\HREmployment.json") Then File.Delete("C:\Temp\persist\grehan\JobEntity\HREmployment.json")
 
         Dim j As New JobEntity
         j.Name = "HREmployment"
-        j.DataStreamTypeName = GetType(FtpFileStream).AssemblyQualifiedName
-        j.EndpointTypeName = GetType(Infotjenester.Hressurs.Provider.Endpoints.HREmploymentEndpoint).AssemblyQualifiedName
-        j.DataStreamParams = New FtpFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = False}
-        j.EndpointParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "DepartmentCode", .Password = ""}
+        'j.DataStreamTypeName = GetType(ValueSeparatedFileStream).AssemblyQualifiedName
+        j.Endpoint = New HREmploymentEndpoint With {.StreamParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "DepartmentCode", .Password = "tullepassord"}}
+        'j.EndpointTypeName = GetType(Infotjenester.Hressurs.Provider.Endpoints.HREmploymentEndpoint).AssemblyQualifiedName
+        j.DataStream = New ValueSeparatedFileStream
+        j.DataStream.SetParams(New ValueSeparatedFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = False})
+        'j.EndpointParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "DepartmentCode", .Password = ""}
 
         Dim ret As New MapConfig
         ret.Add("STATIC", "CompanyIdentifier", "return 'WF';")

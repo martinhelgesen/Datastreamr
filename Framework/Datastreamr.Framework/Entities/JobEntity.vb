@@ -3,33 +3,17 @@ Imports Newtonsoft.Json
 
 Public Class JobEntity
     Property Name As String
-    Property DataStreamTypeName As String
-    Property EndpointTypeName As String
+    'Property DataStreamTypeName As String
+    'Property EndpointTypeName As String
     Property MapSerialized As String
 
-    Private _DataStream As IDatastream = Nothing
+    <JsonProperty(ItemTypeNameHandling:=TypeNameHandling.Auto)> Public Property DataStream As IDatastream
 
-    ReadOnly Property DataStream As IDatastream
-        Get
-            If _DataStream Is Nothing Then
-                _DataStream = CType(Activator.CreateInstance(Type.GetType(DataStreamTypeName)), IDatastream)
-            End If
-            Return _DataStream
-        End Get
-    End Property
+    <JsonProperty(ItemTypeNameHandling:=TypeNameHandling.Auto)> Public Property Endpoint As IEndpoint
 
-    Private _Endpoint As IEndpoint = Nothing
-    ReadOnly Property Endpoint As IEndpoint
-        Get
-            If _Endpoint Is Nothing Then
-                _Endpoint = CType(Activator.CreateInstance(Type.GetType(EndpointTypeName)), IEndpoint)
-            End If
-            Return _Endpoint
-        End Get
-    End Property
-    
-    Public Property DataStreamParams As StreamParams
-    Public Property EndpointParams As StreamParams
+
+    'Public Property DataBaseStreamParams As BaseStreamParams
+    'Public Property EndpointParams As BaseStreamParams
     Public Property Mapconfig As MapConfig
 
 

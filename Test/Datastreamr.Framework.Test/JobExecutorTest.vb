@@ -15,7 +15,7 @@ Imports Infotjenester.Hressurs.Provider.PersonServiceReference
     <SetUp> Public Sub Setup()
         _sessionInstance = New ClassFactory.SessionInstance
         Dim contextMock = Substitute.For(Of IDatastreamrContext)()
-        contextMock.CurrentUser.ReturnsForAnyArgs(Function(p) New User With {.Username = "testuser", .Password = "testpwd", .FTPRootCatalog = "C:\FTP"})
+        contextMock.CurrentUser.ReturnsForAnyArgs(Function(p) New User With {.Username = "testuser", .Password = "testpwd", .RootPath = "C:\FTP"})
         ClassFactory.SetTypeInstanceForSession(Of IDatastreamrContext)(contextMock)
     End Sub
     <TearDown> Public Sub TearDown()
@@ -27,10 +27,11 @@ Imports Infotjenester.Hressurs.Provider.PersonServiceReference
         Dim jobmock = NSubstitute.Substitute.For(Of IJobEntityDataAcces)()
         jobmock.WhenForAnyArgs(Sub(p) p.GetInstance("", "1", Nothing)).Do(Sub(p)
                                                                               Dim j = CType(p(2), JobEntity)
-                                                                              j.DataStreamTypeName = GetType(FtpFileStream).AssemblyQualifiedName
-                                                                              j.EndpointTypeName = GetType(Infotjenester.Hressurs.Provider.Endpoints.HRPersonEndpoint).AssemblyQualifiedName
-                                                                              j.DataStreamParams = New FtpFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = False}
-                                                                              j.EndpointParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "guid"}
+
+                                                                              j.Endpoint = New HRPersonEndpoint With {.StreamParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "guid"}}
+                                                                              j.DataStream = New ValueSeparatedFileStream With {.StreamParams = New ValueSeparatedFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = False}}
+                                                                              'j.DataStream.SetParams(New ValueSeparatedFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = False})
+                                                                              'j.EndpointParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "guid"}
 
                                                                               Dim ret As New MapConfig
                                                                               ret.Add("0", "Identifier", Nothing)
@@ -66,10 +67,12 @@ Imports Infotjenester.Hressurs.Provider.PersonServiceReference
         Dim jobmock = NSubstitute.Substitute.For(Of IJobEntityDataAcces)()
         jobmock.WhenForAnyArgs(Sub(p) p.GetInstance("", "1", Nothing)).Do(Sub(p)
                                                                               Dim j = CType(p(2), JobEntity)
-                                                                              j.DataStreamTypeName = GetType(FtpFileStream).AssemblyQualifiedName
-                                                                              j.EndpointTypeName = GetType(Infotjenester.Hressurs.Provider.Endpoints.HRPersonEndpoint).AssemblyQualifiedName
-                                                                              j.DataStreamParams = New FtpFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = True}
-                                                                              j.EndpointParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "guid"}
+                                                                              'j.DataStreamTypeName = GetType(ValueSeparatedFileStream).AssemblyQualifiedName
+                                                                              'j.EndpointTypeName = GetType(Infotjenester.Hressurs.Provider.Endpoints.HRPersonEndpoint).AssemblyQualifiedName
+                                                                              j.Endpoint = New HRPersonEndpoint With {.StreamParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "guid"}}
+                                                                              j.DataStream = New ValueSeparatedFileStream
+                                                                              j.DataStream.SetParams(New ValueSeparatedFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = True})
+                                                                              'j.EndpointParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "guid"}
 
                                                                               Dim ret As New MapConfig
                                                                               ret.Add("@EmployeeNumber", "Identifier", Nothing)

@@ -16,7 +16,7 @@ Imports Datastreamr.Framework.Utils
     <SetUp> Public Sub Setup()
         _sessionInstance = New ClassFactory.SessionInstance
         Dim contextMock = Substitute.For(Of IDatastreamrContext)()
-        contextMock.CurrentUser.ReturnsForAnyArgs(Function(p) New User With {.Username = "testuser", .Password = "testpwd", .FTPRootCatalog = "C:\FTP"})
+        contextMock.CurrentUser.ReturnsForAnyArgs(Function(p) New User With {.Username = "testuser", .Password = "testpwd", .RootPath = "C:\FTP"})
         ClassFactory.SetTypeInstanceForSession(Of IDatastreamrContext)(contextMock)
 
     End Sub
@@ -46,9 +46,10 @@ Imports Datastreamr.Framework.Utils
         Dim params = endpoint.GetParams
         params.PersonIdentifier = CType([Enum].Parse(GetType(PersonIdentifierType), "EmployeeNumber", True), PersonIdentifierType?)
         params.UnitIdentifier = CType([Enum].Parse(GetType(UnitIdentifierType), "DepartmentCode", True), UnitIdentifierType?)
+        endpoint.StreamParams = params
 
         'Assert
-        Dim result = endpoint.Deliver(params, sourcedata)
+        Dim result = endpoint.Deliver(sourcedata)
         hrProxyMock.Received.Import(Arg.Any(Of ImportPersonRequest), Arg.Any(Of String), Arg.Any(Of String))
     End Sub
 
@@ -63,9 +64,10 @@ Imports Datastreamr.Framework.Utils
         Dim params = endpoint.GetParams
         params.PersonIdentifier = CType([Enum].Parse(GetType(PersonIdentifierType), "EmployeeNumber", True), PersonIdentifierType?)
         params.UnitIdentifier = CType([Enum].Parse(GetType(UnitIdentifierType), "DepartmentCode", True), UnitIdentifierType?)
+        endpoint.StreamParams = params
 
         'Assert
-        Dim result = endpoint.Deliver(params, sourcedata)
+        Dim result = endpoint.Deliver(sourcedata)
         hrProxyMock.ReceivedWithAnyArgs.Import(Nothing, "", "")
         hrProxyMock.Received.Import(Arg.Is(Of ImportPersonRequest)(Function(p) ValidateReceivedChildren(p).All(Function(b) b = True)), Arg.Any(Of String), Arg.Any(Of String))
     End Sub
@@ -75,10 +77,13 @@ Imports Datastreamr.Framework.Utils
         Dim jobmock = NSubstitute.Substitute.For(Of IJobEntityDataAcces)()
         jobmock.WhenForAnyArgs(Sub(p) p.GetInstance("", "1", Nothing)).Do(Sub(p)
                                                                               Dim j = CType(p(2), JobEntity)
-                                                                              j.DataStreamTypeName = GetType(FtpFileStream).AssemblyQualifiedName
-                                                                              j.EndpointTypeName = GetType(HRChildEndpoint).AssemblyQualifiedName
-                                                                              j.DataStreamParams = New FtpFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = False}
-                                                                              j.EndpointParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "guid"}
+                                                                              'j.DataStreamTypeName = GetType(ValueSeparatedFileStream).AssemblyQualifiedName
+                                                                              'j.EndpointTypeName = GetType(HRChildEndpoint).AssemblyQualifiedName
+                                                                              j.Endpoint = New HRChildEndpoint With {.StreamParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "guid"}}
+
+                                                                              j.DataStream = New ValueSeparatedFileStream
+                                                                              j.DataStream.SetParams(New ValueSeparatedFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = False})
+                                                                              'j.EndpointParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "guid"}
 
                                                                               Dim ret As New MapConfig
                                                                               ret.Add("0", "ParentIdentifier", Nothing)

@@ -8,26 +8,26 @@ Namespace Endpoints
         Inherits TypeSafeEndPoint(Of HRPersonParams, HRChild)
 
 
-        Public Overrides Function Deliver(ByVal params As HRPersonParams, ByVal values As DataContainer) As EndPointResult
+        Public Overrides Function Deliver(ByVal values As DataContainer) As EndPointResult
             'Validate
-            ValidateParams(params)
+            ValidateParams(StreamParams)
 
             'Transform values to Person and Child objects
             Dim persons As New List(Of Person)
             Dim persongroups = values.Data.GroupBy(Function(d) d("ParentIdentifier"))
             For Each group In persongroups
-                persons.Add(TransformPerson(group, params))
+                persons.Add(TransformPerson(group, StreamParams))
             Next
 
             'Deliver            
             Dim request As New ImportPersonRequest With {
                                              .Persons = persons.ToArray,
-                                             .PersonIdentifierType = CType([Enum].Parse(GetType(PersonIdentifierType), params.PersonIdentifier, True), PersonIdentifierType?),
-                                             .UnitIdentifierType = CType([Enum].Parse(GetType(UnitIdentifierType), params.UnitIdentifier, True), UnitIdentifierType?)}
+                                             .PersonIdentifierType = CType([Enum].Parse(GetType(PersonIdentifierType), StreamParams.PersonIdentifier, True), PersonIdentifierType?),
+                                             .UnitIdentifierType = CType([Enum].Parse(GetType(UnitIdentifierType), StreamParams.UnitIdentifier, True), UnitIdentifierType?)}
             'request.
 
             Dim service = ClassFactory.GetTypeInstance(Of IHRPersonProxy, PersonClientProxy)()
-            Dim result = service.Import(request, params.Username, params.Password)
+            Dim result = service.Import(request, StreamParams.Username, StreamParams.Password)
 
             Return New EndPointResult With {.success = False, .Result = Newtonsoft.Json.JsonConvert.SerializeObject(result)}
         End Function

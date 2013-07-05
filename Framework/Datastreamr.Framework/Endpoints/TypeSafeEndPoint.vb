@@ -1,5 +1,5 @@
 ﻿Namespace Endpoints
-    Public MustInherit Class TypeSafeEndPoint(Of TParams As {New, StreamParams}, TMapInfo)
+    Public MustInherit Class TypeSafeEndPoint(Of TParams As {New, BaseStreamParams}, TMapInfo)
         Inherits BaseEndpoint(Of TParams)
         Public Overrides ReadOnly Property GetObjectMapInfo As List(Of ParamInfo)
             Get

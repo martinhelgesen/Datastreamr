@@ -16,7 +16,7 @@ Imports Datastreamr.Framework.Utils
     <SetUp> Public Sub Setup()
         _sessionInstance = New ClassFactory.SessionInstance
         Dim contextMock = Substitute.For(Of IDatastreamrContext)()
-        contextMock.CurrentUser.ReturnsForAnyArgs(Function(p) New User With {.Username = "testuser", .Password = "testpwd", .FTPRootCatalog = "C:\FTP"})
+        contextMock.CurrentUser.ReturnsForAnyArgs(Function(p) New User With {.Username = "testuser", .Password = "testpwd", .RootPath = "C:\FTP"})
         ClassFactory.SetTypeInstanceForSession(Of IDatastreamrContext)(contextMock)
 
     End Sub
@@ -47,9 +47,10 @@ Imports Datastreamr.Framework.Utils
         Dim params = endpoint.GetParams
         params.PersonIdentifier = CType([Enum].Parse(GetType(PersonIdentifierType), "EmployeeNumber", True), PersonIdentifierType?)
         params.UnitIdentifier = CType([Enum].Parse(GetType(UnitIdentifierType), "DepartmentCode", True), UnitIdentifierType?)
+        endpoint.StreamParams = params
 
         'Assert
-        Dim result = endpoint.Deliver(params, sourcedata)        
+        Dim result = endpoint.Deliver(sourcedata)
         hrProxyMock.ReceivedWithAnyArgs(1).Import(Nothing, "", "")
         hrProxyMock.Received.Import(Arg.Is(Of ImportPersonRequest)(Function(p) ValidateReceivedEmployee(p).All(Function(b) b = True)), Arg.Any(Of String), Arg.Any(Of String))
     End Sub
@@ -107,9 +108,10 @@ Imports Datastreamr.Framework.Utils
         Dim params = endpoint.GetParams
         params.PersonIdentifier = CType([Enum].Parse(GetType(PersonIdentifierType), "EmployeeNumber", True), PersonIdentifierType?)
         params.UnitIdentifier = CType([Enum].Parse(GetType(UnitIdentifierType), "DepartmentCode", True), UnitIdentifierType?)
+        endpoint.StreamParams = params
 
         'Assert
-        Dim result = endpoint.Deliver(params, sourcedata)
+        Dim result = endpoint.Deliver(sourcedata)
         'hrProxyMock.ReceivedWithAnyArgs.Import(Nothing, "", "")
         hrProxyMock.ReceivedWithAnyArgs(2).Import(Nothing, "", "")
         hrProxyMock.Received.Import(Arg.Is(Of ImportPersonRequest)(Function(p) ValidateFromCalledMultipleTimes(p).All(Function(b) b = True)), Arg.Any(Of String), Arg.Any(Of String))

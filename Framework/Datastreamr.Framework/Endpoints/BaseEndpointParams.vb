@@ -1,6 +1,6 @@
 ﻿Namespace Endpoints
     Public Class BaseEndpointParams
-        Inherits StreamParams
+        Inherits BaseStreamParams
 
         Public Sub New()
             MyBase.New()
@@ -11,8 +11,8 @@
         End Sub
 
 
-        Public Sub New(streamParams As StreamParams)
-            MyBase.New(streamParams)
+        Public Sub New(baseStreamParams As BaseStreamParams)
+            MyBase.New(baseStreamParams)
         End Sub
 
 

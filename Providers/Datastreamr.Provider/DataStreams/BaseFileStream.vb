@@ -6,20 +6,19 @@ Imports System.Text.RegularExpressions
 Imports LazyFramework
 
 Namespace DataStreams
-    Public Class FtpFileStream
-        Inherits StreamReaderStream(Of FtpFileStreamParams)
+    ''' <summary>
+    ''' Responsible for opening file content
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public MustInherit Class BaseFileStream(Of T As {BaseFileStreamParams, New})
+        Inherits StreamReaderStream(Of T)
 
-        Private _fileHelper As IFileHelper = ClassFactory.GetTypeInstance(Of IFileHelper, FileHelperInternal)()
+        Private ReadOnly _fileHelper As IFileHelper = ClassFactory.GetTypeInstance(Of IFileHelper, FileHelperInternal)()
 
-        Public Overrides Function GetStreamInternal(params As StreamParams) As DataContainer
-            Dim p = New FtpFileStreamParams(params)
+        Public Function GetfileContent(params As T) As StreamReader
             Dim currentUser = DatastreamrContext.Current.CurrentUser
-            Dim rootCat = currentUser.FTPRootCatalog + "\incoming"
-            Dim dc As DataContainer = Nothing
-            Using sr = FindFile(rootCat, p.FilenameMatch)
-                dc = ConvertToDataContainer(sr, p)
-            End Using
-            Return dc
+            Dim rootCat = currentUser.RootPath + "\incoming"
+            Return FindFile(rootCat, params.FilenameMatch)
         End Function
 
         Private Function FindFile(ByVal path As String, ByVal filenameMatch As String) As StreamReader
@@ -33,7 +32,16 @@ Namespace DataStreams
             If filteredFiles Is Nothing Then
                 Return Nothing
             End If
-            Return _fileHelper.OpenFile(filteredFiles(0))
+            Dim streamReader As StreamReader = Nothing
+            Try
+                streamReader = _fileHelper.OpenFile(filteredFiles(0))
+                If streamReader Is Nothing Then
+                    Throw New ApplicationException("Streamreader is nothing")
+                End If
+                Return streamReader
+            Catch ex As Exception
+                Throw New CouldNotOpenFileException(ex)
+            End Try
         End Function
 
         Private Function FilterWithRegex(ByVal strings As String(), ByVal filenameMatch As String) As String()
@@ -50,17 +58,16 @@ Namespace DataStreams
             Return list.ToArray
         End Function
 
-        Public Overrides ReadOnly Property Description As String
-            Get
-                Return "Returns content of file in users Datastreamr FTP catalog"
-            End Get
-
-        End Property
-
-        Public Overrides ReadOnly Property Name As String
-            Get
-                Return "Datastreamr filestream reader"
-            End Get
-        End Property
     End Class
-End NameSpace
+
+    Public Class CouldNotOpenFileException
+        Inherits Exception
+
+        Public Sub New(ByVal exception As Exception)
+            MyBase.New("Could not open file", exception)
+        End Sub
+    End Class
+End Namespace
+
+
+'          

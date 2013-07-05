@@ -1,12 +1,11 @@
-Public Class StreamParams
+Public Class BaseStreamParams
     Inherits Dictionary(Of String, ParamInfo)
 
     Public Sub New()
 
     End Sub
 
-    Public Sub New(params As StreamParams)
-        Me.New()
+    Public Sub AddParams(params As BaseStreamParams)
         For Each p In params
             If Not Me.ContainsKey(p.Key) Then
                 Add(p.Key, p.Value)
@@ -14,6 +13,11 @@ Public Class StreamParams
                 Me(p.Key) = p.Value
             End If
         Next
+    End Sub
+
+    Public Sub New(params As BaseStreamParams)
+        Me.New()
+        AddParams(params)
     End Sub
 
     Public Function GetValue(key As String) As Object

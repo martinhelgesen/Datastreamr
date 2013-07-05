@@ -150,7 +150,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ProvidersFacade.vb" />
-    <Compile Include="StreamParams.vb" />
+    <Compile Include="BaseStreamParams.vb" />
     <Compile Include="User.vb" />
     <Compile Include="Utils\FileHelper.vb" />
     <Compile Include="Utils\StreamHelper.vb" />

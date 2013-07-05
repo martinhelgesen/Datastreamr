@@ -3,6 +3,7 @@ Imports Datastreamr.Framework.Facade
 Imports Datastreamr.Framework.Entities
 Imports Datastreamr.Framework.DataStreams
 Imports Datastreamr.Provider.DataStreams
+Imports Infotjenester.Hressurs.Provider.Endpoints
 Imports LazyFramework
 Imports NUnit.Framework
 Imports NSubstitute
@@ -15,7 +16,7 @@ Imports LazyFramework.Utils
     <SetUp> Public Sub Setup()
         _sessionInstance = New ClassFactory.SessionInstance
         Dim contextMock = Substitute.For(Of IDatastreamrContext)()
-        contextMock.CurrentUser.ReturnsForAnyArgs(Function(p) New User With {.Username = "testuser", .Password = "testpwd", .FTPRootCatalog = "C:\FTP"})
+        contextMock.CurrentUser.ReturnsForAnyArgs(Function(p) New User With {.Username = "testuser", .Password = "testpwd", .RootPath = "C:\FTP"})
         ClassFactory.SetTypeInstanceForSession(Of IDatastreamrContext)(contextMock)
 
     End Sub
@@ -41,8 +42,12 @@ Imports LazyFramework.Utils
         Dim jobmock = NSubstitute.Substitute.For(Of IJobEntityDataAcces)()
         jobmock.WhenForAnyArgs(Sub(p) p.GetInstance("", "1", Nothing)).Do(Sub(p)
                                                                               Dim j = CType(p(2), JobEntity)
-                                                                              j.DataStreamTypeName = GetType(FtpFileStream).AssemblyQualifiedName
-                                                                              j.EndpointTypeName = GetType(Infotjenester.Hressurs.Provider.Endpoints.HRPersonEndpoint).AssemblyQualifiedName
+                                                                              'j.DataStreamTypeName = GetType(ValueSeparatedFileStream).AssemblyQualifiedName
+                                                                              j.DataStream = New ValueSeparatedFileStream
+                                                                              j.DataStream.SetParams(New ValueSeparatedFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = False})
+                                                                              'j.EndpointParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "guid"}
+                                                                              j.Endpoint = New HRPersonEndpoint With {.StreamParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "guid"}}
+                                                                              'j.EndpointTypeName = GetType(Infotjenester.Hressurs.Provider.Endpoints.HRPersonEndpoint).AssemblyQualifiedName
                                                                           End Sub)
 
         ClassFactory.SetTypeInstanceForSession(Of IJobEntityDataAcces)(jobmock)

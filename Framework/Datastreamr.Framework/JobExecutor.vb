@@ -20,10 +20,11 @@ Public Class JobExecutor
         Dim endpointResult As EndPointResult = Nothing
         Try
             InitializeV8Engine()
-            Dim dataContainer = _job.DataStream.GetStreamInternal(_job.DataStreamParams)
+
+            Dim dataContainer = _job.DataStream.GetStreamInternal()
             Dim endpoint = _job.Endpoint
             mapresult = Mapper.Map(dataContainer, _job.Mapconfig)
-            endpointResult = endpoint.InternalDeliver(_job.EndpointParams, mapresult)
+            endpointResult = endpoint.InternalDeliver(mapresult)
             Return New JobResult With {.EndpointResult = endpointResult, .MapResult = mapresult, .Success = True}
         Catch ex As Exception
             Return New JobResult With {.EndpointResult = endpointResult, .MapResult = mapresult, .Success = False, .Exception = ex}

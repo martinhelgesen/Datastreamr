@@ -9,6 +9,9 @@ Namespace Utils
         End Function
 
         Public Function OpenFile(path As String) As StreamReader Implements IFileHelper.OpenFile
+            If Not File.Exists(path) Then
+                Throw New FileNotFoundException("File not found", path)
+            End If
             Return New StreamReader(path, Text.Encoding.GetEncoding("iso-8859-1"))
         End Function
     End Class

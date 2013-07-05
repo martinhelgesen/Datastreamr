@@ -8,23 +8,23 @@ Namespace Endpoints
     Public Class HRPersonEndpoint
         Inherits TypeSafeEndPoint(Of HRPersonParams, HRPerson)
 
-        Public Overrides Function Deliver(params As HRPersonParams, values As DataContainer) As EndPointResult
+        Public Overrides Function Deliver(values As DataContainer) As EndPointResult
             'Validate
-            ValidateParams(params)
+            ValidateParams(StreamParams)
 
 
             'Transform values to HRPerson objects
-            Dim persons As List(Of Person) = (From dic In values.Data Select InternalTransform(dic, params)).ToList()
+            Dim persons As List(Of Person) = (From dic In values.Data Select InternalTransform(dic, StreamParams)).ToList()
 
             'Deliver            
             Dim request As New ImportPersonRequest With {
                                              .Persons = persons.ToArray,
-                                             .PersonIdentifierType = CType([Enum].Parse(GetType(PersonIdentifierType), params.PersonIdentifier, True), PersonIdentifierType?),
-                                             .UnitIdentifierType = CType([Enum].Parse(GetType(UnitIdentifierType), params.UnitIdentifier, True), UnitIdentifierType?)}
+                                             .PersonIdentifierType = CType([Enum].Parse(GetType(PersonIdentifierType), StreamParams.PersonIdentifier, True), PersonIdentifierType?),
+                                             .UnitIdentifierType = CType([Enum].Parse(GetType(UnitIdentifierType), StreamParams.UnitIdentifier, True), UnitIdentifierType?)}
             'request.
 
             Dim service = ClassFactory.GetTypeInstance(Of IHRPersonProxy, PersonClientProxy)()
-            Dim result = service.Import(request, params.Username, params.Password)
+            Dim result = service.Import(request, StreamParams.Username, StreamParams.Password)
 
             Return New EndPointResult With {.success = False, .Result = Newtonsoft.Json.JsonConvert.SerializeObject(result)}
         End Function

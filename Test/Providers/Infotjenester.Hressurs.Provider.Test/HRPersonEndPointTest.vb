@@ -16,7 +16,7 @@ Imports Datastreamr.Framework.Utils
     <SetUp> Public Sub Setup()
         _sessionInstance = New ClassFactory.SessionInstance
         Dim contextMock = Substitute.For(Of IDatastreamrContext)()
-        contextMock.CurrentUser.ReturnsForAnyArgs(Function(p) New User With {.Username = "testuser", .Password = "testpwd", .FTPRootCatalog = "C:\FTP"})
+        contextMock.CurrentUser.ReturnsForAnyArgs(Function(p) New User With {.Username = "testuser", .Password = "testpwd", .RootPath = "C:\FTP"})
         ClassFactory.SetTypeInstanceForSession(Of IDatastreamrContext)(contextMock)
 
     End Sub
@@ -46,9 +46,9 @@ Imports Datastreamr.Framework.Utils
         Dim params = endpoint.GetParams
         params.PersonIdentifier = CType([Enum].Parse(GetType(PersonIdentifierType), "EmployeeNumber", True), PersonIdentifierType?)
         params.UnitIdentifier = CType([Enum].Parse(GetType(UnitIdentifierType), "DepartmentCode", True), UnitIdentifierType?)
-
+        endpoint.StreamParams = params
         'Assert
-        Dim result = endpoint.Deliver(params, sourcedata)
+        Dim result = endpoint.Deliver(sourcedata)
         hrProxyMock.Received.Import(Arg.Any(Of ImportPersonRequest), Arg.Any(Of String), Arg.Any(Of String))
     End Sub
 
@@ -63,9 +63,10 @@ Imports Datastreamr.Framework.Utils
         Dim params = endpoint.GetParams
         params.PersonIdentifier = CType([Enum].Parse(GetType(PersonIdentifierType), "EmployeeNumber", True), PersonIdentifierType?)
         params.UnitIdentifier = CType([Enum].Parse(GetType(UnitIdentifierType), "DepartmentCode", True), UnitIdentifierType?)
+        endpoint.StreamParams = params
 
         'Assert
-        Dim result = endpoint.Deliver(params, sourcedata)
+        Dim result = endpoint.Deliver(sourcedata)
         hrProxyMock.ReceivedWithAnyArgs.Import(Nothing, "", "")
         hrProxyMock.Received.Import(Arg.Is(Of ImportPersonRequest)(Function(p) ValidateReceivedPersons(p).All(Function(b) b = True)), Arg.Any(Of String), Arg.Any(Of String))
     End Sub
@@ -75,10 +76,12 @@ Imports Datastreamr.Framework.Utils
         Dim jobmock = NSubstitute.Substitute.For(Of IJobEntityDataAcces)()
         jobmock.WhenForAnyArgs(Sub(p) p.GetInstance("", "1", Nothing)).Do(Sub(p)
                                                                               Dim j = CType(p(2), JobEntity)
-                                                                              j.DataStreamTypeName = GetType(FtpFileStream).AssemblyQualifiedName
-                                                                              j.EndpointTypeName = GetType(HRPersonEndpoint).AssemblyQualifiedName
-                                                                              j.DataStreamParams = New FtpFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = False}
-                                                                              j.EndpointParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "guid"}
+                                                                              'j.DataStreamTypeName = GetType(ValueSeparatedFileStream).AssemblyQualifiedName
+                                                                              j.Endpoint = New HRPersonEndpoint With {.StreamParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "guid"}}
+                                                                              'j.EndpointTypeName = GetType(HRPersonEndpoint).AssemblyQualifiedName
+                                                                              j.DataStream = New ValueSeparatedFileStream
+                                                                              j.DataStream.SetParams(New ValueSeparatedFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = False})
+                                                                              'j.EndpointParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "guid"}
 
                                                                               Dim ret As New MapConfig
                                                                               ret.Add("0", "Identifier", Nothing)
@@ -127,10 +130,12 @@ Imports Datastreamr.Framework.Utils
         Dim jobmock = NSubstitute.Substitute.For(Of IJobEntityDataAcces)()
         jobmock.WhenForAnyArgs(Sub(p) p.GetInstance("", "1", Nothing)).Do(Sub(p)
                                                                               Dim j = CType(p(2), JobEntity)
-                                                                              j.DataStreamTypeName = GetType(FtpFileStream).AssemblyQualifiedName
-                                                                              j.EndpointTypeName = GetType(HRPersonEndpoint).AssemblyQualifiedName
-                                                                              j.DataStreamParams = New FtpFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = False}
-                                                                              j.EndpointParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "DepartmentCode"}
+                                                                              'j.DataStreamTypeName = GetType(ValueSeparatedFileStream).AssemblyQualifiedName
+                                                                              j.Endpoint = New HRPersonEndpoint With {.StreamParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "DepartmentCode"}}
+                                                                              'j.EndpointTypeName = GetType(HRPersonEndpoint).AssemblyQualifiedName
+                                                                              j.DataStream = New ValueSeparatedFileStream
+                                                                              j.DataStream.SetParams(New ValueSeparatedFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = False})
+                                                                              'j.EndpointParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "DepartmentCode"}
 
                                                                               Dim ret As New MapConfig
                                                                               ret.Add("0", "Identifier", Nothing)
@@ -201,10 +206,12 @@ Imports Datastreamr.Framework.Utils
         Dim jobmock = NSubstitute.Substitute.For(Of IJobEntityDataAcces)()
         jobmock.WhenForAnyArgs(Sub(p) p.GetInstance("", "1", Nothing)).Do(Sub(p)
                                                                               Dim j = CType(p(2), JobEntity)
-                                                                              j.DataStreamTypeName = GetType(FtpFileStream).AssemblyQualifiedName
-                                                                              j.EndpointTypeName = GetType(HRPersonEndpoint).AssemblyQualifiedName
-                                                                              j.DataStreamParams = New FtpFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = False}
-                                                                              j.EndpointParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "guid"}
+                                                                              'j.DataStreamTypeName = GetType(ValueSeparatedFileStream).AssemblyQualifiedName
+                                                                              j.Endpoint = New HRPersonEndpoint With {.StreamParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "guid"}}
+                                                                              'j.EndpointTypeName = GetType(HRPersonEndpoint).AssemblyQualifiedName
+                                                                              j.DataStream = New ValueSeparatedFileStream
+                                                                              j.DataStream.SetParams(New ValueSeparatedFileStreamParams With {.ValueSeparator = ";", .FirstLineIsHeader = False})
+                                                                              'j.EndpointParams = New HRPersonParams With {.PersonIdentifier = "EmployeeNumber", .UnitIdentifier = "guid"}
 
                                                                               Dim ret As New MapConfig
                                                                               ret.Add("0", "Identifier", Nothing)
@@ -260,20 +267,20 @@ Imports Datastreamr.Framework.Utils
         Yield persons(0).Addresses(0).ZipCode = "3170"
         Yield persons(0).BankAccount1 Is Nothing
         Yield persons(0).BankAccount2 Is Nothing
-        Yield persons(0).BirthDate = CType("04.01.1956", Date)
+        Yield persons(0).BirthDate = CType("04.01.1946", Date)
         Yield persons(0).Children Is Nothing
         Yield persons(0).CountryCode Is Nothing
-        Yield persons(0).EMailAddresses(0).Address = "egil.bjerke@wideroe.no"
+        Yield persons(0).EMailAddresses(0).Address = "arne.belinda@lala.no"
         Yield persons(0).EMailAddresses(0).Type = EMailType.Main
         Yield persons(0).EmploymentInfo(0).EmployeeNumber = "4170"
         Yield persons(0).EmploymentInfo(0).EmployedIn.Value = "WF"
         Yield persons(0).EmploymentInfo(0).EmployedIn.Identifiertype = UnitIdentifierType.DepartmentCode
         Yield persons(0).EmploymentInfo(0).Employment Is Nothing
-        Yield persons(0).FirstName = "Egil"
+        Yield persons(0).FirstName = "Arne"
         Yield persons(0).Gender = Gender.Male
         Yield persons(0).IsDeactivated = False
         Yield persons(0).IsLeader = False  'Not used on import
-        Yield persons(0).LastName = "Bjerke"
+        Yield persons(0).LastName = "Belinda"
         Yield persons(0).LegalUnitIdentifier Is Nothing
         Yield persons(0).LogOn Is Nothing
         Yield persons(0).MaritalStatus Is Nothing
@@ -289,7 +296,7 @@ Imports Datastreamr.Framework.Utils
         'Yield persons(0).PersonIdentifier.UnitIdentifier.Identifiertype = UnitIdentifierType.DepartmentCode
         Yield persons(0).Phones Is Nothing
         Yield persons(0).ShortName Is Nothing
-        Yield persons(0).SocialSecurityNumber = "04015642993"
+        Yield persons(0).SocialSecurityNumber = "04015452453"
         Yield persons(0).SpecifiedLeader Is Nothing
     End Function
     Private Iterator Function ValidateReceivedPersons(ByVal importRequest As ImportPersonRequest) As IEnumerable(Of Boolean)

@@ -14,8 +14,8 @@ Namespace Endpoints
             Add("UnitIdentifier", New ParamInfo With {.Required = False, .Name = "UnitIdentifier", .Type = GetType(String), .Description = "DepartmentCode,InternalId"})
         End Sub
 
-        Public Sub New(streamParams As StreamParams)
-            MyBase.New(streamParams)
+        Public Sub New(baseStreamParams As BaseStreamParams)
+            MyBase.New(baseStreamParams)
         End Sub
 
 

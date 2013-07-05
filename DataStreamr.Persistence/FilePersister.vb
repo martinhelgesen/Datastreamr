@@ -1,6 +1,7 @@
 ﻿Imports DataStreamr.Persistence.Config
 Imports DataStreamr.Persistence.Interfaces
 Imports System.Text
+Imports Newtonsoft.Json
 
 Friend Class FilePersister
     Implements IPersister
@@ -47,7 +48,7 @@ Friend Class FilePersister
         End If
 
         Using sWriter As New IO.StreamWriter(Path(dbName, data.GetType) & objectname & ".json", False)
-            sWriter.Write(Newtonsoft.Json.JsonConvert.SerializeObject(data, Newtonsoft.Json.Formatting.Indented))
+            sWriter.Write(Newtonsoft.Json.JsonConvert.SerializeObject(data, Newtonsoft.Json.Formatting.Indented, New JsonSerializerSettings() With {.NullValueHandling = NullValueHandling.Ignore, .TypeNameAssemblyFormat = Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple, .TypeNameHandling = TypeNameHandling.Auto}))
         End Using
 
     End Sub
